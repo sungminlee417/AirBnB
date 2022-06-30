@@ -151,7 +151,7 @@ user's information.
 - Request
 
   - Method: POST
-  - URL: /signup_login
+  - URL: /signup
   - Headers:
     - Content-Type: application/json
   - Body:
@@ -1357,7 +1357,7 @@ Return spots filtered by query parameters.
 - Request
 
   - Method: GET
-  - URL: /spots
+  - URL: /spots/
   - Query Parameters
     - page: integer, minimum: 0, maximum: 10, default: 0
     - size: integer, minimum: 0, maximum: 20, default: 20
