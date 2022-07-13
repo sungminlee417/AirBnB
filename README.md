@@ -53,7 +53,7 @@ Returns the information about the current user that is logged in.
 - Request
 
   - Method: GET
-  - URL: /users/:userId
+  - URL: /me
   - Body: none
 
 - Successful Response
@@ -267,7 +267,7 @@ Returns all the spots owned (created) by the current user.
 - Request
 
   - Method: GET
-  - URL: /users/:userId/spots
+  - URL: /me/spots
   - Body: none
 
 - Successful Response
@@ -575,7 +575,7 @@ Returns all the reviews written by the current user.
 - Request
 
   - Method: GET
-  - URL: /users/:userId/reviews
+  - URL: /me/reviews
   - Body: none
 
 - Successful Response
@@ -878,7 +878,7 @@ Return all the bookings that the current user has made.
 - Request
 
   - Method: GET
-  - URL: /users/:userId/bookings
+  - URL: /me/bookings
   - Body: none
 
 - Successful Response
