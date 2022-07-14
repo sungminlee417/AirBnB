@@ -34,9 +34,9 @@ const validateSignup = [
 
 router.post("/signup", validateSignup, async (req, res, next) => {
   const { firstName, lastName, email, password } = req.body;
-  const possibleExisitingUser = await User.findOne({ where: { email: email } });
+  const possibleExistingUser = await User.findOne({ where: { email: email } });
 
-  if (possibleExisitingUser) {
+  if (possibleExistingUser) {
     const err = new Error("User already exists");
     err.status = 403;
     err.errors = {
@@ -44,7 +44,32 @@ router.post("/signup", validateSignup, async (req, res, next) => {
     };
     next(err);
   }
-  const user = await User.signup({ firstName, lastName, email, password });
+  const user = await User.signup(firstName, lastName, email, password);
+
+  setTokenCookie(res, user);
+
+  res.json(user);
+});
+
+const validateLogin = [
+  check("email").exists({ checkFalsy: true }).withMessage("Email is required"),
+  check("password")
+    .exists({ checkFalsy: true })
+    .withMessage("Password is required"),
+  handleValidationErrors,
+];
+
+router.post("/login", validateLogin, async (req, res, next) => {
+  const { email, password } = req.body;
+  const user = await User.login(email, password);
+
+  console.log(user);
+
+  if (!user) {
+    const err = new Error("Invalid credentials");
+    err.status = 401;
+    next(err);
+  }
 
   setTokenCookie(res, user);
 

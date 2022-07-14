@@ -14,25 +14,21 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     static getCurrentUserById(id) {
-      return User.scope("currentUser").findByPk(id);
+      return User.findByPk(id);
     }
 
-    static async login({ credential, password }) {
-      const { Op } = require("sequelize");
-      const user = await User.scope("loginUser").findOne({
+    static async login(email, password) {
+      const user = await User.scope("logInUser").findOne({
         where: {
-          [Op.or]: {
-            username: credential,
-            email: credential,
-          },
+          email: email,
         },
       });
       if (user && user.validatePassword(password)) {
-        return await User.scope("currentUser").findByPk(user.id);
+        return User.findByPk(user.id);
       }
     }
 
-    static async signup({ firstName, lastName, email, password }) {
+    static async signup(firstName, lastName, email, password) {
       const hashedPassword = bcrypt.hashSync(password);
       const user = await User.create({
         firstName,
@@ -40,7 +36,7 @@ module.exports = (sequelize, DataTypes) => {
         email,
         hashedPassword,
       });
-      return await User.scope("currentUser").findByPk(user.id);
+      return User.findByPk(user.id);
     }
 
     static associate(models) {
@@ -78,15 +74,14 @@ module.exports = (sequelize, DataTypes) => {
       modelName: "User",
       defaultScope: {
         attributes: {
-          exclude: ["hashedPassword", "email", "createdAt", "updatedAt"],
+          exclude: ["hashedPassword", "createdAt", "updatedAt"],
         },
       },
       scopes: {
-        currentUser: {
-          attributes: { exclude: ["hashedPassword", "createdAt", "updatedAt"] },
-        },
-        loginUser: {
-          attributes: {},
+        logInUser: {
+          attributes: {
+            exclude: ["createdAt", "updatedAt"],
+          },
         },
       },
     }
