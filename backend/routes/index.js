@@ -18,6 +18,8 @@ router.get("/api/csrf/restore", (req, res) => {
   });
 });
 
+// SIGNING UP A USER
+
 const validateSignup = [
   check("email")
     .exists({ checkFalsy: true })
@@ -51,6 +53,8 @@ router.post("/signup", validateSignup, async (req, res, next) => {
   res.json(user);
 });
 
+// LOGGING IN A USER
+
 const validateLogin = [
   check("email").exists({ checkFalsy: true }).withMessage("Email is required"),
   check("password")
@@ -75,6 +79,8 @@ router.post("/login", validateLogin, async (req, res, next) => {
 
   res.json(user);
 });
+
+// GETTING CURRENT USER
 
 router.get("/me", [restoreUser, requireAuth], (req, res, next) => {
   res.json(req.user);
