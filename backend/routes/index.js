@@ -3,7 +3,7 @@ const router = express.Router();
 
 const { User } = require("../db/models");
 const apiRouter = require("./api");
-const { setTokenCookie } = require("../utils/auth");
+const { setTokenCookie, restoreUser, requireAuth } = require("../utils/auth");
 
 const { check } = require("express-validator");
 const { handleValidationErrors } = require("../utils/validation");
@@ -74,6 +74,10 @@ router.post("/login", validateLogin, async (req, res, next) => {
   setTokenCookie(res, user);
 
   res.json(user);
+});
+
+router.get("/me", [restoreUser, requireAuth], (req, res, next) => {
+  res.json(req.user);
 });
 
 module.exports = router;

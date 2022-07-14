@@ -37,7 +37,7 @@ const restoreUser = (req, res, next) => {
 
     try {
       const { id } = jwtPayload.data;
-      req.user = await User.scope("currentUser").findByPk(id);
+      req.user = await User.findByPk(id);
     } catch (e) {
       res.clearCookie("token");
       return next();
@@ -49,12 +49,10 @@ const restoreUser = (req, res, next) => {
   });
 };
 
-const requireAuth = function (req, _res, next) {
+const requireAuth = function (req, res, next) {
   if (req.user) return next();
 
-  const err = new Error("Unauthorized");
-  err.title = "Unauthorized";
-  err.errors = ["Unauthorized"];
+  const err = new Error("Authentication required");
   err.status = 401;
   return next(err);
 };
