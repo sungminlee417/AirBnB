@@ -1,32 +1,31 @@
-const express = require('express');
-require('express-async-errors');
-const morgan = require('morgan');
-const cors = require('cors');
-const csurf = require('csurf');
-const helmet = require('helmet');
-const cookieParser = require('cookie-parser');
+const express = require("express");
+require("express-async-errors");
+const morgan = require("morgan");
+const cors = require("cors");
+const csurf = require("csurf");
+const helmet = require("helmet");
+const cookieParser = require("cookie-parser");
 
-const { environment } = require('./config');
-const isProduction = environment === 'production';
+const { environment } = require("./config");
+const isProduction = environment === "production";
 
-const { ValidationError } = require('sequelize');
+const { ValidationError } = require("sequelize");
 
-const routes = require('./routes');
+const routes = require("./routes");
 
-const app = express()
+const app = express();
 
+app.use(morgan("dev"));
+app.use(cookieParser());
+app.use(express.json());
 
-app.use(morgan('dev'))
-app.use(cookieParser())
-app.use(express.json())
-
-if(!isProduction) {
-  app.use(cors())
+if (!isProduction) {
+  app.use(cors());
 }
 
 app.use(
   helmet.crossOriginResourcePolicy({
-    policy: "cross-origin"
+    policy: "cross-origin",
   })
 );
 
@@ -35,12 +34,12 @@ app.use(
     cookie: {
       secure: isProduction,
       sameSite: isProduction && "Lax",
-      httpOnly: true
-    }
+      httpOnly: true,
+    },
   })
 );
 
-app.use(routes)
+app.use(routes);
 
 app.use((req, res, next) => {
   const err = new Error("The requested resource couldn't be found.");
@@ -53,7 +52,6 @@ app.use((req, res, next) => {
 app.use((err, req, res, next) => {
   if (err instanceof ValidationError) {
     err.errors = err.errors.map((e) => e.message);
-    err.title = 'Validation error';
   }
   next(err);
 });
@@ -62,11 +60,10 @@ app.use((err, _req, res, _next) => {
   res.status(err.status || 500);
   console.error(err);
   res.json({
-    title: err.title || 'Server Error',
     message: err.message,
+    statusCode: err.status,
     errors: err.errors,
-    stack: isProduction ? null : err.stack
   });
 });
 
-module.exports = app
+module.exports = app;
