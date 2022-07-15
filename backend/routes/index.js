@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const apiRouter = require("./api");
+const currentUserRouter = require("./current-user");
 const spotsRouter = require("./spots");
 
 const { User } = require("../db/models");
@@ -11,6 +12,7 @@ const { check } = require("express-validator");
 const { handleValidationErrors } = require("../utils/validation");
 
 router.use("/api", apiRouter);
+router.use("/me", currentUserRouter);
 router.use("/spots", spotsRouter);
 
 router.get("/api/csrf/restore", (req, res) => {
@@ -21,7 +23,7 @@ router.get("/api/csrf/restore", (req, res) => {
   });
 });
 
-// SIGNING UP A USER
+// SIGN UP USER
 
 const validateSignup = [
   check("email")
@@ -56,7 +58,7 @@ router.post("/signup", validateSignup, async (req, res, next) => {
   res.json(user);
 });
 
-// LOGGING IN A USER
+// LOGG IN USER
 
 const validateLogin = [
   check("email").exists({ checkFalsy: true }).withMessage("Email is required"),
@@ -81,12 +83,6 @@ router.post("/login", validateLogin, async (req, res, next) => {
   setTokenCookie(res, user);
 
   res.json(user);
-});
-
-// GETTING CURRENT USER
-
-router.get("/me", [restoreUser, requireAuth], (req, res, next) => {
-  res.json(req.user);
 });
 
 module.exports = router;

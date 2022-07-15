@@ -3,7 +3,9 @@ const router = express.Router();
 
 const { Spot } = require("../db/models");
 
-router.get("/", async (req, res, next) => {
+// GETTING ALL SPOTS
+
+router.get("/", async (req, res) => {
   const spots = await Spot.findAll();
   res.json(spots);
 });
