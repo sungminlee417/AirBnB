@@ -5,12 +5,14 @@ const sequelize = require("sequelize");
 
 const { Spot, User, Review, Image } = require("../db/models");
 
-// GETTING ALL SPOTS
+// GET ALL SPOTS
 
 router.get("/", async (req, res) => {
   const spots = await Spot.findAll();
   res.json(spots);
 });
+
+// GET SPOT BY ID
 
 router.get("/:spotId", async (req, res, next) => {
   const id = Number(req.params.spotId);
@@ -57,5 +59,7 @@ router.get("/:spotId", async (req, res, next) => {
     next(err);
   }
 });
+
+// CREATE A SPOT (WITH AUTHENTICATION)
 
 module.exports = router;
