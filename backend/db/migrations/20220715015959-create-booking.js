@@ -1,57 +1,38 @@
 "use strict";
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("Spots", {
+    await queryInterface.createTable("Bookings", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      ownerId: {
+      spotId: {
         type: Sequelize.INTEGER,
+        references: {
+          model: "Spots",
+          key: "id",
+        },
         allowNull: false,
+        onDelete: "cascade",
+      },
+      userId: {
+        type: Sequelize.INTEGER,
         references: {
           model: "Users",
           key: "id",
         },
+        allowNull: false,
         onDelete: "cascade",
       },
-      address: {
+      startDate: {
+        allowNull: false,
         type: Sequelize.STRING,
-        allowNull: false,
       },
-      city: {
+      endDate: {
+        allowNull: false,
         type: Sequelize.STRING,
-        allowNull: false,
-      },
-      state: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      country: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      lat: {
-        type: Sequelize.DECIMAL,
-        allowNull: false,
-      },
-      lng: {
-        type: Sequelize.DECIMAL,
-        allowNull: false,
-      },
-      name: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      description: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      price: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
       },
       createdAt: {
         allowNull: false,
@@ -66,6 +47,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("Spots");
+    await queryInterface.dropTable("Bookings");
   },
 };
