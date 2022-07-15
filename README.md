@@ -1224,7 +1224,6 @@ Create and return a new image for a spot specified by id.
     {
       "id": 1,
       "imageableId": 1,
-      "imageableType": "Spot",
       "url": "image url"
     }
     ```
@@ -1274,7 +1273,6 @@ Create and return a new image for a review specified by id.
     {
       "id": 1,
       "imageableId": 1,
-      "imageableType": "Review",
       "url": "image url"
     }
     ```
