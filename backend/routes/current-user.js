@@ -3,7 +3,7 @@ const router = express.Router();
 
 const { restoreUser, requireAuth } = require("../utils/auth");
 
-const { Spot } = require("../db/models");
+const { Spot, Review } = require("../db/models");
 
 // GET CURRENT USER
 

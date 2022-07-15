@@ -131,6 +131,28 @@ router.put(
   }
 );
 
+// DELETE SPOT
+
+router.delete(
+  "/:spotId",
+  [restoreUser, requireAuth],
+  async (req, res, next) => {
+    const spot = await Spot.findByPk(req.params.spotId);
+
+    checkSpotExists(spot.id, next);
+
+    if (spot.ownerId === req.user.id) {
+      await spot.destroy();
+      res.json({
+        message: "Successfully deleted",
+        statusCode: 200,
+      });
+    } else {
+      requireAuthor(req, res, next);
+    }
+  }
+);
+
 // GET ALL SPOTS
 
 router.get("/", async (req, res) => {
