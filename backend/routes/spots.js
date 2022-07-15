@@ -3,21 +3,14 @@ const router = express.Router();
 
 const sequelize = require("sequelize");
 
-const { restoreUser, requireAuth } = require("../utils/auth");
+const { restoreUser, requireAuth, requireAuthor } = require("../utils/auth");
 
 const { check } = require("express-validator");
 const { handleValidationErrors } = require("../utils/validation");
 
 const { Spot, User, Review, Image } = require("../db/models");
 
-// GET ALL SPOTS
-
-router.get("/", async (req, res) => {
-  const spots = await Spot.findAll();
-  res.json(spots);
-});
-
-// CREATE A SPOT (WITH AUTHENTICATION)
+// VALIDATE SPOT MIDDLEWARE
 
 const validateSpot = [
   check("address")
@@ -43,24 +36,17 @@ const validateSpot = [
   handleValidationErrors,
 ];
 
-router.post("/", [restoreUser, requireAuth, validateSpot], async (req, res) => {
-  const userId = req.user.id;
-  const { address, city, state, country, lat, lng, name, description, price } =
-    req.body;
-  const spot = await Spot.create({
-    ownerId: userId,
-    address,
-    city,
-    state,
-    country,
-    lat,
-    lng,
-    name,
-    description,
-    price,
-  });
-  res.json(spot);
-});
+// CHECK IF SPOT EXISTS HELPER FUNCTION
+
+const checkSpotExists = (spotId, next) => {
+  if (spotId) {
+    return;
+  } else {
+    const err = new Error("Spot couldn't be found");
+    err.status = 404;
+    return next(err);
+  }
+};
 
 // GET SPOT BY ID
 
@@ -101,13 +87,76 @@ router.get("/:spotId", async (req, res, next) => {
     ],
   });
 
-  if (spot.id) {
-    res.json(spot);
-  } else {
-    const err = new Error("Spot couldn't be found");
-    err.status = 404;
-    next(err);
+  checkSpotExists(spot.id, next);
+  res.json(spot);
+});
+
+// EDIT A SPOT
+
+router.put(
+  "/:spotId",
+  [restoreUser, requireAuth, validateSpot],
+  async (req, res, next) => {
+    const spot = await Spot.findByPk(req.params.spotId);
+
+    checkSpotExists(spot.id, next);
+
+    if (spot.ownerId === req.user.id) {
+      const {
+        address,
+        city,
+        state,
+        country,
+        lat,
+        lng,
+        name,
+        description,
+        price,
+      } = req.body;
+      spot.update({
+        address: address,
+        city: city,
+        state: state,
+        country: country,
+        lat: lat,
+        lng: lng,
+        name: name,
+        description: description,
+        price: price,
+      });
+      res.json(spot);
+    } else {
+      requireAuthor(req, res, next);
+    }
   }
+);
+
+// GET ALL SPOTS
+
+router.get("/", async (req, res) => {
+  const spots = await Spot.findAll();
+  res.json(spots);
+});
+
+// CREATE A SPOT (WITH AUTHENTICATION)
+
+router.post("/", [restoreUser, requireAuth, validateSpot], async (req, res) => {
+  const userId = req.user.id;
+  const { address, city, state, country, lat, lng, name, description, price } =
+    req.body;
+  const spot = await Spot.create({
+    ownerId: userId,
+    address,
+    city,
+    state,
+    country,
+    lat,
+    lng,
+    name,
+    description,
+    price,
+  });
+  res.json(spot);
 });
 
 module.exports = router;
