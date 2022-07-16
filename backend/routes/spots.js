@@ -72,6 +72,10 @@ router.get("/:spotId/reviews", async (req, res, next) => {
   res.json(reviews);
 });
 
+// CREATE REVIEW FOR CERTAIN SPOT
+
+router.post("/:spotId/reviews", async (req, res, next) => {});
+
 // GET SPOT BY ID
 
 router.get("/:spotId", async (req, res, next) => {
