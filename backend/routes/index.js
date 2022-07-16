@@ -15,6 +15,10 @@ router.use("/api", apiRouter);
 router.use("/me", currentUserRouter);
 router.use("/spots", spotsRouter);
 
+router.get("/", (req, res) => {
+  res.json("hello");
+});
+
 router.get("/api/csrf/restore", (req, res) => {
   const csrfToken = req.csrfToken();
   res.cookie("XSRF-TOKEN", csrfToken);
