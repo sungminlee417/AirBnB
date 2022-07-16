@@ -99,7 +99,6 @@ router.get("/:spotId", checkSpotExists, async (req, res, next) => {
       [sequelize.fn("COUNT", sequelize.col("Reviews.id")), "numReviews"],
       [sequelize.fn("AVG", sequelize.col("Reviews.stars")), "avgStarRating"],
     ],
-    group: ["id"],
   });
   res.json(spot);
 });
