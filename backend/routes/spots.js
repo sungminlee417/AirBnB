@@ -38,8 +38,8 @@ const validateSpot = [
 
 // CHECK IF SPOT EXISTS HELPER FUNCTION
 
-const checkSpotExists = (spotId, next) => {
-  if (spotId) {
+const checkSpotExists = (spot, next) => {
+  if (spot) {
     return;
   } else {
     const err = new Error("Spot couldn't be found");
@@ -47,6 +47,30 @@ const checkSpotExists = (spotId, next) => {
     return next(err);
   }
 };
+
+// GET REVIEWS VIA SPOT ID
+
+router.get("/:spotId/reviews", async (req, res, next) => {
+  const id = Number(req.params.spotId);
+  const spot = await Spot.findByPk(id);
+
+  checkSpotExists(spot, next);
+
+  const reviews = await Review.findAll({
+    where: { spotId: id },
+    include: [
+      {
+        model: User,
+        attributes: ["id", "firstName", "lastName"],
+      },
+      {
+        model: Image,
+        attributes: ["id", "imageableId", "url"],
+      },
+    ],
+  });
+  res.json(reviews);
+});
 
 // GET SPOT BY ID
 
@@ -99,7 +123,7 @@ router.put(
   async (req, res, next) => {
     const spot = await Spot.findByPk(req.params.spotId);
 
-    checkSpotExists(spot.id, next);
+    checkSpotExists(spot, next);
 
     if (spot.ownerId === req.user.id) {
       const {
@@ -125,28 +149,6 @@ router.put(
         price: price,
       });
       res.json(spot);
-    } else {
-      requireAuthor(req, res, next);
-    }
-  }
-);
-
-// DELETE SPOT
-
-router.delete(
-  "/:spotId",
-  [restoreUser, requireAuth],
-  async (req, res, next) => {
-    const spot = await Spot.findByPk(req.params.spotId);
-
-    checkSpotExists(spot.id, next);
-
-    if (spot.ownerId === req.user.id) {
-      await spot.destroy();
-      res.json({
-        message: "Successfully deleted",
-        statusCode: 200,
-      });
     } else {
       requireAuthor(req, res, next);
     }
