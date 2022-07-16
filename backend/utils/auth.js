@@ -4,6 +4,8 @@ const { User } = require("../db/models");
 
 const { secret, expiresIn } = jwtConfig;
 
+const { Spot, Review } = require("../db/models");
+
 const setTokenCookie = (res, user) => {
   // Create the token.
   const token = jwt.sign(
@@ -61,10 +63,32 @@ const requireAuth = function (req, res, next) {
 
 // AUTHORIZATION MIDDLEWARE
 
-const requireAuthor = function (req, res, next) {
-  const err = new Error("Forbidden");
-  err.status = 403;
-  return next(err);
+const requireAuthorSpot = async (req, res, next) => {
+  const spot = Spot.findByPk(req.params.spotId);
+  if (spot.ownerId === req.user.id) {
+    return next();
+  } else {
+    const err = new Error("Forbidden");
+    err.status = 403;
+    return next(err);
+  }
 };
 
-module.exports = { setTokenCookie, restoreUser, requireAuth, requireAuthor };
+const requireAuthorReview = async (req, res, next) => {
+  const review = await Review.findByPk(req.params.reviewId);
+  if (review.userId === req.user.id) {
+    return next();
+  } else {
+    const err = new Error("Forbidden");
+    err.status = 403;
+    return next(err);
+  }
+};
+
+module.exports = {
+  setTokenCookie,
+  restoreUser,
+  requireAuth,
+  requireAuthorSpot,
+  requireAuthorReview,
+};

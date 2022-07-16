@@ -15,7 +15,7 @@ const checkSpotExists = async (req, res, next) => {
 
 // CHECK IF USER HAS A REVIEW FOR A CERTAIN SPOT MIDDLEWARE
 
-const checkReviewExists = async (req, res, next) => {
+const checkReviewAtCertainSpotExists = async (req, res, next) => {
   const review = await Review.findOne({
     where: { userId: req.user.id, spotId: req.params.spotId },
   });
@@ -28,7 +28,20 @@ const checkReviewExists = async (req, res, next) => {
   }
 };
 
+// CHECK IF REVIEW EXISTS MIDDLEWARE
+const checkReviewExists = async (req, res, next) => {
+  const review = await Spot.findByPk(req.params.reviewId);
+  if (review) {
+    next();
+  } else {
+    const err = new Error("Review couldn't be found");
+    err.status = 404;
+    next(err);
+  }
+};
+
 module.exports = {
   checkSpotExists,
+  checkReviewAtCertainSpotExists,
   checkReviewExists,
 };
