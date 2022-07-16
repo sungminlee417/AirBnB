@@ -21,6 +21,8 @@ router.get("/spots", [restoreUser, requireAuth], async (req, res) => {
   res.json(spots);
 });
 
+// GET CURRENT USER'S REVIEWS
+
 router.get("/reviews", [restoreUser, requireAuth], async (req, res) => {
   const user = req.user;
   const reviews = await Review.findAll({
