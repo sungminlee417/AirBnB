@@ -8,19 +8,19 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      spotId: {
+      userId: {
         type: Sequelize.INTEGER,
         references: {
-          model: "Spots",
+          model: "Users",
           key: "id",
         },
         allowNull: false,
         onDelete: "cascade",
       },
-      userId: {
+      spotId: {
         type: Sequelize.INTEGER,
         references: {
-          model: "Users",
+          model: "Spots",
           key: "id",
         },
         allowNull: false,

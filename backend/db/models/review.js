@@ -20,11 +20,11 @@ module.exports = (sequelize, DataTypes) => {
   }
   Review.init(
     {
-      spotId: {
+      userId: {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
-      userId: {
+      spotId: {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
