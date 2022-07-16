@@ -3,58 +3,25 @@ const router = express.Router();
 
 const sequelize = require("sequelize");
 
-const { restoreUser, requireAuth, requireAuthor } = require("../utils/auth");
+const {
+  restoreUser,
+  requireAuth,
+  requireAuthorSpot,
+} = require("../utils/auth");
 
-const { check } = require("express-validator");
-const { handleValidationErrors } = require("../utils/validation");
+const {
+  checkSpotExists,
+  checkReviewAtCertainSpotExists,
+} = require("../utils/existance-check");
+
+const { validateReview, validateSpot } = require("../utils/validation");
 
 const { Spot, User, Review, Image } = require("../db/models");
 
-// VALIDATE SPOT MIDDLEWARE
-
-const validateSpot = [
-  check("address")
-    .exists({ checkFalsy: true })
-    .withMessage("Street address is required"),
-  check("city").exists({ checkFalsy: true }).withMessage("City is required"),
-  check("state").exists({ checkFalsy: true }).withMessage("State is required"),
-  check("country")
-    .exists({ checkFalsy: true })
-    .withMessage("Country is required"),
-  check("lat").exists({ checkFalsy: true }).withMessage("Latitude is required"),
-  check("lng")
-    .exists({ checkFalsy: true })
-    .withMessage("Longitude is required"),
-  check("name")
-    .exists({ checkFalsy: true })
-    .isLength({ max: 50 })
-    .withMessage("Name must be less than 50 characters"),
-  check("description")
-    .exists({ checkFalsy: true })
-    .withMessage("Description is required"),
-  check("price").exists({ checkFalsy: true }).withMessage("Price is required"),
-  handleValidationErrors,
-];
-
-// CHECK IF SPOT EXISTS HELPER FUNCTION
-
-const checkSpotExists = (spot, next) => {
-  if (spot) {
-    return;
-  } else {
-    const err = new Error("Spot couldn't be found");
-    err.status = 404;
-    return next(err);
-  }
-};
-
 // GET REVIEWS VIA SPOT ID
-
-router.get("/:spotId/reviews", async (req, res, next) => {
-  const id = Number(req.params.spotId);
+router.get("/:spotId/reviews", checkSpotExists, async (req, res, next) => {
+  const id = req.params.spotId;
   const spot = await Spot.findByPk(id);
-
-  checkSpotExists(spot, next);
 
   const reviews = await Review.findAll({
     where: { spotId: id },
@@ -73,12 +40,31 @@ router.get("/:spotId/reviews", async (req, res, next) => {
 });
 
 // CREATE REVIEW FOR CERTAIN SPOT
-
-router.post("/:spotId/reviews", async (req, res, next) => {});
+router.post(
+  "/:spotId/reviews",
+  [
+    restoreUser,
+    requireAuth,
+    checkSpotExists,
+    checkReviewAtCertainSpotExists,
+    validateReview,
+  ],
+  async (req, res, next) => {
+    const { review, stars } = req.body;
+    const user = req.user;
+    const spot = await Spot.findByPk(req.params.spotId);
+    const newReview = await Review.create({
+      userId: user.id,
+      spotId: spot.id,
+      review,
+      stars,
+    });
+    res.json(newReview);
+  }
+);
 
 // GET SPOT BY ID
-
-router.get("/:spotId", async (req, res, next) => {
+router.get("/:spotId", checkSpotExists, async (req, res, next) => {
   const id = Number(req.params.spotId);
   const spot = await Spot.findByPk(id, {
     include: [
@@ -110,64 +96,52 @@ router.get("/:spotId", async (req, res, next) => {
       "price",
       "createdAt",
       "updatedAt",
-      [sequelize.fn("SUM", sequelize.col("Reviews.id")), "numReviews"],
+      [sequelize.fn("COUNT", sequelize.col("Reviews.id")), "numReviews"],
       [sequelize.fn("AVG", sequelize.col("Reviews.stars")), "avgStarRating"],
     ],
   });
-
-  checkSpotExists(spot.id, next);
   res.json(spot);
 });
 
 // EDIT A SPOT
-
 router.put(
   "/:spotId",
-  [restoreUser, requireAuth, validateSpot],
+  [restoreUser, requireAuth, checkSpotExists, requireAuthorSpot, validateSpot],
   async (req, res, next) => {
     const spot = await Spot.findByPk(req.params.spotId);
-
-    checkSpotExists(spot, next);
-
-    if (spot.ownerId === req.user.id) {
-      const {
-        address,
-        city,
-        state,
-        country,
-        lat,
-        lng,
-        name,
-        description,
-        price,
-      } = req.body;
-      spot.update({
-        address: address,
-        city: city,
-        state: state,
-        country: country,
-        lat: lat,
-        lng: lng,
-        name: name,
-        description: description,
-        price: price,
-      });
-      res.json(spot);
-    } else {
-      requireAuthor(req, res, next);
-    }
+    const {
+      address,
+      city,
+      state,
+      country,
+      lat,
+      lng,
+      name,
+      description,
+      price,
+    } = req.body;
+    spot.update({
+      address: address,
+      city: city,
+      state: state,
+      country: country,
+      lat: lat,
+      lng: lng,
+      name: name,
+      description: description,
+      price: price,
+    });
+    res.json(spot);
   }
 );
 
 // GET ALL SPOTS
-
 router.get("/", async (req, res) => {
   const spots = await Spot.findAll();
   res.json(spots);
 });
 
 // CREATE A SPOT (WITH AUTHENTICATION)
-
 router.post("/", [restoreUser, requireAuth, validateSpot], async (req, res) => {
   const userId = req.user.id;
   const { address, city, state, country, lat, lng, name, description, price } =

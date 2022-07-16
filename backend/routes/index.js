@@ -4,6 +4,7 @@ const router = express.Router();
 const apiRouter = require("./api");
 const currentUserRouter = require("./current-user");
 const spotsRouter = require("./spots");
+const reviewsRouter = require("./reviews");
 
 const { User } = require("../db/models");
 const { setTokenCookie, restoreUser, requireAuth } = require("../utils/auth");
@@ -14,6 +15,7 @@ const { handleValidationErrors } = require("../utils/validation");
 router.use("/api", apiRouter);
 router.use("/me", currentUserRouter);
 router.use("/spots", spotsRouter);
+router.use("/reviews", reviewsRouter);
 
 router.get("/api/csrf/restore", (req, res) => {
   const csrfToken = req.csrfToken();
@@ -24,7 +26,6 @@ router.get("/api/csrf/restore", (req, res) => {
 });
 
 // SIGN UP USER
-
 const validateSignup = [
   check("email")
     .exists({ checkFalsy: true })
@@ -58,8 +59,7 @@ router.post("/signup", validateSignup, async (req, res, next) => {
   res.json(user);
 });
 
-// LOGG IN USER
-
+// LOG IN USER
 const validateLogin = [
   check("email").exists({ checkFalsy: true }).withMessage("Email is required"),
   check("password")
