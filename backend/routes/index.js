@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 
-const apiRouter = require("./api");
 const currentUserRouter = require("./current-user");
 const spotsRouter = require("./spots");
 const reviewsRouter = require("./reviews");
@@ -9,37 +8,13 @@ const reviewsRouter = require("./reviews");
 const { User } = require("../db/models");
 const { setTokenCookie, restoreUser, requireAuth } = require("../utils/auth");
 
-const { check } = require("express-validator");
-const { handleValidationErrors } = require("../utils/validation");
+const { validateSignup, validateLogin } = require("../utils/validation");
 
-router.use("/api", apiRouter);
 router.use("/me", currentUserRouter);
 router.use("/spots", spotsRouter);
 router.use("/reviews", reviewsRouter);
 
-router.get("/api/csrf/restore", (req, res) => {
-  const csrfToken = req.csrfToken();
-  res.cookie("XSRF-TOKEN", csrfToken);
-  res.status(200).json({
-    "XSRF-Token": csrfToken,
-  });
-});
-
 // SIGN UP USER
-const validateSignup = [
-  check("email")
-    .exists({ checkFalsy: true })
-    .isEmail()
-    .withMessage("Invalid email"),
-  check("firstName")
-    .exists({ checkFalsy: true })
-    .withMessage("First Name is required"),
-  check("lastName")
-    .exists({ checkFalsy: true })
-    .withMessage("Last Name is required"),
-  handleValidationErrors,
-];
-
 router.post("/signup", validateSignup, async (req, res, next) => {
   const { firstName, lastName, email, password } = req.body;
   const possibleExistingUser = await User.findOne({ where: { email: email } });
@@ -59,15 +34,7 @@ router.post("/signup", validateSignup, async (req, res, next) => {
   res.json(user);
 });
 
-// LOG IN USER
-const validateLogin = [
-  check("email").exists({ checkFalsy: true }).withMessage("Email is required"),
-  check("password")
-    .exists({ checkFalsy: true })
-    .withMessage("Password is required"),
-  handleValidationErrors,
-];
-
+// LOGIN USER
 router.post("/login", validateLogin, async (req, res, next) => {
   const { email, password } = req.body;
   const user = await User.login(email, password);
@@ -83,6 +50,15 @@ router.post("/login", validateLogin, async (req, res, next) => {
   setTokenCookie(res, user);
 
   res.json(user);
+});
+
+// RESTORE CSRF
+router.get("/api/csrf/restore", (req, res) => {
+  const csrfToken = req.csrfToken();
+  res.cookie("XSRF-TOKEN", csrfToken);
+  res.status(200).json({
+    "XSRF-Token": csrfToken,
+  });
 });
 
 module.exports = router;

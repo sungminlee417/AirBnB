@@ -14,8 +14,34 @@ const handleValidationErrors = (req, res, next) => {
   next();
 };
 
-// VALIDATE SPOT MIDDLEWARE
+// SIGN UP USER
+const validateSignup = [
+  check("email")
+    .exists({ checkFalsy: true })
+    .isEmail()
+    .withMessage("Invalid email"),
+  check("firstName")
+    .exists({ checkFalsy: true })
+    .withMessage("First Name is required"),
+  check("lastName")
+    .exists({ checkFalsy: true })
+    .withMessage("Last Name is required"),
+  check("password")
+    .exists({ checkFalsy: true })
+    .withMessage("Password is required"),
+  handleValidationErrors,
+];
 
+// LOG IN USER
+const validateLogin = [
+  check("email").exists({ checkFalsy: true }).withMessage("Email is required"),
+  check("password")
+    .exists({ checkFalsy: true })
+    .withMessage("Password is required"),
+  handleValidationErrors,
+];
+
+// VALIDATE SPOT MIDDLEWARE
 const validateSpot = [
   check("address")
     .exists({ checkFalsy: true })
@@ -41,7 +67,6 @@ const validateSpot = [
 ];
 
 // VALIDATE REVIEW MIDDLEWARE
-
 const validateReview = [
   check("review")
     .exists({ checkFalsy: true })
@@ -54,6 +79,8 @@ const validateReview = [
 
 module.exports = {
   handleValidationErrors,
+  validateSignup,
+  validateLogin,
   validateSpot,
   validateReview,
 };
