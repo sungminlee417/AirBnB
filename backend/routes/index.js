@@ -7,8 +7,8 @@ const reviewsRouter = require("./reviews");
 const bookingsRouter = require("./bookings");
 
 const { User } = require("../db/models");
-const { setTokenCookie, restoreUser, requireAuth } = require("../utils/auth");
 
+const { setTokenCookie, restoreUser, requireAuth } = require("../utils/auth");
 const { validateSignup, validateLogin } = require("../utils/validation");
 
 router.use("/me", currentUserRouter);

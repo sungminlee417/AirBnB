@@ -6,6 +6,7 @@ const { Booking } = require("../db/models");
 const {
   restoreUser,
   requireAuth,
+  requireAuthorSpot,
   requireAuthorEditingBooking,
 } = require("../utils/auth");
 
@@ -34,6 +35,25 @@ router.put(
       endDate: endDate,
     });
     res.json(booking);
+  }
+);
+
+router.delete(
+  "/:bookingId",
+  [
+    restoreUser,
+    requireAuth,
+    requireAuthorSpot,
+    checkBookingExists,
+    requireAuthorEditingBooking,
+  ],
+  async (req, res) => {
+    const booking = Booking.findByPk(req.params.bookingId);
+    await booking.destroy();
+    res.json({
+      message: "Successfully deleted",
+      statusCode: 200,
+    });
   }
 );
 
