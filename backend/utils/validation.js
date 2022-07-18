@@ -1,6 +1,8 @@
 const { validationResult } = require("express-validator");
 const { check } = require("express-validator");
 
+const { Booking } = require("../db/models");
+
 const handleValidationErrors = (req, res, next) => {
   const validationErrors = validationResult(req);
   if (!validationErrors.isEmpty()) {
@@ -77,10 +79,63 @@ const validateReview = [
   handleValidationErrors,
 ];
 
+// VALIDATE BOOKING DATE MIDDLEWARE
+const validateBookingDate = (req, res, next) => {
+  const currentDate = new Date();
+  const year = currentDate.getFullYear();
+  const month = currentDate.getMonth();
+  const day = currentDate.getDate();
+
+  const bookingDate = req.body.endDate.split("-");
+  const bookingYear = Number(bookingDate[0]);
+  const bookingMonth = Number(bookingDate[1]);
+  const bookingDay = Number(bookingDate[2]);
+
+  const err = new Error("Past bookings can't be modified");
+  err.status = 400;
+
+  if (year > bookingYear) {
+    next(err);
+  } else if (month > bookingMonth) {
+    if (year === bookingYear) {
+      next(err);
+    } else if (day > bookingDay) {
+      if (year === bookingYear && year === bookingMonth) {
+        next(err);
+      }
+    }
+  }
+  next();
+};
+
+// VALIDATE BOOKING DATE CONFLICT
+const validateBookingConflict = async (req, res, next) => {
+  const { startDate, endDate } = req.body;
+  const bookings = await Booking.findByPk(req.params.bookingId);
+  const originalStart = bookings.startDate;
+  const originalEnd = bookings.endDate;
+
+  if (originalStart === startDate || originalEnd === endDate) {
+    const err = new Error(
+      "Sorry, this spot is already booked for the specified dates"
+    );
+    err.status = 403;
+    if (originalStart === startDate) {
+      err.errors.startDate = "Start date conflicts with an existing booking";
+    }
+    if (originalEnd === endDate) {
+      err.errors.endDate = "End date conflicts with an existing booking";
+    }
+    next(err);
+  }
+};
+
 module.exports = {
   handleValidationErrors,
   validateSignup,
   validateLogin,
   validateSpot,
   validateReview,
+  validateBookingDate,
+  validateBookingConflict,
 };

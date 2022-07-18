@@ -40,6 +40,18 @@ const checkReviewExists = async (req, res, next) => {
 
 // CHECK IF BOOKING EXISTS MIDDLEWARE
 const checkBookingExists = async (req, res, next) => {
+  const booking = await Booking.findByPk(req.params.bookingId);
+  if (booking) {
+    next();
+  } else {
+    const err = new Error("Booking couldn't be found");
+    err.status = 404;
+    next(err);
+  }
+};
+
+// CREATE A BOOKING: CHECK IF BOOKING ALREADY EXISTS AND IF DATES CONFLICT MIDDLEWARE
+const checkCreatingBookingExists = async (req, res, next) => {
   const { startDate, endDate } = req.body;
   const user = req.user;
   const booking = await Booking.findOne({
@@ -67,4 +79,5 @@ module.exports = {
   checkReviewAtCertainSpotExists,
   checkReviewExists,
   checkBookingExists,
+  checkCreatingBookingExists,
 };

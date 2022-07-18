@@ -4,7 +4,7 @@ const { User } = require("../db/models");
 
 const { secret, expiresIn } = jwtConfig;
 
-const { Spot, Review } = require("../db/models");
+const { Spot, Review, Booking } = require("../db/models");
 
 // SET TOKEN COOKIE
 const setTokenCookie = (res, user) => {
@@ -81,7 +81,18 @@ const requireAuthorReview = async (req, res, next) => {
   }
 };
 
-const requireAuthorEditingBooking = async (req, res, next) => {};
+// REQUIRE AUTHORIZATION FOR EDITING BOOKING
+const requireAuthorEditingBooking = async (req, res, next) => {
+  const booking = await Booking.findByPk(req.params.bookingId);
+  const user = req.user;
+  if (booking.userId === user.id) {
+    return next();
+  } else {
+    const err = new Error("Forbidden");
+    err.status = 403;
+    return next(err);
+  }
+};
 
 // CREATING BOOKING AUTHORIZATION MIDDLEWARE
 const requireAuthorCreatingBooking = async (req, res, next) => {
@@ -102,4 +113,5 @@ module.exports = {
   requireAuthorSpot,
   requireAuthorReview,
   requireAuthorCreatingBooking,
+  requireAuthorEditingBooking,
 };

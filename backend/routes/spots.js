@@ -13,7 +13,7 @@ const {
 const {
   checkSpotExists,
   checkReviewAtCertainSpotExists,
-  checkBookingExists,
+  checkCreatingBookingExists,
 } = require("../utils/existance-check");
 
 const { validateReview, validateSpot } = require("../utils/validation");
@@ -97,7 +97,7 @@ router.post(
     restoreUser,
     requireAuth,
     checkSpotExists,
-    checkBookingExists,
+    checkCreatingBookingExists,
     requireAuthorCreatingBooking,
   ],
   async (req, res) => {

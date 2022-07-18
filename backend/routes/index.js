@@ -4,6 +4,7 @@ const router = express.Router();
 const currentUserRouter = require("./current-user");
 const spotsRouter = require("./spots");
 const reviewsRouter = require("./reviews");
+const bookingsRouter = require("./bookings");
 
 const { User } = require("../db/models");
 const { setTokenCookie, restoreUser, requireAuth } = require("../utils/auth");
@@ -13,6 +14,7 @@ const { validateSignup, validateLogin } = require("../utils/validation");
 router.use("/me", currentUserRouter);
 router.use("/spots", spotsRouter);
 router.use("/reviews", reviewsRouter);
+router.use("/bookings", bookingsRouter);
 
 // SIGN UP USER
 router.post("/signup", validateSignup, async (req, res, next) => {
