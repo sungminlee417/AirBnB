@@ -1,4 +1,4 @@
-const { Spot, Review } = require("../db/models");
+const { Spot, Review, Booking } = require("../db/models");
 
 // CHECK IF SPOT EXISTS MIDDLEWARE
 const checkSpotExists = async (req, res, next) => {
@@ -38,8 +38,33 @@ const checkReviewExists = async (req, res, next) => {
   }
 };
 
+// CHECK IF BOOKING EXISTS MIDDLEWARE
+const checkBookingExists = async (req, res, next) => {
+  const { startDate, endDate } = req.body;
+  const user = req.user;
+  const booking = await Booking.findOne({
+    where: [{ userId: user.id }, { spotId: req.params.spotId }],
+  });
+
+  if (booking.startDate === startDate || booking.endDate === endDate) {
+    const err = new Error(
+      "Sorry, this spot is already booked for the specified dates"
+    );
+    err.status = 403;
+    if (booking.startDate === startDate) {
+      err.errors.startDate = "Start date conflicts with an existing booking";
+    }
+    if (booking.endDate === endDate) {
+      err.errors.endDate = "End date conflicts with an existing booking";
+    }
+    next(err);
+  }
+  next();
+};
+
 module.exports = {
   checkSpotExists,
   checkReviewAtCertainSpotExists,
   checkReviewExists,
+  checkBookingExists,
 };

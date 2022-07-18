@@ -7,11 +7,13 @@ const {
   restoreUser,
   requireAuth,
   requireAuthorSpot,
+  requireAuthorCreatingBooking,
 } = require("../utils/auth");
 
 const {
   checkSpotExists,
   checkReviewAtCertainSpotExists,
+  checkBookingExists,
 } = require("../utils/existance-check");
 
 const { validateReview, validateSpot } = require("../utils/validation");
@@ -85,6 +87,29 @@ router.get(
       });
       res.json(bookings);
     }
+  }
+);
+
+// CREATE BOOKING FOR CERTAIN SPOT
+router.post(
+  "/spots/:spotId/bookings",
+  [
+    restoreUser,
+    requireAuth,
+    checkSpotExists,
+    checkBookingExists,
+    requireAuthorCreatingBooking,
+  ],
+  async (req, res) => {
+    const { startDate, endDate } = req.body;
+    const user = req.user;
+    const booking = Booking.create({
+      spotId: req.params.spotId,
+      userId: user.id,
+      startDate,
+      endDate,
+    });
+    res.json(booking);
   }
 );
 

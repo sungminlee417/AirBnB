@@ -81,10 +81,25 @@ const requireAuthorReview = async (req, res, next) => {
   }
 };
 
+const requireAuthorEditingBooking = async (req, res, next) => {};
+
+// CREATING BOOKING AUTHORIZATION MIDDLEWARE
+const requireAuthorCreatingBooking = async (req, res, next) => {
+  const spot = await Spot.findByPk(req.params.spotId);
+  if (spot.ownerId !== req.user.id) {
+    return next();
+  } else {
+    const err = new Error("Forbidden");
+    err.status = 403;
+    return next(err);
+  }
+};
+
 module.exports = {
   setTokenCookie,
   restoreUser,
   requireAuth,
   requireAuthorSpot,
   requireAuthorReview,
+  requireAuthorCreatingBooking,
 };
