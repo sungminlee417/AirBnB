@@ -130,6 +130,31 @@ const validateBookingConflict = async (req, res, next) => {
   }
 };
 
+const validateBookingStartDate = async (req, res, next) => {
+  const currentDate = new Date();
+  const year = currentDate.getFullYear();
+  const month = currentDate.getMonth();
+  const day = currentDate.getDate();
+
+  const bookingDate = req.body.startDate.split("-");
+  const bookingYear = Number(bookingDate[0]);
+  const bookingMonth = Number(bookingDate[1]);
+  const bookingDay = Number(bookingDate[2]);
+
+  if (year < bookingYear) {
+    next(err);
+  } else if (month < bookingMonth) {
+    if (year === bookingYear) {
+      next(err);
+    } else if (day < bookingDay) {
+      if (year === bookingYear && year === bookingMonth) {
+        next(err);
+      }
+    }
+  }
+  next();
+};
+
 module.exports = {
   handleValidationErrors,
   validateSignup,
@@ -138,4 +163,5 @@ module.exports = {
   validateReview,
   validateBookingDate,
   validateBookingConflict,
+  validateBookingStartDate,
 };

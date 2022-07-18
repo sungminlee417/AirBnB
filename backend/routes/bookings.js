@@ -15,6 +15,7 @@ const { checkBookingExists } = require("../utils/existance-check");
 const {
   validateBookingDate,
   validateBookingConflict,
+  validateBookingStartDate,
 } = require("../utils/validation");
 
 router.put(
@@ -46,6 +47,7 @@ router.delete(
     requireAuthorSpot,
     checkBookingExists,
     requireAuthorEditingBooking,
+    validateBookingStartDate,
   ],
   async (req, res) => {
     const booking = Booking.findByPk(req.params.bookingId);
