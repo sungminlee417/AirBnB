@@ -3,7 +3,7 @@ const router = express.Router();
 
 const { restoreUser, requireAuth } = require("../utils/auth");
 
-const { User, Spot, Review, Image } = require("../db/models");
+const { User, Spot, Review, Booking, Image } = require("../db/models");
 
 // GET CURRENT USER
 
@@ -55,6 +55,29 @@ router.get("/reviews", [restoreUser, requireAuth], async (req, res) => {
   });
 
   res.json(reviews);
+});
+
+router.get("/bookings", [restoreUser, requireAuth], async (req, res) => {
+  const user = req.user;
+  const bookings = await Booking.findAll({
+    where: { userId: user.id },
+    include: {
+      model: Spot,
+      attributes: [
+        "id",
+        "ownerId",
+        "address",
+        "city",
+        "state",
+        "country",
+        "lat",
+        "lng",
+        "name",
+        "price",
+      ],
+    },
+  });
+  res.json(bookings);
 });
 
 module.exports = router;
