@@ -16,7 +16,7 @@ const {
 
 const { validateReview, validateSpot } = require("../utils/validation");
 
-const { Spot, User, Review, Image } = require("../db/models");
+const { Spot, User, Review, Booking, Image } = require("../db/models");
 
 // GET REVIEWS VIA SPOT ID
 router.get("/:spotId/reviews", checkSpotExists, async (req, res, next) => {
@@ -60,6 +60,31 @@ router.post(
       stars,
     });
     res.json(newReview);
+  }
+);
+
+//GET BOOKINGS OF A CERTAIN SPOT
+router.get(
+  "/:spotId/bookings",
+  [restoreUser, requireAuth, checkSpotExists],
+  async (req, res) => {
+    const user = req.user;
+    const spot = await Spot.findByPk(req.params.spotId);
+    if (spot.ownerId === user.id) {
+      const bookings = await Booking.findAll({
+        where: { spotId: spot.id },
+        include: {
+          model: User,
+        },
+      });
+      res.json(bookings);
+    } else {
+      const bookings = await Booking.findAll({
+        where: { spotId: spot.id },
+        attributes: ["spotId", "startDate", "endDate"],
+      });
+      res.json(bookings);
+    }
   }
 );
 
