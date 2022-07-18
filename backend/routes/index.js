@@ -5,6 +5,7 @@ const currentUserRouter = require("./current-user");
 const spotsRouter = require("./spots");
 const reviewsRouter = require("./reviews");
 const bookingsRouter = require("./bookings");
+const imagesRouter = require("./images");
 
 const { User } = require("../db/models");
 
@@ -15,6 +16,7 @@ router.use("/me", currentUserRouter);
 router.use("/spots", spotsRouter);
 router.use("/reviews", reviewsRouter);
 router.use("/bookings", bookingsRouter);
+router.use("/images", imagesRouter);
 
 // SIGN UP USER
 router.post("/signup", validateSignup, async (req, res, next) => {

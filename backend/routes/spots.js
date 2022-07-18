@@ -113,6 +113,20 @@ router.post(
   }
 );
 
+// ADD IMAGE BASED ON SPOT
+router.post(
+  "/:spotId/image",
+  [restoreUser, requireAuth, checkSpotExists, requireAuthorSpot],
+  async (req, res) => {
+    const { url } = req.body;
+    const spot = await Spot.findByPk(req.params.spotId);
+    const image = await Spot.createImage({
+      url,
+    });
+    res.json(image);
+  }
+);
+
 // GET SPOT BY ID
 router.get("/:spotId", checkSpotExists, async (req, res, next) => {
   const id = Number(req.params.spotId);
