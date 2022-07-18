@@ -70,7 +70,13 @@ router.get("/:spotId", checkSpotExists, async (req, res, next) => {
     include: [
       {
         model: Review,
-        attributes: [],
+        attributes: [
+          [sequelize.fn("COUNT", sequelize.col("Reviews.id")), "numReviews"],
+          [
+            sequelize.fn("AVG", sequelize.col("Reviews.stars")),
+            "avgStarRating",
+          ],
+        ],
       },
       {
         model: Image,
@@ -82,23 +88,21 @@ router.get("/:spotId", checkSpotExists, async (req, res, next) => {
         attributes: ["id", "firstName", "lastName"],
       },
     ],
-    attributes: [
-      // "id",
-      // "ownerId",
-      // "address",
-      // "city",
-      // "state",
-      // "country",
-      // "lat",
-      // "lng",
-      // "name",
-      // "description",
-      // "price",
-      // "createdAt",
-      // "updatedAt",
-      [sequelize.fn("COUNT", sequelize.col("Reviews.id")), "numReviews"],
-      [sequelize.fn("AVG", sequelize.col("Reviews.stars")), "avgStarRating"],
-    ],
+    // attributes: [
+    //   // "id",
+    //   // "ownerId",
+    //   // "address",
+    //   // "city",
+    //   // "state",
+    //   // "country",
+    //   // "lat",
+    //   // "lng",
+    //   // "name",
+    //   // "description",
+    //   // "price",
+    //   // "createdAt",
+    //   // "updatedAt",
+    // ],
   });
   res.json(spot);
 });
