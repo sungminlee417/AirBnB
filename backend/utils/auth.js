@@ -6,19 +6,16 @@ const { secret, expiresIn } = jwtConfig;
 
 const { Spot, Review } = require("../db/models");
 
+// SET TOKEN COOKIE
 const setTokenCookie = (res, user) => {
-  // Create the token.
-  const token = jwt.sign(
-    { data: user.toSafeObject() },
-    secret,
-    { expiresIn: parseInt(expiresIn) } // 604,800 seconds = 1 week
-  );
+  const token = jwt.sign({ data: user.toSafeObject() }, secret, {
+    expiresIn: parseInt(expiresIn),
+  });
 
   const isProduction = process.env.NODE_ENV === "production";
 
-  // Set the token cookie
   res.cookie("token", token, {
-    maxAge: expiresIn * 1000, // maxAge in milliseconds
+    maxAge: expiresIn * 1000,
     httpOnly: true,
     secure: isProduction,
     sameSite: isProduction && "Lax",
@@ -27,8 +24,8 @@ const setTokenCookie = (res, user) => {
   return token;
 };
 
+// RESTORE USER MIDDLEWARE
 const restoreUser = (req, res, next) => {
-  // token parsed from cookies
   const { token } = req.cookies;
   req.user = null;
 
@@ -52,7 +49,6 @@ const restoreUser = (req, res, next) => {
 };
 
 // AUTHENTICATION MIDDLEWARE
-
 const requireAuth = function (req, res, next) {
   if (req.user) return next();
 
@@ -61,8 +57,7 @@ const requireAuth = function (req, res, next) {
   return next(err);
 };
 
-// AUTHORIZATION MIDDLEWARE
-
+// SPOT AUTHORIZATION MIDDLEWARE
 const requireAuthorSpot = async (req, res, next) => {
   const spot = Spot.findByPk(req.params.spotId);
   if (spot.ownerId === req.user.id) {
@@ -74,6 +69,7 @@ const requireAuthorSpot = async (req, res, next) => {
   }
 };
 
+// REVIEW AUTHORIZATION MIDDLEWARE
 const requireAuthorReview = async (req, res, next) => {
   const review = await Review.findByPk(req.params.reviewId);
   if (review.userId === req.user.id) {

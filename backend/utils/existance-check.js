@@ -1,7 +1,6 @@
 const { Spot, Review } = require("../db/models");
 
 // CHECK IF SPOT EXISTS MIDDLEWARE
-
 const checkSpotExists = async (req, res, next) => {
   const spot = await Spot.findByPk(req.params.spotId);
   if (spot) {
@@ -14,7 +13,6 @@ const checkSpotExists = async (req, res, next) => {
 };
 
 // CHECK IF USER HAS A REVIEW FOR A CERTAIN SPOT MIDDLEWARE
-
 const checkReviewAtCertainSpotExists = async (req, res, next) => {
   const review = await Review.findOne({
     where: { userId: req.user.id, spotId: req.params.spotId },
