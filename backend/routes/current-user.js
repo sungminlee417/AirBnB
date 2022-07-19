@@ -1,9 +1,11 @@
 const express = require("express");
 const router = express.Router();
 
+const sequelize = require("sequelize");
+
 const { restoreUser, requireAuth } = require("../utils/auth");
 
-const { User, Spot, Review, Image } = require("../db/models");
+const { User, Spot, Review, Booking, Image } = require("../db/models");
 
 // GET CURRENT USER
 
@@ -16,9 +18,13 @@ router.get("/", [restoreUser, requireAuth], (req, res) => {
 router.get("/spots", [restoreUser, requireAuth], async (req, res) => {
   const user = req.user;
   const spots = await Spot.findAll({
+    include: { model: Image, attributes: [] },
     where: { ownerId: user.id },
+    attributes: ["*", [sequelize.literal("Images.url"), "previewImage"]],
+    group: ["Spot.id"],
+    raw: true,
   });
-  res.json(spots);
+  res.json({ Spots: spots });
 });
 
 // GET CURRENT USER'S REVIEWS
@@ -55,6 +61,29 @@ router.get("/reviews", [restoreUser, requireAuth], async (req, res) => {
   });
 
   res.json(reviews);
+});
+
+router.get("/bookings", [restoreUser, requireAuth], async (req, res) => {
+  const user = req.user;
+  const bookings = await Booking.findAll({
+    where: { userId: user.id },
+    include: {
+      model: Spot,
+      attributes: [
+        "id",
+        "ownerId",
+        "address",
+        "city",
+        "state",
+        "country",
+        "lat",
+        "lng",
+        "name",
+        "price",
+      ],
+    },
+  });
+  res.json(bookings);
 });
 
 module.exports = router;

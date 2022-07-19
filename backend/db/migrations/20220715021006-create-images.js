@@ -10,11 +10,7 @@ module.exports = {
       },
       imageableId: {
         type: Sequelize.INTEGER,
-        references: {
-          model: "Spots",
-          key: "id",
-          allowNull: false,
-        },
+        allowNull: false,
       },
       imageableType: {
         allowNull: false,

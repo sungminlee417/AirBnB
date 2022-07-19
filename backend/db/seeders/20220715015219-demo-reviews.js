@@ -11,6 +11,24 @@ module.exports = {
         review: "This was an awesome spot!",
         stars: 5,
       },
+      {
+        spotId: 1,
+        userId: 2,
+        review: "This was an awesome spot!",
+        stars: 5,
+      },
+      {
+        spotId: 2,
+        userId: 3,
+        review: "This was an awesome spot!",
+        stars: 5,
+      },
+      {
+        spotId: 3,
+        userId: 4,
+        review: "This was an awesome spot!",
+        stars: 5,
+      },
     ]);
   },
 

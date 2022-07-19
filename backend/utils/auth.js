@@ -2,9 +2,9 @@ const jwt = require("jsonwebtoken");
 const { jwtConfig } = require("../config");
 const { User } = require("../db/models");
 
-const { secret, expiresIn } = jwtConfig;
+const { expiresIn, secret } = jwtConfig;
 
-const { Spot, Review } = require("../db/models");
+const { Booking, Review, Spot } = require("../db/models");
 
 // SET TOKEN COOKIE
 const setTokenCookie = (res, user) => {
@@ -58,9 +58,11 @@ const requireAuth = function (req, res, next) {
 };
 
 // SPOT AUTHORIZATION MIDDLEWARE
-const requireAuthorSpot = async (req, res, next) => {
-  const spot = Spot.findByPk(req.params.spotId);
-  if (spot.ownerId === req.user.id) {
+const requireAuthorizationSpot = async (req, res, next) => {
+  const spot = await Spot.findByPk(req.params.spotId);
+  const user = req.user;
+  console.log(spot.ownerId);
+  if (spot.ownerId === user.id) {
     return next();
   } else {
     const err = new Error("Forbidden");
@@ -81,10 +83,37 @@ const requireAuthorReview = async (req, res, next) => {
   }
 };
 
+// REQUIRE AUTHORIZATION FOR EDITING BOOKING
+const requireAuthorEditingBooking = async (req, res, next) => {
+  const booking = await Booking.findByPk(req.params.bookingId);
+  const user = req.user;
+  if (booking.userId === user.id) {
+    return next();
+  } else {
+    const err = new Error("Forbidden");
+    err.status = 403;
+    return next(err);
+  }
+};
+
+// CREATING BOOKING AUTHORIZATION MIDDLEWARE
+const requireAuthorCreatingBooking = async (req, res, next) => {
+  const spot = await Spot.findByPk(req.params.spotId);
+  if (spot.ownerId !== req.user.id) {
+    return next();
+  } else {
+    const err = new Error("Forbidden");
+    err.status = 403;
+    return next(err);
+  }
+};
+
 module.exports = {
   setTokenCookie,
   restoreUser,
   requireAuth,
-  requireAuthorSpot,
+  requireAuthorizationSpot,
   requireAuthorReview,
+  requireAuthorCreatingBooking,
+  requireAuthorEditingBooking,
 };

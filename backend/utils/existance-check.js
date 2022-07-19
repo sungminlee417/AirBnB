@@ -1,8 +1,25 @@
-const { Spot, Review } = require("../db/models");
+const { User, Spot, Review, Booking } = require("../db/models");
 
-// CHECK IF SPOT EXISTS MIDDLEWARE
+// CHECK IF USER ALREADY EXISTS MIDDLEWARE
+const checkUserExists = async (req, res, next) => {
+  const { email } = req.body;
+  const user = User.findOne({
+    where: { email: email },
+  });
+
+  if (user) {
+    const err = new Error("User already exists");
+    err.status = 403;
+    err.errors = { email: "User with that email already exists" };
+    return next(err);
+  }
+  return next();
+};
+
+// CHECK SPOT EXISTS MIDDLEWARE
 const checkSpotExists = async (req, res, next) => {
   const spot = await Spot.findByPk(req.params.spotId);
+
   if (spot) {
     next();
   } else {
@@ -38,8 +55,47 @@ const checkReviewExists = async (req, res, next) => {
   }
 };
 
+// CHECK IF BOOKING EXISTS MIDDLEWARE
+const checkBookingExists = async (req, res, next) => {
+  const booking = await Booking.findByPk(req.params.bookingId);
+  if (booking) {
+    next();
+  } else {
+    const err = new Error("Booking couldn't be found");
+    err.status = 404;
+    next(err);
+  }
+};
+
+// CREATE A BOOKING: CHECK IF BOOKING ALREADY EXISTS AND IF DATES CONFLICT MIDDLEWARE
+const checkCreatingBookingExists = async (req, res, next) => {
+  const { startDate, endDate } = req.body;
+  const user = req.user;
+  const booking = await Booking.findOne({
+    where: [{ userId: user.id }, { spotId: req.params.spotId }],
+  });
+
+  if (booking.startDate === startDate || booking.endDate === endDate) {
+    const err = new Error(
+      "Sorry, this spot is already booked for the specified dates"
+    );
+    err.status = 403;
+    if (booking.startDate === startDate) {
+      err.errors.startDate = "Start date conflicts with an existing booking";
+    }
+    if (booking.endDate === endDate) {
+      err.errors.endDate = "End date conflicts with an existing booking";
+    }
+    next(err);
+  }
+  next();
+};
+
 module.exports = {
+  checkUserExists,
   checkSpotExists,
   checkReviewAtCertainSpotExists,
   checkReviewExists,
+  checkBookingExists,
+  checkCreatingBookingExists,
 };
