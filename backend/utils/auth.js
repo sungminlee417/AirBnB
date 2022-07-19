@@ -2,9 +2,9 @@ const jwt = require("jsonwebtoken");
 const { jwtConfig } = require("../config");
 const { User } = require("../db/models");
 
-const { secret, expiresIn } = jwtConfig;
+const { expiresIn, secret } = jwtConfig;
 
-const { Spot, Review, Booking } = require("../db/models");
+const { Booking, Review, Spot } = require("../db/models");
 
 // SET TOKEN COOKIE
 const setTokenCookie = (res, user) => {
@@ -58,9 +58,11 @@ const requireAuth = function (req, res, next) {
 };
 
 // SPOT AUTHORIZATION MIDDLEWARE
-const requireAuthorSpot = async (req, res, next) => {
-  const spot = Spot.findByPk(req.params.spotId);
-  if (spot.ownerId === req.user.id) {
+const requireAuthorizationSpot = async (req, res, next) => {
+  const spot = await Spot.findByPk(req.params.spotId);
+  const user = req.user;
+  console.log(spot.ownerId);
+  if (spot.ownerId === user.id) {
     return next();
   } else {
     const err = new Error("Forbidden");
@@ -110,7 +112,7 @@ module.exports = {
   setTokenCookie,
   restoreUser,
   requireAuth,
-  requireAuthorSpot,
+  requireAuthorizationSpot,
   requireAuthorReview,
   requireAuthorCreatingBooking,
   requireAuthorEditingBooking,

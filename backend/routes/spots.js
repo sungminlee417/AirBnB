@@ -6,7 +6,7 @@ const sequelize = require("sequelize");
 const {
   restoreUser,
   requireAuth,
-  requireAuthorSpot,
+  requireAuthorizationSpot,
   requireAuthorCreatingBooking,
 } = require("../utils/auth");
 
@@ -116,7 +116,7 @@ router.post(
 // ADD IMAGE BASED ON SPOT
 router.post(
   "/:spotId/image",
-  [restoreUser, requireAuth, checkSpotExists, requireAuthorSpot],
+  [restoreUser, requireAuth, checkSpotExists, requireAuthorizationSpot],
   async (req, res) => {
     const { url } = req.body;
     const spot = await Spot.findByPk(req.params.spotId);
@@ -170,7 +170,13 @@ router.get("/:spotId", checkSpotExists, async (req, res, next) => {
 // EDIT A SPOT
 router.put(
   "/:spotId",
-  [restoreUser, requireAuth, checkSpotExists, requireAuthorSpot, validateSpot],
+  [
+    restoreUser,
+    requireAuth,
+    checkSpotExists,
+    requireAuthorizationSpot,
+    validateSpot,
+  ],
   async (req, res, next) => {
     const spot = await Spot.findByPk(req.params.spotId);
     const {
@@ -199,13 +205,35 @@ router.put(
   }
 );
 
+// DELETE SPOT
+router.delete(
+  "/:spotId",
+  [restoreUser, requireAuth, checkSpotExists, requireAuthorizationSpot],
+  async (req, res, next) => {
+    const spot = await Spot.findByPk(req.params.spotId);
+    await spot.destroy();
+    res.json({
+      message: "Successfully deleted",
+      statusCode: 200,
+    });
+  }
+);
+
 // GET ALL SPOTS
 router.get("/", async (req, res) => {
-  const spots = await Spot.findAll();
-  res.json(spots);
+  const spots = await Spot.findAll({
+    include: {
+      model: Image,
+      attributes: [],
+    },
+    attributes: ["*", [sequelize.literal("Images.url"), "previewImage"]],
+    group: ["Spot.id"],
+    raw: true,
+  });
+  res.json({ Spots: spots });
 });
 
-// CREATE A SPOT (WITH AUTHENTICATION)
+// CREATE A SPOT
 router.post("/", [restoreUser, requireAuth, validateSpot], async (req, res) => {
   const userId = req.user.id;
   const { address, city, state, country, lat, lng, name, description, price } =
@@ -222,7 +250,7 @@ router.post("/", [restoreUser, requireAuth, validateSpot], async (req, res) => {
     description,
     price,
   });
-  res.json(spot);
+  res.status(201).json(spot);
 });
 
 module.exports = router;

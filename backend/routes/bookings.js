@@ -6,7 +6,7 @@ const { Booking } = require("../db/models");
 const {
   restoreUser,
   requireAuth,
-  requireAuthorSpot,
+  requireAuthorizationSpot,
   requireAuthorEditingBooking,
 } = require("../utils/auth");
 
@@ -44,7 +44,7 @@ router.delete(
   [
     restoreUser,
     requireAuth,
-    requireAuthorSpot,
+    requireAuthorizationSpot,
     checkBookingExists,
     requireAuthorEditingBooking,
     validateBookingStartDate,

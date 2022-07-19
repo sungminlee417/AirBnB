@@ -14,8 +14,18 @@ module.exports = {
     await queryInterface.bulkInsert("Images", [
       {
         imageableId: 1,
-        imageableType: "Spots",
-        url: "example.com",
+        imageableType: "Spot",
+        url: "example1.com",
+      },
+      {
+        imageableId: 1,
+        imageableType: "Spot",
+        url: "example2.com",
+      },
+      {
+        imageableId: 1,
+        imageableType: "Spot",
+        url: "example3.com",
       },
     ]);
   },

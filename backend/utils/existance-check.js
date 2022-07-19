@@ -1,8 +1,25 @@
-const { Spot, Review, Booking } = require("../db/models");
+const { User, Spot, Review, Booking } = require("../db/models");
 
-// CHECK IF SPOT EXISTS MIDDLEWARE
+// CHECK IF USER ALREADY EXISTS MIDDLEWARE
+const checkUserExists = async (req, res, next) => {
+  const { email } = req.body;
+  const user = User.findOne({
+    where: { email: email },
+  });
+
+  if (user) {
+    const err = new Error("User already exists");
+    err.status = 403;
+    err.errors = { email: "User with that email already exists" };
+    return next(err);
+  }
+  return next();
+};
+
+// CHECK SPOT EXISTS MIDDLEWARE
 const checkSpotExists = async (req, res, next) => {
   const spot = await Spot.findByPk(req.params.spotId);
+
   if (spot) {
     next();
   } else {
@@ -75,6 +92,7 @@ const checkCreatingBookingExists = async (req, res, next) => {
 };
 
 module.exports = {
+  checkUserExists,
   checkSpotExists,
   checkReviewAtCertainSpotExists,
   checkReviewExists,

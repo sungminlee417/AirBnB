@@ -11,6 +11,7 @@ const { User } = require("../db/models");
 
 const { setTokenCookie, restoreUser, requireAuth } = require("../utils/auth");
 const { validateSignup, validateLogin } = require("../utils/validation");
+const { checkUserExists } = require("../utils/existance-check");
 
 router.use("/me", currentUserRouter);
 router.use("/spots", spotsRouter);
@@ -19,36 +20,30 @@ router.use("/bookings", bookingsRouter);
 router.use("/images", imagesRouter);
 
 // SIGN UP USER
-router.post("/signup", validateSignup, async (req, res, next) => {
-  const { firstName, lastName, email, password } = req.body;
-  const possibleExistingUser = await User.findOne({ where: { email: email } });
+router.post(
+  "/signup",
+  validateSignup,
+  checkUserExists,
+  async (req, res, next) => {
+    const { firstName, lastName, email, password } = req.body;
 
-  if (possibleExistingUser) {
-    const err = new Error("User already exists");
-    err.status = 403;
-    err.errors = {
-      email: "User with that email already exists",
-    };
-    next(err);
+    const user = await User.signup(firstName, lastName, email, password);
+
+    setTokenCookie(res, user);
+
+    res.json(user);
   }
-  const user = await User.signup(firstName, lastName, email, password);
-
-  setTokenCookie(res, user);
-
-  res.json(user);
-});
+);
 
 // LOGIN USER
 router.post("/login", validateLogin, async (req, res, next) => {
   const { email, password } = req.body;
   const user = await User.login(email, password);
 
-  console.log(user);
-
   if (!user) {
     const err = new Error("Invalid credentials");
     err.status = 401;
-    next(err);
+    return next(err);
   }
 
   setTokenCookie(res, user);
