@@ -12,7 +12,7 @@ const {
 
 const {
   checkSpotExists,
-  checkReviewAtCertainSpotExists,
+  checkReviewAtSpotExists,
   checkCreatingBookingExists,
 } = require("../utils/existance-check");
 
@@ -22,11 +22,10 @@ const { Spot, User, Review, Booking, Image } = require("../db/models");
 
 // GET REVIEWS VIA SPOT ID
 router.get("/:spotId/reviews", checkSpotExists, async (req, res, next) => {
-  const id = req.params.spotId;
-  const spot = await Spot.findByPk(id);
+  const spot = await Spot.findByPk(req.params.spotId);
 
   const reviews = await Review.findAll({
-    where: { spotId: id },
+    where: { spotId: spot.id },
     include: [
       {
         model: User,
@@ -38,7 +37,7 @@ router.get("/:spotId/reviews", checkSpotExists, async (req, res, next) => {
       },
     ],
   });
-  res.json(reviews);
+  res.json({ Reviews: reviews });
 });
 
 // CREATE REVIEW FOR CERTAIN SPOT
@@ -48,7 +47,7 @@ router.post(
     restoreUser,
     requireAuth,
     checkSpotExists,
-    checkReviewAtCertainSpotExists,
+    checkReviewAtSpotExists,
     validateReview,
   ],
   async (req, res, next) => {
@@ -61,7 +60,7 @@ router.post(
       review,
       stars,
     });
-    res.json(newReview);
+    res.status(201).json(newReview);
   }
 );
 

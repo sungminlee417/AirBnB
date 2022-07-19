@@ -95,13 +95,13 @@ const validateBookingDate = (req, res, next) => {
   err.status = 400;
 
   if (year > bookingYear) {
-    next(err);
+    return next(err);
   } else if (month > bookingMonth) {
     if (year === bookingYear) {
-      next(err);
+      return next(err);
     } else if (day > bookingDay) {
       if (year === bookingYear && year === bookingMonth) {
-        next(err);
+        return next(err);
       }
     }
   }
@@ -126,7 +126,7 @@ const validateBookingConflict = async (req, res, next) => {
     if (originalEnd === endDate) {
       err.errors.endDate = "End date conflicts with an existing booking";
     }
-    next(err);
+    return next(err);
   }
 };
 
@@ -142,13 +142,13 @@ const validateBookingStartDate = async (req, res, next) => {
   const bookingDay = Number(bookingDate[2]);
 
   if (year < bookingYear) {
-    next(err);
+    return next(err);
   } else if (month < bookingMonth) {
     if (year === bookingYear) {
-      next(err);
+      return next(err);
     } else if (day < bookingDay) {
       if (year === bookingYear && year === bookingMonth) {
-        next(err);
+        return next(err);
       }
     }
   }

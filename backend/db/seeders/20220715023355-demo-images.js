@@ -24,7 +24,7 @@ module.exports = {
       },
       {
         imageableId: 1,
-        imageableType: "Spot",
+        imageableType: "Review",
         url: "example3.com",
       },
     ]);

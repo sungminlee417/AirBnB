@@ -72,7 +72,7 @@ const requireAuthorizationSpot = async (req, res, next) => {
 };
 
 // REVIEW AUTHORIZATION MIDDLEWARE
-const requireAuthorReview = async (req, res, next) => {
+const requireAuthorizationReview = async (req, res, next) => {
   const review = await Review.findByPk(req.params.reviewId);
   if (review.userId === req.user.id) {
     return next();
@@ -113,7 +113,7 @@ module.exports = {
   restoreUser,
   requireAuth,
   requireAuthorizationSpot,
-  requireAuthorReview,
+  requireAuthorizationReview,
   requireAuthorCreatingBooking,
   requireAuthorEditingBooking,
 };

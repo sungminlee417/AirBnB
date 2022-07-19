@@ -60,7 +60,7 @@ router.get("/reviews", [restoreUser, requireAuth], async (req, res) => {
     ],
   });
 
-  res.json(reviews);
+  res.json({ Reviews: reviews });
 });
 
 router.get("/bookings", [restoreUser, requireAuth], async (req, res) => {

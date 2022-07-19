@@ -4,7 +4,7 @@ const router = express.Router();
 const {
   restoreUser,
   requireAuth,
-  requireAuthorReview,
+  requireAuthorizationReview,
 } = require("../utils/auth");
 
 const { validateReview, validateSpot } = require("../utils/validation");
@@ -22,7 +22,7 @@ router.put(
     restoreUser,
     requireAuth,
     checkReviewExists,
-    requireAuthorReview,
+    requireAuthorizationReview,
     validateReview,
   ],
   async (req, res, next) => {
@@ -39,7 +39,7 @@ router.put(
 
 router.delete(
   "/:reviewId",
-  [restoreUser, requireAuth, checkReviewExists, requireAuthorReview],
+  [restoreUser, requireAuth, checkReviewExists, requireAuthorizationReview],
   async (req, res, next) => {
     const reviewData = await Review.findByPk(req.params.reviewId);
     await reviewData.destroy();

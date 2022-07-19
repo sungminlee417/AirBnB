@@ -3,7 +3,7 @@ const { User, Spot, Review, Booking } = require("../db/models");
 // CHECK IF USER ALREADY EXISTS MIDDLEWARE
 const checkUserExists = async (req, res, next) => {
   const { email } = req.body;
-  const user = User.findOne({
+  const user = await User.findOne({
     where: { email: email },
   });
 
@@ -21,25 +21,25 @@ const checkSpotExists = async (req, res, next) => {
   const spot = await Spot.findByPk(req.params.spotId);
 
   if (spot) {
-    next();
+    return next();
   } else {
     const err = new Error("Spot couldn't be found");
     err.status = 404;
-    next(err);
+    return next(err);
   }
 };
 
 // CHECK IF USER HAS A REVIEW FOR A CERTAIN SPOT MIDDLEWARE
-const checkReviewAtCertainSpotExists = async (req, res, next) => {
+const checkReviewAtSpotExists = async (req, res, next) => {
   const review = await Review.findOne({
     where: { userId: req.user.id, spotId: req.params.spotId },
   });
   if (review) {
     const err = new Error("User already has a review for this spot");
     err.status = 403;
-    next(err);
+    return next(err);
   } else {
-    next();
+    return next();
   }
 };
 
@@ -47,11 +47,11 @@ const checkReviewAtCertainSpotExists = async (req, res, next) => {
 const checkReviewExists = async (req, res, next) => {
   const review = await Spot.findByPk(req.params.reviewId);
   if (review) {
-    next();
+    return next();
   } else {
     const err = new Error("Review couldn't be found");
     err.status = 404;
-    next(err);
+    return next(err);
   }
 };
 
@@ -59,11 +59,11 @@ const checkReviewExists = async (req, res, next) => {
 const checkBookingExists = async (req, res, next) => {
   const booking = await Booking.findByPk(req.params.bookingId);
   if (booking) {
-    next();
+    return next();
   } else {
     const err = new Error("Booking couldn't be found");
     err.status = 404;
-    next(err);
+    return next(err);
   }
 };
 
@@ -86,15 +86,15 @@ const checkCreatingBookingExists = async (req, res, next) => {
     if (booking.endDate === endDate) {
       err.errors.endDate = "End date conflicts with an existing booking";
     }
-    next(err);
+    return next(err);
   }
-  next();
+  return next();
 };
 
 module.exports = {
   checkUserExists,
   checkSpotExists,
-  checkReviewAtCertainSpotExists,
+  checkReviewAtSpotExists,
   checkReviewExists,
   checkBookingExists,
   checkCreatingBookingExists,
