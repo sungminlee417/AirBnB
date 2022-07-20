@@ -4,7 +4,7 @@ const { User } = require("../db/models");
 
 const { expiresIn, secret } = jwtConfig;
 
-const { Booking, Review, Spot } = require("../db/models");
+const { Booking, Review, Spot, Image } = require("../db/models");
 
 // SET TOKEN COOKIE
 const setTokenCookie = (res, user) => {
@@ -61,7 +61,6 @@ const requireAuth = function (req, res, next) {
 const requireAuthorizationSpot = async (req, res, next) => {
   const spot = await Spot.findByPk(req.params.spotId);
   const user = req.user;
-  console.log(spot.ownerId);
   if (spot.ownerId === user.id) {
     return next();
   } else {
@@ -83,8 +82,8 @@ const requireAuthorizationReview = async (req, res, next) => {
   }
 };
 
-// REQUIRE AUTHORIZATION FOR EDITING BOOKING
-const requireAuthorEditingBooking = async (req, res, next) => {
+// AUTHORIZATION FOR EDITING BOOKING
+const requireAuthorizationEditingBooking = async (req, res, next) => {
   const booking = await Booking.findByPk(req.params.bookingId);
   const user = req.user;
   if (booking.userId === user.id) {
@@ -97,9 +96,47 @@ const requireAuthorEditingBooking = async (req, res, next) => {
 };
 
 // CREATING BOOKING AUTHORIZATION MIDDLEWARE
-const requireAuthorCreatingBooking = async (req, res, next) => {
+const requireAuthorizationCreatingBooking = async (req, res, next) => {
   const spot = await Spot.findByPk(req.params.spotId);
   if (spot.ownerId !== req.user.id) {
+    return next();
+  } else {
+    const err = new Error("Forbidden");
+    err.status = 403;
+    return next(err);
+  }
+};
+
+// DELETING BOOKING AUTHORIZATION MIDDLEWARE
+const requireAuthorizationDeletingBooking = async (req, res, next) => {
+  const booking = await Booking.findByPk(req.params.bookingId);
+  const spot = await Spot.findByPk(booking.spotId);
+  const user = req.user;
+  if (booking.userId === user.id || spot.ownerId === user.id) {
+    return next();
+  } else {
+    const err = new Error("Forbidden");
+    err.status = 403;
+    return next(err);
+  }
+};
+
+// AUTHORIZATION FOR DELETING IMAGE
+const requireAuthorizationDeletingImage = async (req, res, next) => {
+  const image = await Image.findByPk(req.params.imageId);
+  const user = req.user;
+
+  let userId;
+
+  if (image.imageableType === "Spot") {
+    const spot = await Spot.findByPk(image.imageableId);
+    userId = spot.ownerId;
+  } else if (image.imageableType === "Review") {
+    const review = await Review.findByPk(image.imageableId);
+    userId = review.userId;
+  }
+
+  if (user.id === userId) {
     return next();
   } else {
     const err = new Error("Forbidden");
@@ -114,6 +151,8 @@ module.exports = {
   requireAuth,
   requireAuthorizationSpot,
   requireAuthorizationReview,
-  requireAuthorCreatingBooking,
-  requireAuthorEditingBooking,
+  requireAuthorizationCreatingBooking,
+  requireAuthorizationEditingBooking,
+  requireAuthorizationDeletingBooking,
+  requireAuthorizationDeletingImage,
 };

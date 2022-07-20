@@ -7,14 +7,15 @@ const {
   restoreUser,
   requireAuth,
   requireAuthorizationSpot,
-  requireAuthorEditingBooking,
+  requireAuthorizationEditingBooking,
+  requireAuthorizationDeletingBooking,
 } = require("../utils/auth");
 
 const { checkBookingExists } = require("../utils/existance-check");
 
 const {
-  validateBookingDate,
-  validateBookingConflict,
+  validateBookingEndDate,
+  validateBookingDateConflict,
   validateBookingStartDate,
 } = require("../utils/validation");
 
@@ -24,13 +25,13 @@ router.put(
     restoreUser,
     requireAuth,
     checkBookingExists,
-    requireAuthorEditingBooking,
-    validateBookingDate,
-    validateBookingConflict,
+    requireAuthorizationEditingBooking,
+    validateBookingEndDate,
+    validateBookingDateConflict,
   ],
   async (req, res) => {
     const { startDate, endDate } = req.body;
-    const booking = Booking.findByPk(req.params.bookingId);
+    const booking = await Booking.findByPk(req.params.bookingId);
     booking.update({
       startDate: startDate,
       endDate: endDate,
@@ -44,13 +45,12 @@ router.delete(
   [
     restoreUser,
     requireAuth,
-    requireAuthorizationSpot,
+    requireAuthorizationDeletingBooking,
     checkBookingExists,
-    requireAuthorEditingBooking,
     validateBookingStartDate,
   ],
   async (req, res) => {
-    const booking = Booking.findByPk(req.params.bookingId);
+    const booking = await Booking.findByPk(req.params.bookingId);
     await booking.destroy();
     res.json({
       message: "Successfully deleted",

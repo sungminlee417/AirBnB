@@ -1,7 +1,7 @@
 const { validationResult } = require("express-validator");
 const { check } = require("express-validator");
 
-const { Booking } = require("../db/models");
+const { Booking, Image } = require("../db/models");
 
 const handleValidationErrors = (req, res, next) => {
   const validationErrors = validationResult(req);
@@ -79,11 +79,11 @@ const validateReview = [
   handleValidationErrors,
 ];
 
-// VALIDATE BOOKING DATE MIDDLEWARE
-const validateBookingDate = (req, res, next) => {
+// VALIDATE BOOKING END DATE MIDDLEWARE
+const validateBookingEndDate = (req, res, next) => {
   const currentDate = new Date();
   const year = currentDate.getFullYear();
-  const month = currentDate.getMonth();
+  const month = currentDate.getMonth() + 1;
   const day = currentDate.getDate();
 
   const bookingDate = req.body.endDate.split("-");
@@ -109,17 +109,18 @@ const validateBookingDate = (req, res, next) => {
 };
 
 // VALIDATE BOOKING DATE CONFLICT
-const validateBookingConflict = async (req, res, next) => {
+const validateBookingDateConflict = async (req, res, next) => {
   const { startDate, endDate } = req.body;
-  const bookings = await Booking.findByPk(req.params.bookingId);
-  const originalStart = bookings.startDate;
-  const originalEnd = bookings.endDate;
+  const booking = await Booking.findByPk(req.params.bookingId);
+  const originalStart = booking.startDate;
+  const originalEnd = booking.endDate;
 
   if (originalStart === startDate || originalEnd === endDate) {
     const err = new Error(
       "Sorry, this spot is already booked for the specified dates"
     );
     err.status = 403;
+    err.errors = {};
     if (originalStart === startDate) {
       err.errors.startDate = "Start date conflicts with an existing booking";
     }
@@ -128,12 +129,14 @@ const validateBookingConflict = async (req, res, next) => {
     }
     return next(err);
   }
+  return next();
 };
 
+// VALIDATE BOOKING START DATE
 const validateBookingStartDate = async (req, res, next) => {
   const currentDate = new Date();
   const year = currentDate.getFullYear();
-  const month = currentDate.getMonth();
+  const month = currentDate.getMonth() + 1;
   const day = currentDate.getDate();
 
   const bookingDate = req.body.startDate.split("-");
@@ -141,18 +144,35 @@ const validateBookingStartDate = async (req, res, next) => {
   const bookingMonth = Number(bookingDate[1]);
   const bookingDay = Number(bookingDate[2]);
 
-  if (year < bookingYear) {
+  const err = new Error("Bookings that have been started can't be deleted");
+  err.status = 400;
+
+  if (year > bookingYear) {
     return next(err);
-  } else if (month < bookingMonth) {
+  } else if (month > bookingMonth) {
     if (year === bookingYear) {
       return next(err);
-    } else if (day < bookingDay) {
-      if (year === bookingYear && year === bookingMonth) {
-        return next(err);
-      }
+    }
+  } else if (day > bookingDay) {
+    if (year === bookingYear && month === bookingMonth) {
+      return next(err);
     }
   }
   next();
+};
+
+const validateAmountOfImages = async (req, res, next) => {
+  const images = await Image.findAll();
+  console.log(images.length);
+  if (images.length >= 10) {
+    const err = new Error(
+      "Maximum number of images for this resource was reached"
+    );
+    err.status = 403;
+    return next(err);
+  } else {
+    return next();
+  }
 };
 
 module.exports = {
@@ -161,7 +181,8 @@ module.exports = {
   validateLogin,
   validateSpot,
   validateReview,
-  validateBookingDate,
-  validateBookingConflict,
+  validateBookingEndDate,
+  validateBookingDateConflict,
   validateBookingStartDate,
+  validateAmountOfImages,
 };

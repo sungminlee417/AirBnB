@@ -69,6 +69,10 @@ router.get("/bookings", [restoreUser, requireAuth], async (req, res) => {
     where: { userId: user.id },
     include: {
       model: Spot,
+      include: {
+        model: Image,
+        attributes: [],
+      },
       attributes: [
         "id",
         "ownerId",
@@ -80,10 +84,12 @@ router.get("/bookings", [restoreUser, requireAuth], async (req, res) => {
         "lng",
         "name",
         "price",
+        [sequelize.literal("(SELECT url FROM Images)"), "previewImage"],
       ],
+      group: ["Spot.id"],
     },
   });
-  res.json(bookings);
+  res.json({ Bookings: bookings });
 });
 
 module.exports = router;

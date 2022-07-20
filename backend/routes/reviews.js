@@ -7,7 +7,11 @@ const {
   requireAuthorizationReview,
 } = require("../utils/auth");
 
-const { validateReview, validateSpot } = require("../utils/validation");
+const {
+  validateReview,
+  validateSpot,
+  validateAmountOfImages,
+} = require("../utils/validation");
 
 const {
   checkSpotExists,
@@ -15,6 +19,28 @@ const {
 } = require("../utils/existance-check");
 
 const { Review } = require("../db/models");
+
+router.post(
+  "/:reviewId/images",
+  [
+    restoreUser,
+    requireAuth,
+    checkReviewExists,
+    requireAuthorizationReview,
+    validateAmountOfImages,
+  ],
+  async (req, res) => {
+    const { url } = req.body;
+    const review = await Review.findByPk(req.params.reviewId);
+    const image = await review.createImage({
+      url,
+    });
+    const imageData = await Image.findByPk(image.id, {
+      attributes: ["id", "imageableId", "url"],
+    });
+    res.json(imageData);
+  }
+);
 
 router.put(
   "/:reviewId",

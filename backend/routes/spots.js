@@ -7,13 +7,13 @@ const {
   restoreUser,
   requireAuth,
   requireAuthorizationSpot,
-  requireAuthorCreatingBooking,
+  requireAuthorizationCreatingBooking,
 } = require("../utils/auth");
 
 const {
   checkSpotExists,
   checkReviewAtSpotExists,
-  checkCreatingBookingExists,
+  checkConflictingBookingExists,
 } = require("../utils/existance-check");
 
 const { validateReview, validateSpot } = require("../utils/validation");
@@ -76,33 +76,34 @@ router.get(
         where: { spotId: spot.id },
         include: {
           model: User,
+          attributes: ["id", "firstName", "lastName"],
         },
       });
-      res.json(bookings);
+      res.json({ Bookings: bookings });
     } else {
       const bookings = await Booking.findAll({
         where: { spotId: spot.id },
         attributes: ["spotId", "startDate", "endDate"],
       });
-      res.json(bookings);
+      res.json({ Bookings: bookings });
     }
   }
 );
 
 // CREATE BOOKING FOR CERTAIN SPOT
 router.post(
-  "/spots/:spotId/bookings",
+  "/:spotId/bookings",
   [
     restoreUser,
     requireAuth,
     checkSpotExists,
-    checkCreatingBookingExists,
-    requireAuthorCreatingBooking,
+    checkConflictingBookingExists,
+    requireAuthorizationCreatingBooking,
   ],
   async (req, res) => {
     const { startDate, endDate } = req.body;
     const user = req.user;
-    const booking = Booking.create({
+    const booking = await Booking.create({
       spotId: req.params.spotId,
       userId: user.id,
       startDate,
@@ -114,7 +115,7 @@ router.post(
 
 // ADD IMAGE BASED ON SPOT
 router.post(
-  "/:spotId/image",
+  "/:spotId/images",
   [restoreUser, requireAuth, checkSpotExists, requireAuthorizationSpot],
   async (req, res) => {
     const { url } = req.body;
@@ -122,7 +123,10 @@ router.post(
     const image = await spot.createImage({
       url,
     });
-    res.json(image);
+    const imageData = await Image.findByPk(image.id, {
+      attributes: ["id", "imageableId", "url"],
+    });
+    res.json(imageData);
   }
 );
 
