@@ -45,7 +45,7 @@ const checkReviewAtSpotExists = async (req, res, next) => {
 
 // CHECK IF REVIEW EXISTS MIDDLEWARE
 const checkReviewExists = async (req, res, next) => {
-  const review = await Spot.findByPk(req.params.reviewId);
+  const review = await Review.findByPk(req.params.reviewId);
   if (review) {
     return next();
   } else {

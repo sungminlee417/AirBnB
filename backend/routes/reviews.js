@@ -28,7 +28,6 @@ router.put(
   async (req, res, next) => {
     const { review, stars } = req.body;
     const reviewData = await Review.findByPk(req.params.reviewId);
-
     await reviewData.update({
       review: review,
       stars: stars,

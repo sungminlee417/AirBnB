@@ -119,7 +119,7 @@ router.post(
   async (req, res) => {
     const { url } = req.body;
     const spot = await Spot.findByPk(req.params.spotId);
-    const image = await Spot.createImage({
+    const image = await spot.createImage({
       url,
     });
     res.json(image);
