@@ -141,10 +141,6 @@ router.get("/:spotId", checkSpotExists, async (req, res, next) => {
   const spot = await Spot.findByPk(id, {
     include: [
       {
-        model: Review,
-        attributes: [],
-      },
-      {
         model: Image,
         attributes: ["id", "imageableId", "url"],
       },
@@ -154,25 +150,19 @@ router.get("/:spotId", checkSpotExists, async (req, res, next) => {
         attributes: ["id", "firstName", "lastName"],
       },
     ],
-    attributes: [
-      "id",
-      "ownerId",
-      "address",
-      "city",
-      "state",
-      "country",
-      "lat",
-      "lng",
-      "name",
-      "description",
-      "price",
-      "previewImage",
-      "createdAt",
-      "updatedAt",
-      [sequelize.fn("COUNT", sequelize.col("Reviews.id")), "numReviews"],
-      [sequelize.fn("AVG", sequelize.col("Reviews.stars")), "avgStarRating"],
-    ],
   });
+
+  const numReviews = await Review.count({
+    where: { spotId: spot.id },
+  });
+  const sum = await Review.sum("stars", {
+    where: { spotId: spot.id },
+  });
+  const avgStarRating = sum / numReviews;
+
+  spot.dataValues["numReviews"] = numReviews;
+  spot.dataValues["avgStarRating"] = avgStarRating;
+
   res.json(spot);
 });
 
