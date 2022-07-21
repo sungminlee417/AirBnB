@@ -20,9 +20,6 @@ router.get("/spots", [restoreUser, requireAuth], async (req, res) => {
   const spots = await Spot.findAll({
     include: { model: Image, attributes: [] },
     where: { ownerId: user.id },
-    attributes: ["*", [sequelize.literal("Images.url"), "previewImage"]],
-    group: ["Spot.id"],
-    raw: true,
   });
   res.json({ Spots: spots });
 });
@@ -84,9 +81,7 @@ router.get("/bookings", [restoreUser, requireAuth], async (req, res) => {
         "lng",
         "name",
         "price",
-        [sequelize.literal("(SELECT url FROM Images)"), "previewImage"],
       ],
-      group: ["Spot.id"],
     },
   });
   res.json({ Bookings: bookings });

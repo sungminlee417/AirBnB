@@ -169,14 +169,8 @@ router.get("/:spotId", checkSpotExists, async (req, res, next) => {
       "price",
       "createdAt",
       "updatedAt",
-      [
-        sequelize.literal(
-          `(SELECT COUNT(Reviews.stars) FROM Spots JOIN Reviews ON id = Reviews.spotId WHERE id = ${id})`
-        ),
-        "numReviews",
-      ],
-      // [sequelize.fn("COUNT", sequelize.col("Reviews.id")), "numReviews"],
-      // [sequelize.fn("AVG", sequelize.col("Reviews.stars")), "avgStarRating"],
+      [sequelize.fn("COUNT", sequelize.col("Reviews.id")), "numReviews"],
+      [sequelize.fn("AVG", sequelize.col("Reviews.stars")), "avgStarRating"],
     ],
   });
   res.json(spot);

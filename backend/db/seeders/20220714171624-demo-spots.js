@@ -25,6 +25,7 @@ module.exports = {
         name: "Stan's House",
         description: "Home of the famous singer, Lorde",
         price: 343,
+        previewImage: "url",
       },
       {
         ownerId: 2,
@@ -37,6 +38,7 @@ module.exports = {
         name: "Kyle's House",
         description: "Infamous house of a troll.",
         price: 412,
+        previewImage: "url",
       },
       {
         ownerId: 3,
@@ -49,6 +51,7 @@ module.exports = {
         name: "Eric's House",
         description: "A hotdog.",
         price: 542,
+        previewImage: "url",
       },
       {
         ownerId: 4,
@@ -61,6 +64,7 @@ module.exports = {
         name: "Kenny's House",
         description: "SoDoSoPa",
         price: 671,
+        previewImage: "url",
       },
     ]);
   },
