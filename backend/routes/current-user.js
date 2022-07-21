@@ -74,6 +74,7 @@ router.get("/bookings", [restoreUser, requireAuth], async (req, res) => {
         "lng",
         "name",
         "price",
+        "previewImage",
       ],
     },
   });
