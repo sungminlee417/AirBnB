@@ -59,10 +59,9 @@ router.post(
   async (req, res, next) => {
     const { review, stars } = req.body;
     const user = req.user;
-    const spot = await Spot.findByPk(req.params.spotId);
     const newReview = await Review.create({
       userId: user.id,
-      spotId: spot.id,
+      spotId: req.params.spotId,
       review,
       stars,
     });
@@ -130,7 +129,7 @@ router.post(
       url,
     });
     const imageData = await Image.findByPk(image.id, {
-      attributes: ["id", "imageableId", "url"],
+      attributes: ["id", "imageableId", "imageableType", "url"],
     });
     res.json(imageData);
   }

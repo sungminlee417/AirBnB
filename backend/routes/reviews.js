@@ -14,7 +14,7 @@ const {
 
 const { checkReviewExists } = require("../utils/existance-check");
 
-const { Review } = require("../db/models");
+const { Review, Image } = require("../db/models");
 
 router.post(
   "/:reviewId/images",
@@ -32,7 +32,7 @@ router.post(
       url,
     });
     const imageData = await Image.findByPk(image.id, {
-      attributes: ["id", "imageableId", "url"],
+      attributes: ["id", "imageableId", "imageableType", "url"],
     });
     res.json(imageData);
   }
