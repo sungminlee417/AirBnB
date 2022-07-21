@@ -110,7 +110,6 @@ const requireAuthorizationCreatingBooking = async (req, res, next) => {
 // DELETING BOOKING AUTHORIZATION MIDDLEWARE
 const requireAuthorizationDeletingBooking = async (req, res, next) => {
   const booking = await Booking.findByPk(req.params.bookingId);
-  console.log(booking);
   const spot = await Spot.findByPk(booking.spotId);
   const user = req.user;
   if (booking.userId === user.id || spot.ownerId === user.id) {

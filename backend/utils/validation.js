@@ -133,12 +133,16 @@ const validateBookingDateConflict = async (req, res, next) => {
 
 // VALIDATE BOOKING START DATE
 const validateBookingStartDate = async (req, res, next) => {
+  const booking = await Booking.findByPk(req.params.bookingId);
+
   const currentDate = new Date();
   const year = currentDate.getFullYear();
   const month = currentDate.getMonth() + 1;
   const day = currentDate.getDate();
 
-  const bookingDate = req.body.startDate.split("-");
+  console.log(req.body.startDate);
+
+  const bookingDate = booking.startDate.split("-");
   const bookingYear = Number(bookingDate[0]);
   const bookingMonth = Number(bookingDate[1]);
   const bookingDay = Number(bookingDate[2]);
