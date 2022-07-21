@@ -144,6 +144,8 @@ router.get("/:spotId", checkSpotExists, async (req, res, next) => {
       {
         model: Review,
         attributes: [],
+        required: true,
+        duplicating: false,
       },
       {
         model: Image,
