@@ -169,6 +169,7 @@ router.get("/:spotId", checkSpotExists, async (req, res, next) => {
       "name",
       "description",
       "price",
+      "previewImage",
       "createdAt",
       "updatedAt",
       [sequelize.fn("COUNT", sequelize.col("Reviews.id")), "numReviews"],
@@ -200,6 +201,7 @@ router.put(
       name,
       description,
       price,
+      previewImage,
     } = req.body;
     spot.update({
       address: address,
@@ -211,6 +213,7 @@ router.put(
       name: name,
       description: description,
       price: price,
+      previewImage: previewImage,
     });
     res.json(spot);
   }
