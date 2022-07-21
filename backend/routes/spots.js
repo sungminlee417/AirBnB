@@ -171,7 +171,7 @@ router.get("/:spotId", checkSpotExists, async (req, res, next) => {
       "updatedAt",
       [
         sequelize.literal(
-          `(SELECT COUNT(stars) FROM Reviews WHERE spotId = ${id})`
+          `(SELECT COUNT(stars) FROM Spots JOIN Reviews WHERE spotId = ${id})`
         ),
         "numReviews",
       ],
