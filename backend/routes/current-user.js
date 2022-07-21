@@ -83,6 +83,9 @@ router.get("/bookings", [restoreUser, requireAuth], async (req, res) => {
 
 // GET CURRENT USER
 router.get("/", [restoreUser, requireAuth], (req, res) => {
+  const user = req.user;
+  const token = req.cookies.token;
+  user.dataValues["token"] = token;
   res.json(req.user);
 });
 
