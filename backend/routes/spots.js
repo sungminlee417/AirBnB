@@ -144,8 +144,6 @@ router.get("/:spotId", checkSpotExists, async (req, res, next) => {
       {
         model: Review,
         attributes: [],
-        required: true,
-        duplicating: false,
       },
       {
         model: Image,
@@ -241,6 +239,9 @@ router.get("/", validateGetAllSpotsQueries, async (req, res) => {
   page ? (page <= 10 ? (page = Number(page)) : (page = 0)) : (page = 0);
   size ? (size <= 20 ? (size = Number(size)) : (size = 20)) : (size = 20);
 
+  const limit = size;
+  const offset = page ? 0 : size * (page - 1);
+
   const where = {};
 
   if (maxLat) where.lat = { [Op.lte]: Number(maxLat) };
@@ -256,8 +257,8 @@ router.get("/", validateGetAllSpotsQueries, async (req, res) => {
       model: Image,
       attributes: [],
     },
-    limit: size,
-    offset: size * (page - 1),
+    limit: limit,
+    offset: offset,
   });
   res.json({ Spots: spots, page: page, size: size });
 });

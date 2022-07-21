@@ -7,14 +7,7 @@ const { restoreUser, requireAuth } = require("../utils/auth");
 
 const { User, Spot, Review, Booking, Image } = require("../db/models");
 
-// GET CURRENT USER
-
-router.get("/", [restoreUser, requireAuth], (req, res) => {
-  res.json(req.user);
-});
-
 // GET CURRENT USER'S SPOTS
-
 router.get("/spots", [restoreUser, requireAuth], async (req, res) => {
   const user = req.user;
   const spots = await Spot.findAll({
@@ -85,6 +78,11 @@ router.get("/bookings", [restoreUser, requireAuth], async (req, res) => {
     },
   });
   res.json({ Bookings: bookings });
+});
+
+// GET CURRENT USER
+router.get("/", [restoreUser, requireAuth], (req, res) => {
+  res.json(req.user);
 });
 
 module.exports = router;

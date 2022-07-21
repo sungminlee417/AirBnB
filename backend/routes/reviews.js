@@ -9,14 +9,10 @@ const {
 
 const {
   validateReview,
-  validateSpot,
   validateAmountOfImages,
 } = require("../utils/validation");
 
-const {
-  checkSpotExists,
-  checkReviewExists,
-} = require("../utils/existance-check");
+const { checkReviewExists } = require("../utils/existance-check");
 
 const { Review } = require("../db/models");
 
