@@ -240,7 +240,7 @@ router.get("/", validateGetAllSpotsQueries, async (req, res) => {
   size ? (size <= 20 ? (size = Number(size)) : (size = 20)) : (size = 20);
 
   const limit = size;
-  const offset = page ? 0 : size * (page - 1);
+  const offset = page ? size * (page - 1) : 0;
 
   const where = {};
 
