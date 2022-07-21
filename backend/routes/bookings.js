@@ -45,8 +45,8 @@ router.delete(
   [
     restoreUser,
     requireAuth,
-    requireAuthorizationDeletingBooking,
     checkBookingExists,
+    requireAuthorizationDeletingBooking,
     validateBookingStartDate,
   ],
   async (req, res) => {
