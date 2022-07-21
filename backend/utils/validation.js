@@ -1,5 +1,4 @@
-const { validationResult } = require("express-validator");
-const { check } = require("express-validator");
+const { check, validationResult, query } = require("express-validator");
 
 const { Booking, Image } = require("../db/models");
 
@@ -175,6 +174,42 @@ const validateAmountOfImages = async (req, res, next) => {
   }
 };
 
+const validateGetAllSpotsQueries = [
+  query("page")
+    .optional()
+    .isInt({ min: 0 })
+    .withMessage("Page must be greater than or equal to 0"),
+  query("size")
+    .optional()
+    .isInt({ min: 0 })
+    .withMessage("Size must be greater than or equal to 0"),
+  query("maxLat")
+    .optional()
+    .isDecimal()
+    .withMessage("Maximum latitude is invalid"),
+  query("minLat")
+    .optional()
+    .isDecimal()
+    .withMessage("Minimum latitude is invalid"),
+  query("maxLng")
+    .optional()
+    .isDecimal()
+    .withMessage("Maximum longitude is invalid"),
+  query("minLng")
+    .optional()
+    .isDecimal()
+    .withMessage("Minimum longitude is invalid"),
+  query("maxPrice")
+    .optional()
+    .isInt({ min: 0 })
+    .withMessage("Size must be greater than or equal to 0"),
+  query("minPrice")
+    .optional()
+    .isInt({ min: 0 })
+    .withMessage("Size must be greater than or equal to 0"),
+  handleValidationErrors,
+];
+
 module.exports = {
   handleValidationErrors,
   validateSignup,
@@ -185,4 +220,5 @@ module.exports = {
   validateBookingDateConflict,
   validateBookingStartDate,
   validateAmountOfImages,
+  validateGetAllSpotsQueries,
 };

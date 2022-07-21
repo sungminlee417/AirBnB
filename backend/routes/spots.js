@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const sequelize = require("sequelize");
+const { Op } = require("sequelize");
 
 const {
   restoreUser,
@@ -16,9 +17,14 @@ const {
   checkConflictingBookingExists,
 } = require("../utils/existance-check");
 
-const { validateReview, validateSpot } = require("../utils/validation");
+const {
+  validateReview,
+  validateSpot,
+  validateGetAllSpotsQueries,
+} = require("../utils/validation");
 
 const { Spot, User, Review, Booking, Image } = require("../db/models");
+const { where } = require("sequelize");
 
 // GET REVIEWS VIA SPOT ID
 router.get("/:spotId/reviews", checkSpotExists, async (req, res, next) => {
@@ -163,8 +169,14 @@ router.get("/:spotId", checkSpotExists, async (req, res, next) => {
       "price",
       "createdAt",
       "updatedAt",
-      [sequelize.fn("COUNT", sequelize.col("Reviews.id")), "numReviews"],
-      [sequelize.fn("AVG", sequelize.col("Reviews.stars")), "avgStarRating"],
+      [
+        sequelize.literal(
+          `(SELECT COUNT(stars) FROM Reviews WHERE spotId = ${id})`
+        ),
+        "numReviews",
+      ],
+      // [sequelize.fn("COUNT", sequelize.col("Reviews.id")), "numReviews"],
+      // [sequelize.fn("AVG", sequelize.col("Reviews.stars")), "avgStarRating"],
     ],
   });
   res.json(spot);
@@ -223,17 +235,32 @@ router.delete(
 );
 
 // GET ALL SPOTS
-router.get("/", async (req, res) => {
+router.get("/", validateGetAllSpotsQueries, async (req, res) => {
+  let { page, size } = req.query;
+  const { maxLat, minLat, maxLng, minLng, maxPrice, minPrice } = req.query;
+
+  page ? (page <= 10 ? (page = Number(page)) : (page = 0)) : (page = 0);
+  size ? (size <= 20 ? (size = Number(size)) : (size = 20)) : (size = 20);
+
+  const where = {};
+
+  if (maxLat) where.lat = { [Op.lte]: Number(maxLat) };
+  if (minLat) where.lat = { [Op.gte]: Number(minLat) };
+  if (maxLng) where.lng = { [Op.lte]: Number(maxLat) };
+  if (minLng) where.lng = { [Op.gte]: Number(minLng) };
+  if (maxPrice) where.price = { [Op.lte]: Number(maxPrice) };
+  if (minPrice) where.price = { [Op.gte]: Number(minPrice) };
+
   const spots = await Spot.findAll({
+    where,
     include: {
       model: Image,
       attributes: [],
     },
-    attributes: ["*", [sequelize.literal("Images.url"), "previewImage"]],
-    group: ["Spot.id"],
-    raw: true,
+    limit: size,
+    offset: size * (page - 1),
   });
-  res.json({ Spots: spots });
+  res.json({ Spots: spots, page: page, size: size });
 });
 
 // CREATE A SPOT
