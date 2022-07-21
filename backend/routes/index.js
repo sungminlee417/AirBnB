@@ -29,7 +29,8 @@ router.post(
 
     const user = await User.signup(firstName, lastName, email, password);
 
-    setTokenCookie(res, user);
+    const token = setTokenCookie(res, user);
+    user.dataValues["token"] = token;
 
     res.json(user);
   }
@@ -46,8 +47,8 @@ router.post("/login", validateLogin, async (req, res, next) => {
     return next(err);
   }
 
-  setTokenCookie(res, user);
-
+  const token = setTokenCookie(res, user);
+  user.dataValues["token"] = token;
   res.json(user);
 });
 
