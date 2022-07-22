@@ -94,7 +94,7 @@ const checkConflictingBookingExists = async (req, res, next) => {
 };
 
 const checkImageExists = async (req, res, next) => {
-  const image = Image.findByPk(req.params.imageId);
+  const image = await Image.findByPk(req.params.imageId);
   if (image) {
     return next();
   } else {

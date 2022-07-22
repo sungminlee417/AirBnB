@@ -43,12 +43,17 @@ router.get("/reviews", [restoreUser, requireAuth], async (req, res) => {
           "price",
         ],
       },
-      {
-        model: Image,
-        attributes: ["id", "imageableId", "url"],
-      },
     ],
   });
+
+  for (let review of reviews) {
+    const images = await Image.findAll({ where: { imageableId: review.id } });
+    const imagesArr = [];
+    images.forEach((image) => {
+      imagesArr.push(image.url);
+    });
+    review.dataValues["Images"] = imagesArr;
+  }
 
   res.json({ Reviews: reviews });
 });

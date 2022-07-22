@@ -37,12 +37,18 @@ router.get("/:spotId/reviews", checkSpotExists, async (req, res, next) => {
         model: User,
         attributes: ["id", "firstName", "lastName"],
       },
-      {
-        model: Image,
-        attributes: ["id", "imageableId", "url"],
-      },
     ],
   });
+
+  for (let review of reviews) {
+    const images = await Image.findAll({ where: { imageableId: review.id } });
+    const imagesArr = [];
+    images.forEach((image) => {
+      imagesArr.push(image.url);
+    });
+    review.dataValues["Images"] = imagesArr;
+  }
+
   res.json({ Reviews: reviews });
 });
 
