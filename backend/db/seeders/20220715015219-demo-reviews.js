@@ -6,7 +6,7 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.bulkInsert("Reviews", [
       {
-        spotId: 1,
+        spotId: 2,
         userId: 1,
         review: "This was an awesome spot!",
         stars: 5,

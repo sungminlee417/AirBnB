@@ -18,7 +18,7 @@ module.exports = {
         url: "example1.com",
       },
       {
-        imageableId: 1,
+        imageableId: 2,
         imageableType: "Spot",
         url: "example2.com",
       },
