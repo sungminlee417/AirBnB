@@ -6,6 +6,7 @@ const spotsRouter = require("./spots");
 const reviewsRouter = require("./reviews");
 const bookingsRouter = require("./bookings");
 const imagesRouter = require("./images");
+const apiRouter = require("./api");
 
 const { User } = require("../db/models");
 
@@ -18,6 +19,33 @@ router.use("/spots", spotsRouter);
 router.use("/reviews", reviewsRouter);
 router.use("/bookings", bookingsRouter);
 router.use("/images", imagesRouter);
+router.use("/api", apiRouter);
+
+if (process.env.NODE_ENV === "production") {
+  const path = require("path");
+  router.get("/", (req, res) => {
+    res.cookie("XSRF-TOKEN", req.csrfToken());
+    return res.sendFile(
+      path.resolve(__dirname, "../../frontend", "build", "index.html")
+    );
+  });
+
+  router.use(express.static(path.resolve("../frontend/build")));
+
+  router.get(/^(?!\/?api).*/, (req, res) => {
+    res.cookie("XSRF-TOKEN", req.csrfToken());
+    return res.sendFile(
+      path.resolve(__dirname, "../../frontend", "build", "index.html")
+    );
+  });
+}
+
+if (process.env.NODE_ENV !== "production") {
+  router.get("/api/csrf/restore", (req, res) => {
+    res.cookie("XSRF-TOKEN", req.csrfToken());
+    return res.json({});
+  });
+}
 
 // SIGN UP USER
 router.post(
@@ -50,15 +78,6 @@ router.post("/login", validateLogin, async (req, res, next) => {
   const token = setTokenCookie(res, user);
   user.dataValues["token"] = token;
   res.json(user);
-});
-
-// RESTORE CSRF
-router.get("/api/csrf/restore", (req, res) => {
-  const csrfToken = req.csrfToken();
-  res.cookie("XSRF-TOKEN", csrfToken);
-  res.status(200).json({
-    "XSRF-Token": csrfToken,
-  });
 });
 
 module.exports = router;
