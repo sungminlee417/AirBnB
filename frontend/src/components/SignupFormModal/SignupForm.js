@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 import * as sessionActions from "../../store/session";
+import "./SignupForm.css";
 
 const SignupForm = () => {
   const dispatch = useDispatch();
@@ -32,46 +33,56 @@ const SignupForm = () => {
   };
 
   return (
-    <div className="signup-form-box">
-      <form className="signup-form" onSubmit={handleSubmit}>
-        <ul>
+    <div className="login-signup-form-container">
+      <header className="login-signup-header">Sign Up</header>
+      <form className="login-signup-form" onSubmit={handleSubmit}>
+        <div className="input-fields">
+          <input
+            className="first-name-input-field input-field"
+            onChange={(e) => setFirstName(e.target.value)}
+            placeholder="First Name"
+            value={firstName}
+          ></input>{" "}
+          <input
+            className="last-name-input-field input-field"
+            onChange={(e) => setLastName(e.target.value)}
+            placeholder="Last Name"
+            value={lastName}
+          ></input>
+          <input
+            className="signup-email-input-field input-field"
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Email"
+            value={email}
+          ></input>
+          <input
+            className="signup-password-input-field input-field"
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Password"
+            type="password"
+            value={password}
+          ></input>
+          <input
+            className="confirm-password-input-field input-field"
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            placeholder="Confirm Password"
+            type="password"
+            value={confirmPassword}
+          />
+        </div>
+        <ul className="errors">
           {errors.map((error, i) => {
-            return <li key={i}>{error}</li>;
+            return (
+              <div className="error" key={i}>
+                <i class="fa-solid fa-circle-exclamation"></i>
+                <li key={i}>{error}</li>
+              </div>
+            );
           })}
         </ul>
-        <input
-          onChange={(e) => setFirstName(e.target.value)}
-          placeholder="First Name"
-          value={firstName}
-          required
-        ></input>{" "}
-        <input
-          onChange={(e) => setLastName(e.target.value)}
-          placeholder="Last Name"
-          value={lastName}
-          required
-        ></input>
-        <input
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Email"
-          value={email}
-          required
-        ></input>
-        <input
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="Password"
-          type="password"
-          value={password}
-          required
-        ></input>
-        <input
-          onChange={(e) => setConfirmPassword(e.target.value)}
-          placeholder="Confirm Password"
-          type="password"
-          value={confirmPassword}
-          required
-        />
-        <button type="submit">Sign Up</button>
+        <button className="signup-submit" type="submit">
+          Sign Up
+        </button>
       </form>
     </div>
   );

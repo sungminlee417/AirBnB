@@ -17,16 +17,13 @@ const handleValidationErrors = (req, res, next) => {
 
 // SIGN UP USER
 const validateSignup = [
-  check("email")
-    .exists({ checkFalsy: true })
-    .isEmail()
-    .withMessage("Invalid email"),
   check("firstName")
     .exists({ checkFalsy: true })
     .withMessage("First Name is required"),
   check("lastName")
     .exists({ checkFalsy: true })
     .withMessage("Last Name is required"),
+  check("email").exists({ checkFalsy: true }).withMessage("Invalid email"),
   check("password")
     .exists({ checkFalsy: true })
     .withMessage("Password is required"),

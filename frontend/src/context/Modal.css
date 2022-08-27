@@ -18,10 +18,26 @@
   background-color: rgba(0, 0, 0, 0.7);
 }
 
-#modal-content {
+/* #modal-content {
   position: absolute;
   background-color: white;
   border-radius: 10px;
-  height: 350px;
+  height: 300px;
+  width: 500px;
+} */
+
+.modal-content-login {
+  position: absolute;
+  background-color: white;
+  border-radius: 10px;
+  height: 300px;
+  width: 500px;
+}
+
+.modal-content-signup {
+  position: absolute;
+  background-color: white;
+  border-radius: 10px;
+  height: 450px;
   width: 500px;
 }

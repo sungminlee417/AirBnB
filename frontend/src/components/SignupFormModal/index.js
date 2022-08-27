@@ -12,7 +12,7 @@ function SignupFormModal() {
         Sign Up
       </button>
       {showModal && (
-        <Modal onClose={() => setShowModal(false)}>
+        <Modal onClose={() => setShowModal(false)} type={"signup"}>
           <SignupForm />
         </Modal>
       )}

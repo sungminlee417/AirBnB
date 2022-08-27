@@ -25,10 +25,10 @@ const LoginForm = () => {
   };
 
   return (
-    <div className="login-form-box">
-      <header className="login-header">Log in</header>
-      <form className="login-form" onSubmit={handleSubmit}>
-        <div className="input-fields">
+    <div className="login-signup-form-container">
+      <header className="login-signup-header">Log in</header>
+      <form className="login-signup-form" onSubmit={handleSubmit}>
+        <div className="login-signup-input-fields">
           <input
             className="email-input-field input-field"
             onChange={(e) => setEmail(e.target.value)}
