@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import * as sessionActions from "../../store/session";
 import "./LoginForm.css";
 
-const LoginFormPage = () => {
+const LoginForm = () => {
   const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state.session.user);
   const [email, setEmail] = useState("");
@@ -48,4 +48,4 @@ const LoginFormPage = () => {
   );
 };
 
-export default LoginFormPage;
+export default LoginForm;
