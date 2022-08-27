@@ -19,30 +19,42 @@ const LoginForm = () => {
       async (res) => {
         const data = await res.json();
         if (data && data.errors) setErrors(data.errors);
+        if (data.statusCode === 401) setErrors([data.message]);
       }
     );
   };
 
   return (
     <div className="login-form-box">
-      <header>Log in or sign up</header>
+      <header className="login-header">Log in</header>
       <form className="login-form" onSubmit={handleSubmit}>
-        <ul>
+        <div className="input-fields">
+          <input
+            className="email-input-field input-field"
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Email"
+            value={email}
+          ></input>
+          <input
+            className="password-input-field input-field"
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Password"
+            value={password}
+          ></input>
+        </div>
+        <ul className="errors">
           {errors.map((error, i) => {
-            return <li key={i}>{error}</li>;
+            return (
+              <div key={i} className="error">
+                <i class="fa-solid fa-circle-exclamation"></i>
+                <li>{error}</li>
+              </div>
+            );
           })}
         </ul>
-        <input
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Email"
-          value={email}
-        ></input>
-        <input
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="Password"
-          value={password}
-        ></input>
-        <button type="submit">Log In</button>
+        <button className="login-submit" type="submit">
+          Continue
+        </button>
       </form>
     </div>
   );

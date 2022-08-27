@@ -13,7 +13,9 @@ router.post("/login", validateLogin, async (req, res, next) => {
   const user = await User.login(email, password);
 
   if (!user) {
-    const err = new Error("Invalid credentials");
+    const err = new Error(
+      "Sorry, we do not recognize this account. Please enter a valid email/password."
+    );
     err.status = 401;
     return next(err);
   }
