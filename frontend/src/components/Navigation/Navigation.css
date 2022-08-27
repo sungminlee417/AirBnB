@@ -1,8 +1,44 @@
+/* GENERAL STYLING */
+
 * {
   margin: 0;
   padding: 0;
 }
 
 .navbar {
+  align-items: center;
   display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+/* HOME LINK STYLING */
+
+.home-link {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  text-decoration: none;
+}
+
+.fa-airbnb {
+  color: #ff385c;
+}
+
+.home-link-name {
+  color: #ff385c;
+  font-family: sans-serif;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+/* SEARCH BAR STYLING */
+
+.search-bar {
+  align-items: center;
+  border: solid black 0.2px;
+  border-radius: 1000px;
+  display: flex;
+  gap: 20px;
+  padding: 15px 25px;
 }

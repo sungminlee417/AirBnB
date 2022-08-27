@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import ProfileButton from "./ProfileButton";
 import LoginFormModal from "../LoginFormModal";
 import "./Navigation.css";
+import SignupFormModal from "../SignupFormModal";
 
 const Navigation = ({ isLoaded }) => {
   const sessionUser = useSelector((state) => state.session.user);
@@ -14,21 +15,20 @@ const Navigation = ({ isLoaded }) => {
     sessionLinks = (
       <>
         <LoginFormModal />
-        <NavLink to="/signup">Sign Up</NavLink>
+        <SignupFormModal />
       </>
     );
   }
 
   return (
     <div className="navbar">
-      <ul>
-        <li>
-          <NavLink to="/">
-            <i class="fa-brands fa-airbnb"></i>
-          </NavLink>
-          {isLoaded && sessionLinks}
-        </li>
-      </ul>
+      <div className="home-links">
+        <NavLink className="home-link" to="/">
+          <i className="fa-brands fa-airbnb fa-2x"></i>
+          <p className="home-link-name">airbnb</p>
+        </NavLink>
+      </div>
+      <div>{isLoaded && sessionLinks}</div>
     </div>
   );
 };
