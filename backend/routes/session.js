@@ -46,8 +46,6 @@ router.post(
 router.get("/restore", restoreUser, (req, res) => {
   const { user } = req;
   if (user) {
-    const token = req.cookies.token;
-    user.dataValues["token"] = token;
     return res.json({
       user: user.toSafeObject(),
     });
