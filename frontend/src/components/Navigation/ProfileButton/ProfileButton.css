@@ -14,10 +14,10 @@
 }
 
 #session-links {
+  background-color: white;
   border-radius: 5px;
   box-shadow: 1px 1.5px 4px #999;
   display: flex;
-  justify-content: start;
   flex-direction: column;
   gap: 5px;
   padding-top: 5px;

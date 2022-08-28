@@ -30,10 +30,12 @@ export const login = (email, password) => async (dispatch) => {
 };
 
 export const restoreUser = () => async (dispatch) => {
-  const response = await csrfFetch(`/me`);
+  const response = await csrfFetch(`/restore`);
 
-  const user = await response.json();
-  dispatch(setUser(user));
+  const { user } = await response.json();
+  if (user) {
+    dispatch(setUser(user));
+  }
 };
 
 export const signup = (payload) => async (dispatch) => {

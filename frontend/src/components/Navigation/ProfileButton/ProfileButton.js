@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { NavLink, Redirect } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import * as sessionActions from "../../../store/session";
+import DemoLogin from "../../DemoLogin";
 import LoginFormModal from "../../LoginFormModal";
 import SignupFormModal from "../../SignupFormModal";
 import "./ProfileButton.css";
@@ -12,22 +14,25 @@ const ProfileButton = ({ user, isLoaded }) => {
   let sessionLinks;
 
   const logout = (e) => {
-    e.preventDefault();
     dispatch(sessionActions.logout());
+    return <Redirect to="/" />;
   };
 
   if (user) {
     sessionLinks = (
-      <ul>
-        <li>{user.email}</li>
-        <li>
-          <button onClick={logout}>Log out</button>
-        </li>
-      </ul>
+      <div id="session-links">
+        <NavLink to="/account-details" className="nav-bar-button">
+          Account
+        </NavLink>
+        <NavLink to="/" className="nav-bar-button" onClick={logout}>
+          Log out
+        </NavLink>
+      </div>
     );
   } else {
     sessionLinks = (
       <div id="session-links" onClick={(e) => e.stopPropagation()}>
+        <DemoLogin />
         <LoginFormModal />
         <SignupFormModal />
       </div>
@@ -56,8 +61,8 @@ const ProfileButton = ({ user, isLoaded }) => {
   return (
     <>
       <button className="profile-button" onClick={openMenu}>
-        <i class="fa-solid fa-bars"></i>
-        <i class="fa-solid fa-user-large"></i>
+        <i className="fa-solid fa-bars"></i>
+        <i className="fa-solid fa-user-large"></i>
       </button>
       {showMenu && sessionLinks}
     </>

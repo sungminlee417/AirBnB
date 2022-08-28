@@ -87,15 +87,11 @@ router.get("/bookings", [restoreUser, requireAuth], async (req, res) => {
 });
 
 // GET CURRENT USER
-router.get("/", [restoreUser], (req, res) => {
+router.get("/", [restoreUser, requireAuth], (req, res) => {
   const user = req.user;
-  if (user) {
-    const token = req.cookies.token;
-    user.dataValues["token"] = token;
-    res.json(req.user);
-  } else {
-    res.json(null);
-  }
+  const token = req.cookies.token;
+  user.dataValues["token"] = token;
+  res.json(req.user);
 });
 
 module.exports = router;

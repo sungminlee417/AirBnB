@@ -46,7 +46,7 @@ const LoginForm = () => {
           {errors.map((error, i) => {
             return (
               <div key={i} className="error">
-                <i class="fa-solid fa-circle-exclamation"></i>
+                <i className="fa-solid fa-circle-exclamation"></i>
                 <li>{error}</li>
               </div>
             );

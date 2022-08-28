@@ -25,7 +25,8 @@ module.exports = {
         name: "Stan's House",
         description: "Home of the famous singer, Lorde",
         price: 343,
-        previewImage: "url",
+        previewImage:
+          "http://southparkstudios.mtvnimages.com/shared/locations/chefs-house.jpg",
       },
       {
         ownerId: 2,
@@ -38,7 +39,8 @@ module.exports = {
         name: "Kyle's House",
         description: "Infamous house of a troll.",
         price: 412,
-        previewImage: "url",
+        previewImage:
+          "http://southparkstudios.mtvnimages.com/shared/locations/cartman-house.jpg",
       },
       {
         ownerId: 3,
@@ -51,7 +53,8 @@ module.exports = {
         name: "Eric's House",
         description: "A hotdog.",
         price: 542,
-        previewImage: "url",
+        previewImage:
+          "https://media.sketchfab.com/models/7b0fc567104e4852a73bdd35083bc3a5/thumbnails/963295fec2be4a01b38abf65b90b1b71/5979941745bd4f03be0b5aea94120e52.jpeg",
       },
       {
         ownerId: 4,
@@ -64,7 +67,8 @@ module.exports = {
         name: "Kenny's House",
         description: "SoDoSoPa",
         price: 671,
-        previewImage: "url",
+        previewImage:
+          "http://southparkstudios.mtvnimages.com/shared/locations/residences-the-villas-at-kennys-house-full-shot.png",
       },
     ]);
   },
