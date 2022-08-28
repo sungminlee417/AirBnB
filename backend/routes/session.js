@@ -11,6 +11,7 @@ const { checkUserExists } = require("../utils/existance-check");
 router.post("/login", validateLogin, async (req, res, next) => {
   const { email, password } = req.body;
   const user = await User.login(email, password);
+  console.log("hi");
 
   if (!user) {
     const err = new Error(
