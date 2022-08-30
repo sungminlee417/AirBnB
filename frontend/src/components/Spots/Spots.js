@@ -1,39 +1,48 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { NavLink } from "react-router-dom";
 import * as spotActions from "../../store/spots";
 import "./Spots.css";
 
 const Spots = () => {
   const dispatch = useDispatch();
-  const spots = Object.values(useSelector((state) => state.spots));
+  const spots = useSelector((state) => state.spots);
+  console.log(spots);
 
   useEffect(() => {
     dispatch(spotActions.loadAllSpotsThunk());
+    return () => spotActions.clearSpots();
   }, [dispatch]);
 
   return (
     <div className="body-margin">
       <ul id="all-spots-preview">
-        {spots.map((spot) => {
+        {Object.keys(spots).map((spotId) => {
           return (
-            <div className="spot-container" key={spot.id}>
+            <NavLink
+              to={`/spots/${spotId}`}
+              className="spot-preview"
+              key={spotId}
+            >
               <img
                 className="spot-img"
-                src={spot.previewImage}
-                alt={spot.name}
+                src={spots[spotId].previewImage}
+                alt={spots[spotId].name}
               />
               <div className="spot-details-container">
                 <div className="spot-details">
                   <strong>
-                    <p className="spot-location">{`${spot.city}, ${spot.state}`}</p>
+                    <p className="spot-location">{`${spots[spotId].city}, ${spots[spotId].state}`}</p>
                   </strong>
-                  {spot.name && <p className="spot-name">{spot.name}</p>}
+                  {spots[spotId].name && (
+                    <p className="spot-name">{spots[spotId].name}</p>
+                  )}
                 </div>
                 <div className="spot-price">
-                  <strong>{`$${spot.price}`}</strong>
+                  <strong>{`$${spots[spotId].price}`}</strong>
                 </div>
               </div>
-            </div>
+            </NavLink>
           );
         })}
       </ul>

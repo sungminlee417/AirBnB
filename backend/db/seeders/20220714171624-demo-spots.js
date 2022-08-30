@@ -70,6 +70,34 @@ module.exports = {
         previewImage:
           "http://southparkstudios.mtvnimages.com/shared/locations/residences-the-villas-at-kennys-house-full-shot.png",
       },
+      {
+        ownerId: 1,
+        address: "123 Square Street",
+        city: "South Park",
+        state: "Colorado",
+        country: "United States of America",
+        lat: 1231.2512387121,
+        lng: -1093.11232538912,
+        name: "Sam's House",
+        description: "Soda",
+        price: 349,
+        previewImage:
+          "http://southparkstudios.mtvnimages.com/shared/locations/residences-the-villas-at-kennys-house-full-shot.png",
+      },
+      {
+        ownerId: 1,
+        address: "21123 Avenue Street",
+        city: "South Park",
+        state: "Colorado",
+        country: "United States of America",
+        lat: 81237.325071239,
+        lng: -12312.112346136,
+        name: "Hanky's House",
+        description: "Hello",
+        price: 343,
+        previewImage:
+          "http://southparkstudios.mtvnimages.com/shared/locations/chefs-house.jpg",
+      },
     ]);
   },
 

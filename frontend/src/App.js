@@ -5,6 +5,7 @@ import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import Spots from "./components/Spots";
 import AccountDetails from "./components/AccountDetails";
+import SingleSpot from "./components/SingleSpot";
 
 function App() {
   const dispatch = useDispatch();
@@ -20,14 +21,14 @@ function App() {
   return (
     <div id="airbnb-app">
       <Navigation isLoaded={isLoaded} />
-      <div className="component-break-line"></div>
       <Switch>
         <Route exact path="/">
-          {isLoaded && <Spots />}
+          <Spots />
         </Route>
         <Route path="/account-details">
-          {user && <AccountDetails user={user} />}
+          {user && isLoaded && <AccountDetails user={user} />}
         </Route>
+        <Route path="/spots/:spotId">{<SingleSpot />}</Route>
       </Switch>
     </div>
   );

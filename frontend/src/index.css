@@ -2,7 +2,10 @@
 * {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
   font-family: sans-serif;
+  font-size: 14px;
+  color: #333;
 }
 
 input:focus {
@@ -10,10 +13,5 @@ input:focus {
 }
 
 .body-margin {
-  margin: 20px 75px 20px 75px;
-}
-
-.component-break-line {
-  border: 0.5px solid rgb(200, 200, 200);
-  margin: 30px 0px 30px 0px;
+  margin: 0px 75px 20px 75px;
 }

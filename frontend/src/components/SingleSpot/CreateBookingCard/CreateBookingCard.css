@@ -1,0 +1,104 @@
+#create-booking-card-container {
+  display: flex;
+  justify-content: flex-end;
+  width: 50%;
+  height: 50%;
+  position: sticky;
+  top: 18vh;
+}
+
+#create-booking-card {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  margin: 10px 0 10px 0;
+  width: 90%;
+  height: 80%;
+  border-radius: 20px;
+  box-shadow: 0.5px 0.5px 2.3px 1px #999;
+  padding: 25px 20px;
+}
+
+#booking-card-spot-details {
+  display: flex;
+  justify-content: space-between;
+}
+
+#booking-card-price-container,
+#booking-card-price {
+  font-size: 19px;
+}
+
+#booking-card-avg-star-rating {
+  font-weight: 600;
+}
+
+#booking-card-num-reviews {
+  color: #777;
+  text-decoration: underline;
+}
+
+#booking-rating-container {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+#booking-card-avg-star-rating-container {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+#booking-card-dates-form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  justify-content: center;
+}
+
+#booking-card-dates-button {
+  display: flex;
+  position: relative;
+  border-radius: 10px;
+  gap: 10px;
+  padding: 10px;
+  background-color: white;
+  border: 1px solid #999;
+}
+
+#booking-card-dates-button:focus {
+  border: 1px solid black;
+  border-style: inset;
+}
+
+#booking-dates-divider {
+  height: 100%;
+  width: 1px;
+  background-color: #999;
+}
+
+.booking-check-date {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  text-align: start;
+}
+
+.booking-check-date-name {
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.booking-check-date-input {
+  border: none;
+}
+
+#reserve-button {
+  font-size: 15px;
+  color: white;
+  height: 40px;
+  border-radius: 10px;
+  border: none;
+  background-color: rgb(255, 21, 99);
+}
