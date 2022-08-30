@@ -2,28 +2,39 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import LoginFormModal from "../../LoginFormModal";
 import "./CreateBookingCard.css";
-import * as bookingActions from "../../../store/bookings";
+import * as bookingActions from "../../../store/singleBooking";
+import { Redirect } from "react-router-dom";
 
 const CreateBookingCard = ({ spot }) => {
   const dispatch = useDispatch();
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [errors, setErrors] = useState([]);
+  const [submitted, setSubmitted] = useState(false);
   const user = useSelector((state) => state.session.user);
+  const booking = useSelector((state) => state.booking);
+
+  if (submitted) {
+    console.log(booking);
+    return <Redirect to="/" />;
+  }
 
   const onSubmit = (e) => {
     setErrors([]);
     e.preventDefault();
+
     dispatch(
       bookingActions.createBookingThunk(spot.id, startDate, endDate)
     ).catch(async (res) => {
       const data = await res.json();
+      console.log(data);
       const errorArray = [];
       if (data.message) errorArray.push(data.message);
       if (data.errors)
         Object.values(data.errors).forEach((error) => errorArray.push(error));
       setErrors(errorArray);
     });
+    setSubmitted(true);
   };
 
   const review =
