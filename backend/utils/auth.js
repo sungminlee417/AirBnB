@@ -89,7 +89,9 @@ const requireAuthorizationEditingBooking = async (req, res, next) => {
   if (booking.userId === user.id) {
     return next();
   } else {
-    const err = new Error("Forbidden");
+    const err = new Error(
+      "You do not have permission to edit another user's bookings."
+    );
     err.status = 403;
     return next(err);
   }
@@ -101,7 +103,7 @@ const requireAuthorizationCreatingBooking = async (req, res, next) => {
   if (spot.ownerId !== req.user.id) {
     return next();
   } else {
-    const err = new Error("Forbidden");
+    const err = new Error("You cannot book your own spot.");
     err.status = 403;
     return next(err);
   }

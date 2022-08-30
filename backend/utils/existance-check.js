@@ -71,24 +71,28 @@ const checkBookingExists = async (req, res, next) => {
 const checkConflictingBookingExists = async (req, res, next) => {
   const { startDate, endDate } = req.body;
   const user = req.user;
-  const booking = await Booking.findOne({
+  const bookings = await Booking.findAll({
     where: [{ userId: user.id }, { spotId: req.params.spotId }],
   });
-  if (booking) {
-    if (booking.startDate === startDate || booking.endDate === endDate) {
-      const err = new Error(
-        "Sorry, this spot is already booked for the specified dates"
-      );
-      err.status = 403;
-      err.errors = {};
-      if (booking.startDate === startDate) {
-        err.errors[startDate] = "Start date conflicts with an existing booking";
+
+  if (bookings) {
+    bookings.forEach((booking) => {
+      if (booking.startDate === startDate || booking.endDate === endDate) {
+        const err = new Error(
+          "Sorry, this spot is already booked for the specified dates"
+        );
+        err.status = 403;
+        err.errors = {};
+        if (booking.startDate === startDate) {
+          err.errors[startDate] =
+            "Start date conflicts with an existing booking";
+        }
+        if (booking.endDate === endDate) {
+          err.errors[endDate] = "End date conflicts with an existing booking";
+        }
+        return next(err);
       }
-      if (booking.endDate === endDate) {
-        err.errors[endDate] = "End date conflicts with an existing booking";
-      }
-      return next(err);
-    }
+    });
   }
   return next();
 };

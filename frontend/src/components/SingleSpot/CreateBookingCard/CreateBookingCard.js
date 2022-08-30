@@ -1,13 +1,29 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import LoginFormModal from "../../LoginFormModal";
 import "./CreateBookingCard.css";
+import * as bookingActions from "../../../store/bookings";
 
 const CreateBookingCard = ({ spot }) => {
+  const dispatch = useDispatch();
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+  const [errors, setErrors] = useState([]);
+  const user = useSelector((state) => state.session.user);
 
   const onSubmit = (e) => {
+    setErrors([]);
     e.preventDefault();
-    console.log(startDate, endDate);
+    dispatch(
+      bookingActions.createBookingThunk(spot.id, startDate, endDate)
+    ).catch(async (res) => {
+      const data = await res.json();
+      const errorArray = [];
+      if (data.message) errorArray.push(data.message);
+      if (data.errors)
+        Object.values(data.errors).forEach((error) => errorArray.push(error));
+      setErrors(errorArray);
+    });
   };
 
   const review =
@@ -57,9 +73,24 @@ const CreateBookingCard = ({ spot }) => {
               />
             </div>
           </button>
-          <button id="reserve-button" onClick={onSubmit}>
-            Reserve
-          </button>
+          <ul className="errors">
+            {Object.values(errors).map((error, i) => {
+              return (
+                <div key={i} className="error">
+                  <i className="fa-solid fa-circle-exclamation"></i>
+                  <li>{error}</li>
+                </div>
+              );
+            })}
+          </ul>
+          <>
+            {user && (
+              <button id="reserve-button" onClick={onSubmit}>
+                Reserve
+              </button>
+            )}
+            {!user && <LoginFormModal type={"createBooking"} />}
+          </>
         </div>
       </div>
     </div>

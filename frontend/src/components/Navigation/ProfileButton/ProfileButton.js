@@ -33,7 +33,7 @@ const ProfileButton = ({ user, isLoaded }) => {
     sessionLinks = (
       <div id="session-links" onClick={(e) => e.stopPropagation()}>
         <DemoLogin />
-        <LoginFormModal />
+        <LoginFormModal type={"navigation"} />
         <SignupFormModal />
       </div>
     );
