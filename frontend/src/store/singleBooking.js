@@ -1,11 +1,19 @@
 import { csrfFetch } from "./csrf";
 
 const ADD_BOOKING = `booking/ADD`;
+const CLEAR_BOOKING = `booking/REMOVE`;
 
 export const addBooking = (booking) => {
   return {
     type: ADD_BOOKING,
     booking,
+  };
+};
+
+export const clearBooking = () => {
+  return {
+    type: CLEAR_BOOKING,
+    booking: null,
   };
 };
 
@@ -25,11 +33,17 @@ export const createBookingThunk =
     dispatch(addBooking(booking));
   };
 
-const initialState = {};
+const initialState = {
+  booking: null,
+};
 
 export const bookingReducer = (state = initialState, action) => {
+  const newState = { ...state };
   switch (action.type) {
     case ADD_BOOKING:
+      newState[action.booking.id] = action.booking;
+      return newState;
+    case CLEAR_BOOKING:
       return action.booking;
     default:
       return state;

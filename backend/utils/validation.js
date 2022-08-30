@@ -75,6 +75,13 @@ const validateReview = [
   handleValidationErrors,
 ];
 
+// VALIDATE BOOKING MIDDLEWARE
+const validateBooking = [
+  check("startDate").isDate().withMessage("Please enter a valid start date"),
+  check("endDate").isDate().withMessage("Please enter a valid end date"),
+  handleValidationErrors,
+];
+
 // VALIDATE BOOKING END DATE MIDDLEWARE
 const validateBookingEndDate = (req, res, next) => {
   const currentDate = new Date();
@@ -217,6 +224,7 @@ module.exports = {
   validateLogin,
   validateSpot,
   validateReview,
+  validateBooking,
   validateBookingEndDate,
   validateBookingDateConflict,
   validateBookingStartDate,

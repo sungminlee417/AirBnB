@@ -10,13 +10,11 @@ const CreateBookingCard = ({ spot }) => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [errors, setErrors] = useState([]);
-  const [submitted, setSubmitted] = useState(false);
   const user = useSelector((state) => state.session.user);
   const booking = useSelector((state) => state.booking);
 
-  if (submitted) {
-    console.log(booking);
-    return <Redirect to="/" />;
+  if (booking) {
+    return <Redirect to="/successful-booking" />;
   }
 
   const onSubmit = (e) => {
@@ -27,14 +25,12 @@ const CreateBookingCard = ({ spot }) => {
       bookingActions.createBookingThunk(spot.id, startDate, endDate)
     ).catch(async (res) => {
       const data = await res.json();
-      console.log(data);
       const errorArray = [];
       if (data.message) errorArray.push(data.message);
       if (data.errors)
         Object.values(data.errors).forEach((error) => errorArray.push(error));
       setErrors(errorArray);
     });
-    setSubmitted(true);
   };
 
   const review =
