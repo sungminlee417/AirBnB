@@ -15,7 +15,7 @@ function DeleteBookingModal({ booking }) {
         <i className="booking-button fa-solid fa-trash fa-2x"></i>
       </button>
       {showModal && (
-        <Modal onClose={() => setShowModal(false)}>
+        <Modal onClose={() => setShowModal(false)} type="delete-booking">
           <DeleteBooking booking={booking} />
         </Modal>
       )}

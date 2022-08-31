@@ -1,6 +1,9 @@
+import { useDispatch } from "react-redux";
+import * as bookingsActions from "../../../../store/bookings";
 import "./DeleteBooking.css";
 
 const DeleteBooking = ({ booking }) => {
+  const dispatch = useDispatch();
   const date = new Date(booking.createdAt);
   const bookingCreatedAtDateArr = date[Symbol.toPrimitive]("string")
     .split(" ")
@@ -8,6 +11,10 @@ const DeleteBooking = ({ booking }) => {
   const bookingCreatedAtDate = `${
     bookingCreatedAtDateArr[0] + " " + bookingCreatedAtDateArr[1]
   }, ${bookingCreatedAtDateArr[2]}`;
+
+  const onDelete = () => {
+    dispatch(bookingsActions.deleteBookingThunk(booking.id));
+  };
 
   return (
     <div id="delete-booking-container">
@@ -25,7 +32,9 @@ const DeleteBooking = ({ booking }) => {
           </div>
         </div>
       </div>
-      <button id="delete-booking-button">Delete booking</button>
+      <button id="delete-booking-button" onClick={onDelete}>
+        Delete booking
+      </button>
     </div>
   );
 };
