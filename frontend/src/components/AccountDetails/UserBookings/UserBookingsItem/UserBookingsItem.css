@@ -1,0 +1,66 @@
+.user-bookings-item {
+  display: flex;
+  padding: 5px 0 5px 0;
+  border-bottom: 1px solid rgb(200, 200, 200);
+}
+
+.user-bookings-item-img {
+  width: 375px;
+}
+
+.user-bookings-items-divider {
+  height: 1px;
+  width: 100%;
+}
+
+#booking-details {
+  display: flex;
+  gap: 80px;
+  margin: 25px;
+  align-items: center;
+}
+
+#booking-spot-details {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+#booking-spot-name {
+  font-weight: 600;
+  font-size: 18px;
+  margin-bottom: 15px;
+}
+
+.booking-spot-address {
+  font-size: 16px;
+}
+
+.booking-spot-check-bold {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.booking-detail-check-date {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.booking-edit-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.booking-edit-container-button {
+  border: none;
+}
+
+.booking-button {
+  color: #555;
+}
+
+.booking-button:hover {
+  color: black;
+}

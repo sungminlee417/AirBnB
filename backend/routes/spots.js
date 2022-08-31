@@ -22,6 +22,7 @@ const {
   validateSpot,
   validateGetAllSpotsQueries,
   validateBooking,
+  validateBookingStartAndEndDate,
 } = require("../utils/validation");
 
 const { Spot, User, Review, Booking, Image } = require("../db/models");
@@ -110,6 +111,7 @@ router.post(
     requireAuth,
     checkSpotExists,
     validateBooking,
+    validateBookingStartAndEndDate,
     checkConflictingBookingExists,
     requireAuthorizationCreatingBooking,
   ],

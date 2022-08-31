@@ -2,6 +2,8 @@
   display: flex;
   flex-direction: column;
   gap: 23px;
+  margin-top: 35px;
+  color: black;
 }
 
 #single-spot-name {

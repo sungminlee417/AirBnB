@@ -7,6 +7,9 @@
 
 #navbar-container {
   background-color: white;
+  border-bottom: 0.5px solid rgb(200, 200, 200);
+  padding-bottom: 25px;
+  box-shadow: 0.2px 0.2px 3px 0.3px rgb(213, 213, 213);
   position: sticky;
   top: 0;
   z-index: 1;
@@ -17,12 +20,6 @@
   padding-top: 20px;
   display: grid;
   grid-template-columns: 35% 30% 35%;
-}
-
-.component-break-line {
-  border: 0.5px solid rgb(200, 200, 200);
-  margin: 20px 75px 0px -75px;
-  width: 100vw;
 }
 
 /* HOMEPAGE LINK STYLING */
@@ -93,6 +90,7 @@
 
 #host-link {
   text-decoration: none;
+  color: black;
 }
 
 #host-link-container {

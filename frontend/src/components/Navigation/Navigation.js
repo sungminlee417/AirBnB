@@ -37,7 +37,6 @@ const Navigation = ({ isLoaded }) => {
             <ProfileButton user={sessionUser} isLoaded={isLoaded} />
           </div>
         </div>
-        <div className="component-break-line"></div>
       </div>
     </div>
   );

@@ -1,0 +1,40 @@
+#delete-booking-container {
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+  gap: 20px;
+}
+
+#delete-booking-header {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+#delete-booking-card-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: rgb(240, 240, 240);
+  padding: 15px;
+}
+
+#delete-booking-card-container-spot-name {
+  font-weight: bold;
+}
+
+#delete-booking-card-container-created-date {
+  color: #777;
+}
+
+#delete-booking-card-image {
+  width: 150px;
+}
+
+#delete-booking-button {
+  font-size: 15px;
+  color: white;
+  height: 40px;
+  border-radius: 10px;
+  border: none;
+  background-color: rgb(255, 21, 99);
+}

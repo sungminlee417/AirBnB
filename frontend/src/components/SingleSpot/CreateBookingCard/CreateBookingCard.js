@@ -13,8 +13,18 @@ const CreateBookingCard = ({ spot }) => {
   const user = useSelector((state) => state.session.user);
   const booking = useSelector((state) => state.booking);
 
-  if (booking) {
-    return <Redirect to="/successful-booking" />;
+  const date = new Date();
+  const year = date.getFullYear();
+  const month =
+    (date.getMonth() + 1).toString().length === 1
+      ? "0" + (date.getMonth() + 1)
+      : date.getMonth() + 1;
+  const day = date.getDate();
+
+  const today = `${year}-${month}-${day}`;
+
+  if (Object.keys(booking).length) {
+    return <Redirect to="/successful-booking" booking={booking} />;
   }
 
   const onSubmit = (e) => {
@@ -26,7 +36,6 @@ const CreateBookingCard = ({ spot }) => {
     ).catch(async (res) => {
       const data = await res.json();
       const errorArray = [];
-      if (data.message) errorArray.push(data.message);
       if (data.errors)
         Object.values(data.errors).forEach((error) => errorArray.push(error));
       setErrors(errorArray);
@@ -66,6 +75,7 @@ const CreateBookingCard = ({ spot }) => {
                 placeholder="Add date"
                 value={startDate}
                 onChange={(e) => setStartDate(e.target.value)}
+                min={today}
               />
             </div>
             <div id="booking-dates-divider"></div>

@@ -26,7 +26,7 @@ module.exports = {
         description: "Home of the famous singer, Lorde",
         price: 343,
         previewImage:
-          "http://southparkstudios.mtvnimages.com/shared/locations/chefs-house.jpg",
+          "https://thumbor.forbes.com/thumbor/fit-in/900x510/https://www.forbes.com/advisor/wp-content/uploads/2021/08/download-23.jpg",
       },
       {
         ownerId: 2,
@@ -40,7 +40,7 @@ module.exports = {
         description: "Infamous house of a troll.",
         price: 412,
         previewImage:
-          "http://southparkstudios.mtvnimages.com/shared/locations/cartman-house.jpg",
+          "https://www.bhg.com/thmb/a-NwJnw4qLipa1EWsJThQyc7Bik=/1280x1280/smart/filters:no_upscale():focal(899x639:901x641)/white-modern-house-curved-patio-archway-c0a4a3b3-aa51b24d14d0464ea15d36e05aa85ac9.jpg",
       },
       {
         ownerId: 3,
@@ -54,7 +54,7 @@ module.exports = {
         description: "A hotdog.",
         price: 542,
         previewImage:
-          "https://media.sketchfab.com/models/7b0fc567104e4852a73bdd35083bc3a5/thumbnails/963295fec2be4a01b38abf65b90b1b71/5979941745bd4f03be0b5aea94120e52.jpeg",
+          "https://s3.amazonaws.com/timeinc-houseplans-v2-production/region/images/539/original/Adaptive_Cottage_front_resize.jpg?1657733110",
       },
       {
         ownerId: 4,
@@ -68,7 +68,7 @@ module.exports = {
         description: "SoDoSoPa",
         price: 671,
         previewImage:
-          "http://southparkstudios.mtvnimages.com/shared/locations/residences-the-villas-at-kennys-house-full-shot.png",
+          "https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
       },
       {
         ownerId: 1,
@@ -82,7 +82,7 @@ module.exports = {
         description: "Soda",
         price: 349,
         previewImage:
-          "http://southparkstudios.mtvnimages.com/shared/locations/residences-the-villas-at-kennys-house-full-shot.png",
+          "https://cdn.vox-cdn.com/thumbor/frFQQhOsxl8DctGjkR8OLHpdKMs=/0x0:3686x2073/1200x800/filters:focal(1549x743:2137x1331)/cdn.vox-cdn.com/uploads/chorus_image/image/68976842/House_Tour_Liverman_3D6A3138_tour.0.jpg",
       },
       {
         ownerId: 1,
@@ -96,7 +96,7 @@ module.exports = {
         description: "Hello",
         price: 343,
         previewImage:
-          "http://southparkstudios.mtvnimages.com/shared/locations/chefs-house.jpg",
+          "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8YmVhdXRpZnVsJTIwaG91c2V8ZW58MHx8MHx8&w=1000&q=80",
       },
     ]);
   },

@@ -13,7 +13,7 @@ export const loadSpot = (spot) => {
 export const clearSpot = () => {
   return {
     type: CLEAR_SPOT,
-    spots: {},
+    spot: {},
   };
 };
 
@@ -31,7 +31,7 @@ const singleSpotReducer = (state = initialState, action) => {
     case LOAD_SPOT:
       return action.spot;
     case CLEAR_SPOT:
-      return action.spots;
+      return action.spot;
     default:
       return state;
   }

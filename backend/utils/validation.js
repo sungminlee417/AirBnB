@@ -168,6 +168,42 @@ const validateBookingStartDate = async (req, res, next) => {
   next();
 };
 
+// VALIDATE BOOKING START AND END DATES
+const validateBookingStartAndEndDate = (req, res, next) => {
+  const { startDate, endDate } = req.body;
+  const startArr = startDate.split("-");
+  const startYear = Number(startArr[0]);
+  const startMonth = Number(startArr[1]);
+  const startDay = Number(startArr[2]);
+
+  const currentDate = new Date();
+  const year = currentDate.getFullYear();
+  const month = currentDate.getMonth() + 1;
+  const day = currentDate.getDate();
+
+  const err = new Error();
+  err.status = 400;
+  err.errors = {};
+  if (startDate === endDate) {
+    err.errors.conflictingDates = "Start date and end date cannot be the same";
+    next(err);
+  }
+  err.errors.validDate = "Please submit a valid date";
+
+  if (year > startYear) {
+    return next(err);
+  } else if (month > startMonth) {
+    if (year === startYear) {
+      return next(err);
+    }
+  } else if (day > startDay) {
+    if (year === startYear && month === startMonth) {
+      return next(err);
+    }
+  }
+  next();
+};
+
 const validateAmountOfImages = async (req, res, next) => {
   const images = await Image.findAll();
   console.log(images.length);
@@ -228,6 +264,7 @@ module.exports = {
   validateBookingEndDate,
   validateBookingDateConflict,
   validateBookingStartDate,
+  validateBookingStartAndEndDate,
   validateAmountOfImages,
   validateGetAllSpotsQueries,
 };

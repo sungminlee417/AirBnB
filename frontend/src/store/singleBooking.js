@@ -13,7 +13,7 @@ export const addBooking = (booking) => {
 export const clearBooking = () => {
   return {
     type: CLEAR_BOOKING,
-    booking: null,
+    booking: {},
   };
 };
 
@@ -33,15 +33,13 @@ export const createBookingThunk =
     dispatch(addBooking(booking));
   };
 
-const initialState = {
-  booking: null,
-};
+const initialState = {};
 
 export const bookingReducer = (state = initialState, action) => {
   const newState = { ...state };
   switch (action.type) {
     case ADD_BOOKING:
-      newState[action.booking.id] = action.booking;
+      return action.booking;
       return newState;
     case CLEAR_BOOKING:
       return action.booking;

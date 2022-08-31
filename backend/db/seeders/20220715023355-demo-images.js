@@ -40,12 +40,12 @@ module.exports = {
       {
         imageableId: 2,
         imageableType: "Spot",
-        url: "example2.com",
+        url: "https://images.adsttc.com/media/images/5ecd/d4ac/b357/65c6/7300/009d/large_jpg/02C.jpg?1590547607",
       },
       {
         imageableId: 1,
         imageableType: "Review",
-        url: "example3.com",
+        url: "https://www.mydomaine.com/thmb/sEVlAsVoifoG-ZLxsnWk0q0ZVrQ=/3409x3409/filters:fill(auto,1)/binary-4--583f06853df78c6f6a9e0b7a.jpeg",
       },
     ]);
   },
