@@ -10,7 +10,7 @@ const UserBookingsItem = ({ booking }) => {
           className="user-bookings-item-img"
           src={booking.Spot.previewImage}
         />
-        <div id="booking-details">
+        <div id="user-booking-details">
           <div id="booking-spot-details">
             <div id="booking-spot-name">{booking.Spot.name}</div>
             <div className="booking-spot-address">{booking.Spot.address}</div>
@@ -27,7 +27,7 @@ const UserBookingsItem = ({ booking }) => {
           </div>
           <div className="booking-edit-container">
             <EditBookingModal />
-            <DeleteBookingModal booking={booking}/>
+            <DeleteBookingModal booking={booking} />
           </div>
         </div>
       </li>

@@ -2,10 +2,20 @@
   display: flex;
   padding: 5px 0 5px 0;
   border-bottom: 1px solid rgb(200, 200, 200);
+  justify-content: space-between;
+  padding-right: 20px;
+}
+
+#user-booking-details {
+  display: flex;
+  gap: 100px;
+  justify-content: space-between;
 }
 
 .user-bookings-item-img {
-  width: 375px;
+  width: 300px;
+  height: 225px;
+  object-fit: cover;
 }
 
 .user-bookings-items-divider {
@@ -13,17 +23,11 @@
   width: 100%;
 }
 
-#booking-details {
-  display: flex;
-  gap: 80px;
-  margin: 25px;
-  align-items: center;
-}
-
 #booking-spot-details {
   display: flex;
   flex-direction: column;
   gap: 2px;
+  width: 200px;
 }
 
 #booking-spot-name {
