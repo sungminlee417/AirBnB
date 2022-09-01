@@ -3,27 +3,27 @@ const bcrypt = require("bcryptjs");
 
 const users = [
   {
-    firstName: "Stan",
-    lastName: "Marsh",
-    email: "stan.marsh@gmail.com",
+    firstName: "Grozdan",
+    lastName: "Ott",
+    email: "grozdan.ott@gmail.com",
     hashedPassword: bcrypt.hashSync("password1"),
   },
   {
-    firstName: "Kyle",
-    lastName: "Broflovski",
-    email: "kyle.broflovski@gmail.com",
+    firstName: "Lefteris",
+    lastName: "Moana",
+    email: "lefteris.moana@gmail.com",
     hashedPassword: bcrypt.hashSync("password2"),
   },
   {
-    firstName: "Eric",
-    lastName: "Cartman",
-    email: "eric.cartman@gmail.com",
+    firstName: "Porsteinn",
+    lastName: "Jolanda",
+    email: "porsteinn.jolanda@gmail.com",
     hashedPassword: bcrypt.hashSync("password3"),
   },
   {
-    firstName: "Kenny",
-    lastName: "McCormick",
-    email: "kenny.mccormick@gmail.com",
+    firstName: "Drita",
+    lastName: "Boniface",
+    email: "drita.boniface@gmail.com",
     hashedPassword: bcrypt.hashSync("password4"),
   },
   {

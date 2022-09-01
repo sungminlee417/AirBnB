@@ -16,7 +16,7 @@ function DeleteBookingModal({ booking }) {
       </button>
       {showModal && (
         <Modal onClose={() => setShowModal(false)} type="delete-booking">
-          <DeleteBooking booking={booking} />
+          <DeleteBooking booking={booking} setShowModal={setShowModal} />
         </Modal>
       )}
     </>

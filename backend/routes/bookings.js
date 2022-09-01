@@ -36,6 +36,7 @@ router.put(
       startDate: startDate,
       endDate: endDate,
     });
+    console.log("hi");
     res.json(booking);
   }
 );

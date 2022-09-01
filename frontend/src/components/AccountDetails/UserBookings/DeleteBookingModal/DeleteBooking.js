@@ -2,7 +2,7 @@ import { useDispatch } from "react-redux";
 import * as bookingsActions from "../../../../store/bookings";
 import "./DeleteBooking.css";
 
-const DeleteBooking = ({ booking }) => {
+const DeleteBooking = ({ booking, setShowModal }) => {
   const dispatch = useDispatch();
   const date = new Date(booking.createdAt);
   const bookingCreatedAtDateArr = date[Symbol.toPrimitive]("string")
@@ -14,6 +14,7 @@ const DeleteBooking = ({ booking }) => {
 
   const onDelete = () => {
     dispatch(bookingsActions.deleteBookingThunk(booking.id));
+    setShowModal(false);
   };
 
   return (
@@ -22,7 +23,11 @@ const DeleteBooking = ({ booking }) => {
         Permanently delete this booking?
       </header>
       <div id="delete-booking-card-container">
-        <img id="delete-booking-card-image" src={booking.Spot.previewImage} />
+        <img
+          id="delete-booking-card-image"
+          src={booking.Spot.previewImage}
+          alt={booking.Spot.name}
+        />
         <div id="delete-booking-card-container-details">
           <div id="delete-booking-card-container-spot-name">
             {booking.Spot.name}

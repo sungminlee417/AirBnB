@@ -119,6 +119,7 @@ const validateBookingDateConflict = async (req, res, next) => {
   const originalEnd = booking.endDate;
 
   if (originalStart === startDate || originalEnd === endDate) {
+    console.log(originalStart, startDate, originalEnd, endDate);
     const err = new Error(
       "Sorry, this spot is already booked for the specified dates"
     );

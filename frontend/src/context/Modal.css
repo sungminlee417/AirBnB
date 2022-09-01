@@ -50,3 +50,12 @@
   height: 300px;
   width: 500px;
 }
+
+.modal-content-edit-booking {
+  position: absolute;
+  background-color: white;
+  border-radius: 10px;
+  height: 200px;
+  width: 375px;
+  display: flex;
+}

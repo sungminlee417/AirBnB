@@ -23,23 +23,6 @@ export function ModalProvider({ children }) {
 export function Modal({ onClose, children, type }) {
   const [style, setStyle] = useState();
 
-  // const switchType = () => {
-  //   switch (type) {
-  //     case "login":
-  //       setStyle("modal-content-login");
-  //     case "signup":
-  //       setStyle("modal-content-signup");
-  //     case "delete-booking":
-  //       setStyle("modal-content-delete-booking");
-  //     case "edit-booking":
-  //       setStyle("modal-content-edit-booking");
-  //     default:
-  //       setStyle("");
-  //   }
-  // };
-
-  // console.log(type);
-
   useEffect(() => {
     if (type === "login") {
       setStyle("modal-content-login");
@@ -50,7 +33,7 @@ export function Modal({ onClose, children, type }) {
     } else if (type === "delete-booking") {
       setStyle("modal-content-delete-booking");
     }
-  }, []);
+  }, [type]);
 
   const modalNode = useContext(ModalContext);
 
