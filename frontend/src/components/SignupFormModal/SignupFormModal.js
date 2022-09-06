@@ -8,7 +8,10 @@ function SignupFormModal() {
 
   return (
     <>
-      <button className="nav-bar-button" onClick={() => setShowModal(true)}>
+      <button
+        className="profile-button-link"
+        onClick={() => setShowModal(true)}
+      >
         Sign Up
       </button>
       {showModal && (

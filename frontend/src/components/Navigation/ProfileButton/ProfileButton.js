@@ -18,13 +18,13 @@ const ProfileButton = ({ user, isLoaded }) => {
     return <Redirect to="/" />;
   };
 
-  if (user) {
+  if (user && isLoaded) {
     sessionLinks = (
       <div id="session-links">
-        <NavLink to="/account-details" className="nav-bar-button">
+        <NavLink to="/account-details" className="profile-button-link">
           Account
         </NavLink>
-        <NavLink to="/" className="nav-bar-button" onClick={logout}>
+        <NavLink to="/" className="profile-button-link" onClick={logout}>
           Log out
         </NavLink>
       </div>
@@ -60,7 +60,7 @@ const ProfileButton = ({ user, isLoaded }) => {
 
   return (
     <>
-      <button className="profile-button" onClick={openMenu}>
+      <button id="profile-button" onClick={openMenu}>
         <i className="fa-solid fa-bars"></i>
         <i className="fa-solid fa-user-large"></i>
       </button>

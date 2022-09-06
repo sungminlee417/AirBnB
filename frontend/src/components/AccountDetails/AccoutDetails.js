@@ -20,35 +20,37 @@ const AccountDetails = () => {
   }, [user]);
 
   return (
-    <div className="account-details">
+    <>
       {user && (
-        <div className="account-details-container">
-          <section id="account-details-sidebar">
-            <header id="account-details-header">
-              <h1 className="account-sidebar-header">Account</h1>
-              <p className="account-sidebar-sub-header">
-                <strong className="account-sidebar-sub-header">
-                  {user.firstName} {user.lastName},{" "}
-                </strong>
-                {user.email}
-              </p>
-            </header>
-            <div className="account-detail-links">
-              <NavLink
-                className="account-detail-link"
-                to={`${match.url}/spots`}
-              >
-                Your Listings
-              </NavLink>
-              <NavLink
-                className="account-detail-link"
-                to={`${match.url}/bookings`}
-              >
-                Your Bookings
-              </NavLink>
-            </div>
-          </section>
-          <div className="account-details-section-break-line"></div>
+        <div id="account-details">
+          <div>
+            <section id="account-details-sidebar">
+              <header id="account-details-header">
+                <h1 className="account-sidebar-header">Account</h1>
+                <p className="account-sidebar-sub-header">
+                  <strong className="account-sidebar-sub-header">
+                    {user.firstName} {user.lastName},{" "}
+                  </strong>
+                  {user.email}
+                </p>
+              </header>
+              <div className="account-detail-links">
+                <NavLink
+                  className="account-detail-link"
+                  to={`${match.url}/spots`}
+                >
+                  Your Listings
+                </NavLink>
+                <NavLink
+                  className="account-detail-link"
+                  to={`${match.url}/bookings`}
+                >
+                  Your Bookings
+                </NavLink>
+              </div>
+            </section>
+          </div>
+          <div className="account-details-divider"></div>
           <section id="account-details-content-container">
             <Switch>
               <Route path={`${match.url}/spots`}>
@@ -61,7 +63,7 @@ const AccountDetails = () => {
           </section>
         </div>
       )}
-    </div>
+    </>
   );
 };
 

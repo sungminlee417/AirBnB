@@ -1,6 +1,5 @@
 import { useDispatch } from "react-redux";
 import * as sessionActions from "../../store/session";
-import "./DemoLogin.css";
 
 const DemoLogin = () => {
   const dispatch = useDispatch();
@@ -10,7 +9,7 @@ const DemoLogin = () => {
   };
 
   return (
-    <button className="nav-bar-button" onClick={handleClick}>
+    <button className="profile-button-link" onClick={handleClick}>
       Demo Login
     </button>
   );

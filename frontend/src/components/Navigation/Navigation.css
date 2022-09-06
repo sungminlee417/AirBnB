@@ -78,45 +78,22 @@
 
 #host-link {
   text-decoration: none;
+  padding: 10px;
   color: black;
 }
 
-#host-link-container {
+#host-link:hover {
+  background-color: #dcdcdc;
+  border-radius: 70px;
+}
+
+.fa-globe {
   display: flex;
   padding: 10px;
   justify-content: center;
 }
 
-#host-link-container:hover {
-  background-color: rgb(233, 233, 233);
+.fa-globe:hover {
+  background-color: #dcdcdc;
   border-radius: 70px;
-}
-
-#language-link-container {
-  display: flex;
-  padding: 10px;
-  justify-content: center;
-}
-
-#language-link-container:hover {
-  background-color: rgb(233, 233, 233);
-  border-radius: 70px;
-}
-
-/* NAVBAR PROFILE BUTTON STYLING */
-.nav-bar-button {
-  align-items: center;
-  background-color: white;
-  display: flex;
-  border: none;
-  color: black;
-  height: 25px;
-  padding-left: 10px;
-  text-align: start;
-  text-decoration: none;
-  width: 200px;
-}
-
-.nav-bar-button:hover {
-  background-color: rgb(239, 239, 239);
 }

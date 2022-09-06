@@ -66,10 +66,11 @@
 
 .booking-edit-container-button {
   border: none;
+  background-color: #dcdcdc;
 }
 
 .booking-button {
-  color: #555;
+  color: #4a4a4a;
 }
 
 .booking-button:hover {

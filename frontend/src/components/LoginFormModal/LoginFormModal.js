@@ -11,7 +11,7 @@ function LoginFormModal({ type }) {
       <button
         className={
           type === "navigation"
-            ? "nav-bar-button"
+            ? "profile-button-link"
             : "create-booking-login-button"
         }
         onClick={() => setShowModal(true)}

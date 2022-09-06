@@ -31,17 +31,15 @@ const EditBooking = ({ booking, setShowModal }) => {
 
     dispatch(
       bookingActions.editBookingThunk(booking.id, editStartDate, editEndDate)
-    ).catch(async (res) => {
-      const data = await res.json();
-      const errorArray = [];
-      if (data.errors)
-        Object.values(data.errors).forEach((error) => errorArray.push(error));
-      setErrors(errorArray);
-    });
-
-    if (errors.length === 0) {
-      setSubmitted(true);
-    }
+    )
+      .then(() => setSubmitted(true))
+      .catch(async (res) => {
+        const data = await res.json();
+        const errorArray = [];
+        if (data.errors)
+          Object.values(data.errors).forEach((error) => errorArray.push(error));
+        setErrors(errorArray);
+      });
   };
 
   return (

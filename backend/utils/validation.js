@@ -177,6 +177,11 @@ const validateBookingStartAndEndDate = (req, res, next) => {
   const startMonth = Number(startArr[1]);
   const startDay = Number(startArr[2]);
 
+  const endArr = endDate.split("-");
+  const endYear = Number(endArr[0]);
+  const endMonth = Number(endArr[1]);
+  const endDay = Number(endArr[2]);
+
   const currentDate = new Date();
   const year = currentDate.getFullYear();
   const month = currentDate.getMonth() + 1;
@@ -199,6 +204,20 @@ const validateBookingStartAndEndDate = (req, res, next) => {
     }
   } else if (day > startDay) {
     if (year === startYear && month === startMonth) {
+      return next(err);
+    }
+  }
+
+  err.errors.validDate = "Start date must be before end date.";
+
+  if (endYear < startYear) {
+    return next(err);
+  } else if (endMonth < startMonth) {
+    if (endYear === startYear) {
+      return next(err);
+    }
+  } else if (endDay < startDay) {
+    if (endYear === startYear && endMonth === startMonth) {
       return next(err);
     }
   }

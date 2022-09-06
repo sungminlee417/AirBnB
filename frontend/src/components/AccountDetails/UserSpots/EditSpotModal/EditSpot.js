@@ -57,19 +57,15 @@ const EditSpot = ({ spot, setShowModal }) => {
       previewImage: editPreviewImage,
     };
 
-    dispatch(spotsActions.editSpotThunk(spot.id, spotEditObj)).catch(
-      async (res) => {
+    dispatch(spotsActions.editSpotThunk(spot.id, spotEditObj))
+      .then(() => setSubmitted(true))
+      .catch(async (res) => {
         const data = await res.json();
         const errorArray = [];
         if (data.errors)
           Object.values(data.errors).forEach((error) => errorArray.push(error));
         setErrors(errorArray);
-      }
-    );
-
-    if (errors.length === 0) {
-      setSubmitted(true);
-    }
+      });
   };
 
   useEffect(() => {

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { Redirect, useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import * as singleSpotActions from "../../store/singleSpot";
 import "./CreateASpot.css";
 
@@ -18,13 +18,8 @@ const CreateASpot = () => {
   const [price, setPrice] = useState("");
   const [previewImage, setPreviewImage] = useState("");
   const [errors, setErrors] = useState([]);
-  const spot = useSelector((state) => state.spot);
 
-  if (Object.keys(spot).length) {
-    history.push("/successful-listing");
-  }
-
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     setErrors([]);
     e.preventDefault();
 
@@ -40,13 +35,17 @@ const CreateASpot = () => {
       price,
       previewImage,
     };
-    dispatch(singleSpotActions.createSpotThunk(spot)).catch(async (res) => {
-      const data = await res.json();
-      const errorArray = [];
-      if (data.errors)
-        Object.values(data.errors).forEach((error) => errorArray.push(error));
-      setErrors(errorArray);
-    });
+
+    await dispatch(singleSpotActions.createSpotThunk(spot))
+      .then(() => history.push("/successful-booking"))
+      .catch(async (res) => {
+        const data = await res.json();
+        const errorArray = [];
+        if (data.errors.length) {
+          Object.values(data.errors).forEach((error) => errorArray.push(error));
+          setErrors(errorArray);
+        }
+      });
   };
 
   const onHome = () => {

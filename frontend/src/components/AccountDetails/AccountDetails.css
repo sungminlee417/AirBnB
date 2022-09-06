@@ -1,6 +1,10 @@
-.account-details-container {
+#account-details {
   display: flex;
-  background-color: rgb(241, 241, 241);
+}
+
+.account-details-divider {
+  background-color: #c8c8c8;
+  width: 1px;
 }
 
 #account-details-sidebar {
@@ -8,9 +12,7 @@
   flex-direction: column;
   width: 24vw;
   gap: 25px;
-  height: 100vh;
-  border-right: 1px solid rgb(200, 200, 200);
-  top: 11.2vh;
+  top: 13.6%;
   position: sticky;
   background-color: white;
 }
@@ -50,5 +52,5 @@
 
 #account-details-content-container {
   width: 76vw;
-  height: 100vh;
+  background-color: #dcdcdc;
 }

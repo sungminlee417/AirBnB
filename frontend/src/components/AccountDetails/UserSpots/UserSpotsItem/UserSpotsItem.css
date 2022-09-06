@@ -65,10 +65,11 @@
 
 .spot-edit-container-button {
   border: none;
+  background-color: #dcdcdc;
 }
 
 .spot-button {
-  color: #555;
+  color: #4a4a4a;
 }
 
 .spot-button:hover {

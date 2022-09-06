@@ -1,17 +1,17 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import LoginFormModal from "../../LoginFormModal";
 import "./CreateBookingCard.css";
 import * as bookingActions from "../../../store/singleBooking";
-import { Redirect } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 const CreateBookingCard = ({ spot }) => {
   const dispatch = useDispatch();
+  const history = useHistory();
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [errors, setErrors] = useState([]);
   const user = useSelector((state) => state.session.user);
-  const booking = useSelector((state) => state.booking);
 
   const date = new Date();
   const year = date.getFullYear();
@@ -23,23 +23,19 @@ const CreateBookingCard = ({ spot }) => {
 
   const today = `${year}-${month}-${day}`;
 
-  if (Object.keys(booking).length) {
-    return <Redirect to="/successful-booking" booking={booking} />;
-  }
-
   const onSubmit = (e) => {
     setErrors([]);
     e.preventDefault();
 
-    dispatch(
-      bookingActions.createBookingThunk(spot.id, startDate, endDate)
-    ).catch(async (res) => {
-      const data = await res.json();
-      const errorArray = [];
-      if (data.errors)
-        Object.values(data.errors).forEach((error) => errorArray.push(error));
-      setErrors(errorArray);
-    });
+    dispatch(bookingActions.createBookingThunk(spot.id, startDate, endDate))
+      .then(() => history.push("/successful-booking"))
+      .catch(async (res) => {
+        const data = await res.json();
+        const errorArray = [];
+        if (data.errors)
+          Object.values(data.errors).forEach((error) => errorArray.push(error));
+        setErrors(errorArray);
+      });
   };
 
   const review =

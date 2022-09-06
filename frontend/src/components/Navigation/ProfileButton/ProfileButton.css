@@ -1,16 +1,18 @@
-.profile-button {
+/* PROFILE BUTTON STYLING */
+
+#profile-button {
   padding: 8px 12px;
   border-radius: 100px;
   background-color: white;
-  border: 0.5px solid #999;
+  border: 0.5px solid #c8c8c8;
   display: flex;
   gap: 5px;
   transition-property: box-shadow;
   transition-duration: 0.1s;
 }
 
-.profile-button:hover {
-  box-shadow: 0px 1.5px 3px #999;
+#profile-button:hover {
+  box-shadow: 0 0.5px 3px 0.2px #b9b9b9;
 }
 
 #session-links {
@@ -23,6 +25,24 @@
   padding-top: 5px;
   padding-bottom: 5px;
   position: absolute;
-  top: 65px;
-  right: 80px;
+  top: 75px;
+  right: 100px;
+}
+
+/* NAVBAR PROFILE BUTTON STYLING */
+.profile-button-link {
+  align-items: center;
+  background-color: white;
+  display: flex;
+  border: none;
+  color: black;
+  height: 25px;
+  padding-left: 10px;
+  text-align: start;
+  text-decoration: none;
+  width: 200px;
+}
+
+.profile-button-link:hover {
+  background-color: #dcdcdc;
 }

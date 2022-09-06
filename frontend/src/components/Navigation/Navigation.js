@@ -26,14 +26,10 @@ const Navigation = ({ isLoaded }) => {
         <div>
           <div id="user-options">
             <NavLink to="/host" id="host-link">
-              <div id="host-link-container">
-                {sessionUser && <div>Switch to hosting</div>}
-                {!sessionUser && <div>Become a host</div>}
-              </div>
+              {sessionUser && <div>Switch to hosting</div>}
+              {!sessionUser && <div>Become a host</div>}
             </NavLink>
-            <div id="language-link-container">
-              <i className="fa-solid fa-globe"></i>
-            </div>
+            <i className="fa-solid fa-globe"></i>
             <ProfileButton user={sessionUser} isLoaded={isLoaded} />
           </div>
         </div>

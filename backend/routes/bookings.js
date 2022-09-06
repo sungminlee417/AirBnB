@@ -17,6 +17,7 @@ const {
   validateBookingEndDate,
   validateBookingDateConflict,
   validateBookingStartDate,
+  validateBookingStartAndEndDate,
 } = require("../utils/validation");
 
 router.put(
@@ -26,6 +27,7 @@ router.put(
     requireAuth,
     checkBookingExists,
     requireAuthorizationEditingBooking,
+    validateBookingStartAndEndDate,
     validateBookingEndDate,
     validateBookingDateConflict,
   ],
@@ -36,7 +38,6 @@ router.put(
       startDate: startDate,
       endDate: endDate,
     });
-    console.log("hi");
     res.json(booking);
   }
 );
