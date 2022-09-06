@@ -1,0 +1,99 @@
+#create-spot-container {
+  display: flex;
+  height: 100vh;
+}
+
+#create-spot-left-side-container {
+  width: 50%;
+  height: 100vh;
+  background: linear-gradient(
+    0deg,
+    rgba(195, 34, 174, 1) 0%,
+    rgba(198, 43, 43, 1) 100%,
+    rgba(181, 74, 118, 0.5396752450980392) 100%,
+    rgba(150, 56, 202, 1) 100%,
+    rgba(60, 146, 203, 1) 100%,
+    rgba(70, 128, 207, 1) 100%,
+    rgba(75, 119, 209, 1) 100%,
+    rgba(83, 105, 212, 1) 100%,
+    rgba(193, 90, 214, 1) 100%
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#create-spot-left-side-container-text {
+  font-size: 40px;
+  color: white;
+  font-weight: 600;
+}
+
+#create-spot-right-side-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 50%;
+  padding: 20px;
+}
+
+#create-spot-back-to-home-button {
+  position: absolute;
+  top: 2%;
+  right: 2%;
+  font-size: 11px;
+  color: black;
+  height: 27px;
+  width: 90px;
+  border-radius: 100px;
+  border: none;
+  background-color: rgb(220, 220, 220);
+}
+
+#create-spot-back-to-home-button:hover {
+  background-color: rgb(235, 235, 235);
+}
+
+#create-spot-right-side-form-container {
+  width: 75%;
+}
+
+#create-spot-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.create-spot-form-input {
+  padding: 8px;
+  border-radius: 5px;
+}
+
+.create-spot-form-button {
+  font-size: 15px;
+  color: white;
+  height: 40px;
+  border-radius: 5px;
+  border: none;
+  background-color: rgb(255, 21, 99);
+}
+
+.create-spot-errors {
+  color: red !important;
+  font-size: 13px;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.create-spot-error {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+.create-spot-error-text {
+  font-size: 10px;
+}

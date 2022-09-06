@@ -38,7 +38,7 @@ const AccountDetails = () => {
                 className="account-detail-link"
                 to={`${match.url}/spots`}
               >
-                Your Spots
+                Your Listings
               </NavLink>
               <NavLink
                 className="account-detail-link"

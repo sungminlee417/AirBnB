@@ -1,77 +1,76 @@
-.user-bookings-item {
+#user-spots-item {
   display: flex;
   padding: 5px 0 5px 0;
   border-bottom: 1px solid rgb(200, 200, 200);
   align-items: center;
-  justify-content: space-between;
   padding-right: 10px;
   gap: 10px;
 }
 
-#user-bookings-item-img-container {
+#user-spots-item-img-container {
   width: 30%;
 }
 
-.user-bookings-item-img {
-  object-fit: cover;
+#user-spots-item-img {
   width: 300px;
   height: 225px;
+  object-fit: cover;
 }
 
-#user-booking-details {
+#user-spots-details {
   display: flex;
   gap: 50px;
-  justify-content: space-evenly;
   width: 70%;
+  justify-content: space-evenly;
 }
 
-.user-bookings-items-divider {
+.user-spots-items-divider {
   height: 1px;
   width: 100%;
 }
 
-#booking-spot-details {
+#user-spot-details {
   display: flex;
   flex-direction: column;
   gap: 2px;
   width: 150px;
 }
 
-#booking-spot-name {
+#user-spot-name {
   font-weight: 600;
   font-size: 18px;
   margin-bottom: 15px;
 }
 
-.booking-spot-address {
+.user-spot-address {
   font-size: 16px;
 }
 
-.booking-spot-check-bold {
+.user-spot-check-bold {
   font-weight: bold;
   font-size: 16px;
 }
 
-.booking-detail-check-date {
+.user-spot-detail-check-date {
   display: flex;
   flex-direction: column;
   gap: 7px;
 }
 
-.booking-edit-container {
+.user-spot-edit-container {
   display: flex;
   flex-direction: column;
   gap: 15px;
 }
 
-.booking-edit-container-button {
+.spot-edit-container-button {
   border: none;
 }
 
-.booking-button {
+.spot-button {
   color: #555;
 }
 
-.booking-button:hover {
+.spot-button:hover {
   color: black;
 }

@@ -1,59 +1,63 @@
 /* GENERAL STYLING */
-
-#navbar-container {
+#navigation-container {
   background-color: white;
-  border-bottom: 0.5px solid rgb(200, 200, 200);
-  padding-bottom: 25px;
-  box-shadow: 0.2px 0.2px 3px 0.3px rgb(213, 213, 213);
+  border-bottom: 0.5px solid #c8c8c8;
+  box-shadow: 0 0.5px 3px 0.2px #dcdcdc;
+  padding: 25px;
   position: sticky;
   top: 0;
   z-index: 1;
 }
 
-.navbar {
+#navigation-bar {
   align-items: center;
-  padding-top: 20px;
-  display: grid;
-  grid-template-columns: 35% 30% 35%;
+  display: flex;
+  justify-content: space-between;
 }
 
 /* HOMEPAGE LINK STYLING */
-
-.homepage-link {
+#homepage-link {
+  align-items: center;
   display: flex;
   gap: 5px;
-  align-items: center;
   text-decoration: none;
 }
 
-.fa-airbnb {
+.fa-airbnb,
+#homepage-link-name {
   color: #ff385c;
 }
 
-.homepage-link-name {
-  color: #ff385c;
-  font-family: sans-serif;
+#homepage-link-name {
   font-size: 22px;
   font-weight: 500;
 }
 
 /* SEARCH BAR STYLING */
-
 #search-bar {
   align-items: center;
-  width: 430px;
-  border: 0.5px solid #999;
+  background-color: white;
+  border: 0.5px solid #c8c8c8;
   border-radius: 50px;
   display: flex;
   gap: 30px;
   padding: 8px 25px;
-  box-shadow: 0 1px 5px 0.2px rgb(201, 201, 201);
+  box-shadow: 0 0.5px 3px 0.2px #dcdcdc;
   transition-duration: 0.5s;
-  margin: 0 2px 0 2px;
 }
 
 #search-bar:hover {
-  box-shadow: 1px 1px 6px 0.5px rgb(168, 168, 168);
+  box-shadow: 0 0.5px 3px 0.2px #b9b9b9;
+}
+
+.search-bar-divider {
+  background-color: #c8c8c8;
+  height: 24px;
+  width: 1px;
+}
+
+.search-bar-light-text {
+  color: #b9b9b9;
 }
 
 .fa-magnifying-glass {
@@ -65,21 +69,10 @@
   right: -15px;
 }
 
-.search-bar-divider {
-  background-color: rgb(186, 186, 186);
-  height: 24px;
-  width: 1px;
-}
-
-.light {
-  color: #888;
-}
-
 /* USER OPTIONS */
 #user-options {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
   gap: 5px;
 }
 

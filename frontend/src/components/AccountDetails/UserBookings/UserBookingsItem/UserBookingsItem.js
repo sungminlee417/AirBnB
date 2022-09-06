@@ -20,7 +20,10 @@ const UserBookingsItem = ({ booking }) => {
   return (
     <>
       <li className="user-bookings-item">
-        <img className="user-bookings-item-img" src={image} alt={name} />
+        <div id="user-bookings-item-img-container">
+          <div id="user-bookings-item-img-container"></div>
+          <img className="user-bookings-item-img" src={image} alt={name} />
+        </div>
         <div id="user-booking-details">
           <div id="booking-spot-details">
             <div id="booking-spot-name">{name}</div>

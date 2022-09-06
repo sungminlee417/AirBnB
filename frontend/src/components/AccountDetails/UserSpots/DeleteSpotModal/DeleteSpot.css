@@ -1,0 +1,43 @@
+#delete-spot-container {
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+  gap: 20px;
+  width: 100%;
+}
+
+#delete-spot-header {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+#delete-spot-card-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: rgb(240, 240, 240);
+  padding: 15px;
+}
+
+#delete-spot-card-container-spot-name {
+  font-weight: bold;
+}
+
+#delete-spot-card-container-created-date {
+  color: #777;
+}
+
+#delete-spot-card-image {
+  width: 150px;
+  height: 100px;
+  object-fit: cover;
+}
+
+#delete-spot-button {
+  font-size: 15px;
+  color: white;
+  height: 40px;
+  border-radius: 10px;
+  border: none;
+  background-color: rgb(255, 21, 99);
+}

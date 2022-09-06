@@ -32,6 +32,10 @@ export function Modal({ onClose, children, type }) {
       setStyle("modal-content-edit-booking");
     } else if (type === "delete-booking") {
       setStyle("modal-content-delete-booking");
+    } else if (type === "delete-spot") {
+      setStyle("modal-content-delete-spot");
+    } else if (type === "edit-spot") {
+      setStyle("modal-content-edit-spot");
     }
   }, [type]);
 
@@ -42,7 +46,7 @@ export function Modal({ onClose, children, type }) {
   return ReactDOM.createPortal(
     <div id="modal">
       <div id="modal-background" onClick={onClose} />
-      <div className={style}>{children}</div>
+      <div id={style}>{children}</div>
     </div>,
     modalNode
   );

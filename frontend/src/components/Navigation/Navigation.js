@@ -7,22 +7,22 @@ const Navigation = ({ isLoaded }) => {
   const sessionUser = useSelector((state) => state.session.user);
 
   return (
-    <div id="navbar-container">
-      <div className="navbar body-margin">
-        <div className="homepage-links">
-          <NavLink className="homepage-link" to="/">
+    <div id="navigation-container">
+      <div id="navigation-bar" className="body-margin">
+        <div id="homepage-links">
+          <NavLink id="homepage-link" to="/">
             <i className="fa-brands fa-airbnb fa-2x"></i>
-            <p className="homepage-link-name">airbnb</p>
+            <p id="homepage-link-name">airbnb</p>
           </NavLink>
         </div>
-        <div id="search-bar">
-          <div className="bold">Anywhere</div>
+        <button id="search-bar">
+          <div>Anywhere</div>
           <span className="search-bar-divider"></span>
-          <div className="bold">Any week</div>
+          <div>Any week</div>
           <span className="search-bar-divider"></span>
-          <div className="light">Add guests</div>
+          <div className="search-bar-light-text">Add guests</div>
           <i className="fa-solid fa-magnifying-glass"></i>
-        </div>
+        </button>
         <div>
           <div id="user-options">
             <NavLink to="/host" id="host-link">

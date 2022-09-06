@@ -7,6 +7,8 @@ import Spots from "./components/Spots";
 import AccountDetails from "./components/AccountDetails";
 import SingleSpot from "./components/SingleSpot";
 import SuccessfulBooking from "./components/SuccessfulBooking";
+import CreateASpot from "./components/CreateASpot";
+import SuccessfulListing from "./components/SuccessfulListing";
 
 function App() {
   const dispatch = useDispatch();
@@ -21,17 +23,27 @@ function App() {
 
   return (
     <div id="airbnb-app">
-      <Navigation isLoaded={isLoaded} />
       <Switch>
-        <Route exact path="/">
-          <Spots />
+        <Route exact path="/host">
+          <CreateASpot />
         </Route>
-        <Route path="/account-details">
-          {user && isLoaded && <AccountDetails user={user} />}
-        </Route>
-        <Route path="/spots/:spotId">{<SingleSpot />}</Route>
-        <Route path="/successful-booking">
-          <SuccessfulBooking />
+        <Route path="/">
+          <Navigation isLoaded={isLoaded} />
+          <Switch>
+            <Route exact path="/">
+              <Spots />
+            </Route>
+            <Route path="/account-details">
+              {user && isLoaded && <AccountDetails user={user} />}
+            </Route>
+            <Route path="/spots/:spotId">{<SingleSpot />}</Route>
+            <Route path="/successful-booking">
+              <SuccessfulBooking />
+            </Route>
+            <Route path="/successful-listing">
+              <SuccessfulListing />
+            </Route>
+          </Switch>
         </Route>
       </Switch>
     </div>

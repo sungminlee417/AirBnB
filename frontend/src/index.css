@@ -11,10 +11,12 @@ input:focus {
   outline: none;
 }
 
+/* MARGIN FOR CERTAIN COMPONENTS */
 .body-margin {
   margin: 0px 75px 0px 75px;
 }
 
+/* FORM ERROR STYLING */
 .errors {
   color: red !important;
   font-size: 13px;

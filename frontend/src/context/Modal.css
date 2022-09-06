@@ -27,7 +27,7 @@
   width: 500px;
 }
 
-.modal-content-login {
+#modal-content-login {
   position: absolute;
   background-color: white;
   border-radius: 10px;
@@ -35,7 +35,7 @@
   width: 500px;
 }
 
-.modal-content-signup {
+#modal-content-signup {
   position: absolute;
   background-color: white;
   border-radius: 10px;
@@ -43,7 +43,7 @@
   width: 500px;
 }
 
-.modal-content-delete-booking {
+#modal-content-delete-booking {
   position: absolute;
   background-color: white;
   border-radius: 10px;
@@ -51,7 +51,25 @@
   width: 500px;
 }
 
-.modal-content-edit-booking {
+#modal-content-edit-booking {
+  position: absolute;
+  background-color: white;
+  border-radius: 10px;
+  height: 200px;
+  width: 375px;
+  display: flex;
+}
+
+#modal-content-delete-spot {
+  position: absolute;
+  background-color: white;
+  border-radius: 10px;
+  height: 300px;
+  width: 500px;
+  display: flex;
+}
+
+#modal-content-edit-spot {
   position: absolute;
   background-color: white;
   border-radius: 10px;

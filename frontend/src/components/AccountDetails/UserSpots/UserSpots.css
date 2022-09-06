@@ -1,0 +1,8 @@
+#no-bookings-available {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 200px 200px 200px 200px;
+  font-size: 33px;
+  color: #999;
+}

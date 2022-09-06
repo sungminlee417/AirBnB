@@ -2,6 +2,7 @@ import { csrfFetch } from "./csrf";
 
 const LOAD_SPOT = `spot/LOAD`;
 const CLEAR_SPOT = `spot/CLEAR`;
+const CREATE_SPOT = `spot/CREATE`;
 
 export const loadSpot = (spot) => {
   return {
@@ -22,6 +23,18 @@ export const loadOneSpotThunk = (spotId) => async (dispatch) => {
   const spot = await response.json();
 
   dispatch(loadSpot(spot));
+};
+
+export const createSpotThunk = (spot) => async (dispatch) => {
+  const response = await csrfFetch(`/spots`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(spot),
+  });
+  const data = await response.json();
+  dispatch(loadSpot(data));
 };
 
 const initialState = {};
