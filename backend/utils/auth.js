@@ -103,7 +103,9 @@ const requireAuthorizationCreatingBooking = async (req, res, next) => {
   if (spot.ownerId !== req.user.id) {
     return next();
   } else {
-    const err = new Error("You cannot book your own spot.");
+    const err = new Error();
+    err.errors = {};
+    err.errors.message = "You cannot book your own spot.";
     err.status = 403;
     return next(err);
   }

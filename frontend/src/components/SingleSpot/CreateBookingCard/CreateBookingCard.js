@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import LoginFormModal from "../../LoginFormModal";
 import "./CreateBookingCard.css";
@@ -23,12 +23,26 @@ const CreateBookingCard = ({ spot }) => {
 
   const today = `${year}-${month}-${day}`;
 
+  useEffect(() => {
+    return () => dispatch(bookingActions.clearBooking());
+  });
+
   const onSubmit = (e) => {
     setErrors([]);
     e.preventDefault();
 
     dispatch(bookingActions.createBookingThunk(spot.id, startDate, endDate))
-      .then(() => history.push("/successful-booking"))
+      .then(() =>
+        history.push({
+          pathname: "/successful-posting",
+          state: {
+            spot: spot,
+            type: "booking",
+            startDate: startDate,
+            endDate: endDate,
+          },
+        })
+      )
       .catch(async (res) => {
         const data = await res.json();
         const errorArray = [];

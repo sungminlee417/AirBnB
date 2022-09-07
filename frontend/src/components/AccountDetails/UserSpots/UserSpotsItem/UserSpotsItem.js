@@ -15,12 +15,16 @@ const UserSpotsItem = ({ spot }) => {
             <div className="user-spot-address">{spot.state}</div>
           </div>
           <div className="user-spot-detail-check-date">
-            <div className="user-spot-check-bold">Created</div>
-            <div className="user-spot-check-light">{spot.createdAt}</div>
+            <div className="user-spot-check-bold">Created At</div>
+            <div className="user-spot-check-light">
+              {spot.createdAt.split("T")[0]}
+            </div>
           </div>
           <div className="user-spot-detail-check-date">
-            <div className="user-spot-check-bold">Updated</div>
-            <div className="user-spot-check-light">{spot.updatedAt}</div>
+            <div className="user-spot-check-bold">Updated At</div>
+            <div className="user-spot-check-light">
+              {spot.updatedAt.split("T")[0]}
+            </div>
           </div>
           <div className="user-spot-edit-container">
             <EditSpotModal spot={spot} />

@@ -36,11 +36,9 @@ export const createBookingThunk =
 const initialState = {};
 
 export const bookingReducer = (state = initialState, action) => {
-  const newState = { ...state };
   switch (action.type) {
     case ADD_BOOKING:
       return action.booking;
-      return newState;
     case CLEAR_BOOKING:
       return action.booking;
     default:

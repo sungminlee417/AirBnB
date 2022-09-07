@@ -1,5 +1,6 @@
 #account-details {
   display: flex;
+  height: 100vh;
 }
 
 .account-details-divider {
@@ -24,7 +25,7 @@
   padding: 33px;
 }
 
-.account-sidebar-header {
+#account-sidebar-header {
   font-size: 20px;
 }
 
@@ -50,7 +51,18 @@
   border-left: 8px solid #ff385c;
 }
 
+.account-detail-link-active {
+  color: black;
+  font-size: 18px;
+  text-decoration: none;
+  padding: 25px;
+  border-left: 8px solid transparent;
+  background-color: rgb(241, 241, 241);
+  border-left: 8px solid #ff385c;
+}
+
 #account-details-content-container {
   width: 76vw;
   background-color: #dcdcdc;
+  overflow: auto;
 }

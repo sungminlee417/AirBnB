@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { NavLink, Redirect } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import * as sessionActions from "../../../store/session";
 import DemoLogin from "../../DemoLogin";
@@ -21,12 +21,12 @@ const ProfileButton = ({ user, isLoaded }) => {
   if (user && isLoaded) {
     sessionLinks = (
       <div id="session-links">
-        <NavLink to="/account-details" className="profile-button-link">
+        <Link to="/account-details" className="profile-button-link">
           Account
-        </NavLink>
-        <NavLink to="/" className="profile-button-link" onClick={logout}>
+        </Link>
+        <Link to="/" className="profile-button-link" onClick={logout}>
           Log out
-        </NavLink>
+        </Link>
       </div>
     );
   } else {

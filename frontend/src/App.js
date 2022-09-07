@@ -6,9 +6,8 @@ import Navigation from "./components/Navigation";
 import Spots from "./components/Spots";
 import AccountDetails from "./components/AccountDetails";
 import SingleSpot from "./components/SingleSpot";
-import SuccessfulBooking from "./components/SuccessfulBooking";
+import SuccessfulPosting from "./components/SuccessfulPosting";
 import CreateASpot from "./components/CreateASpot";
-import SuccessfulListing from "./components/SuccessfulListing";
 
 function App() {
   const dispatch = useDispatch();
@@ -37,11 +36,8 @@ function App() {
               {user && isLoaded && <AccountDetails user={user} />}
             </Route>
             <Route path="/spots/:spotId">{<SingleSpot />}</Route>
-            <Route path="/successful-booking">
-              <SuccessfulBooking />
-            </Route>
-            <Route path="/successful-listing">
-              <SuccessfulListing />
+            <Route path="/successful-posting">
+              <SuccessfulPosting />
             </Route>
           </Switch>
         </Route>

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Redirect, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import * as singleSpotActions from "../../store/singleSpot";
 import "./CreateASpot.css";
@@ -19,6 +19,10 @@ const CreateASpot = () => {
   const [previewImage, setPreviewImage] = useState("");
   const [errors, setErrors] = useState([]);
 
+  useEffect(() => {
+    return () => dispatch(singleSpotActions.clearSpot());
+  });
+
   const onSubmit = async (e) => {
     setErrors([]);
     e.preventDefault();
@@ -37,7 +41,15 @@ const CreateASpot = () => {
     };
 
     await dispatch(singleSpotActions.createSpotThunk(spot))
-      .then(() => history.push("/successful-booking"))
+      .then(() =>
+        history.push({
+          pathname: "/successful-posting",
+          state: {
+            spot: spot,
+            type: "listing",
+          },
+        })
+      )
       .catch(async (res) => {
         const data = await res.json();
         const errorArray = [];
