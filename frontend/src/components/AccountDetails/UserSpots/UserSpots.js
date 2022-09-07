@@ -10,6 +10,7 @@ const UserSpots = () => {
 
   useEffect(() => {
     dispatch(spotsActions.loadYourSpotsThunk());
+    return () => dispatch(spotsActions.clearSpots());
   }, [dispatch]);
 
   return (

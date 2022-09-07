@@ -1,37 +1,51 @@
-#edit-booking-container {
+#edit-spot-container {
   display: flex;
   flex-direction: column;
   width: 100%;
-  gap: 15px;
   padding: 30px;
   justify-content: center;
   align-items: center;
 }
 
-#edit-booking-container-button {
-  display: flex;
-  position: relative;
-  border-radius: 10px;
-  justify-content: space-between;
-  gap: 10px;
-  padding: 10px;
-  background-color: white;
-  border: 1px solid #999;
+#edit-spot-header {
+  align-self: flex-start;
+  font-weight: 600;
+  font-size: 18px;
+  grid-area: a;
+}
+
+#edit-spot-form {
+  display: grid;
   width: 100%;
+  height: 100%;
+  grid-template-areas: "a a";
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
 }
 
-#edit-booking-container-button:focus {
-  border: 1px solid black;
-  border-style: inset;
+.edit-spot-input-field-container {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }
 
-#edit-button {
+.edit-spot-input-field-label {
+  font-weight: 600;
+}
+
+.edit-spot-form-input {
+  width: 100%;
+  height: 30px;
+  border: 1px solid #999;
+  border-radius: 5px;
+}
+
+#edit-spot-form-button {
   font-size: 15px;
   color: white;
-  height: 40px;
   border-radius: 10px;
   border: none;
   background-color: rgb(255, 21, 99);
-  height: 30%;
+  height: 10%;
   width: 100%;
 }

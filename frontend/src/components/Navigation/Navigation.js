@@ -10,7 +10,7 @@ const Navigation = ({ isLoaded }) => {
     <div id="navigation-container">
       <div id="navigation-bar" className="body-margin">
         <div id="homepage-links">
-          <Link id="homepage-link" exact to="/">
+          <Link id="homepage-link" exact="true" to="/">
             <i className="fa-brands fa-airbnb fa-2x"></i>
             <p id="homepage-link-name">airbnb</p>
           </Link>

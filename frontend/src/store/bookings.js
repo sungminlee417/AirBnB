@@ -3,6 +3,7 @@ import { csrfFetch } from "./csrf";
 const LOAD_BOOKINGS = `bookings/LOAD`;
 const DELETE_BOOKING = `booking/DELETE`;
 const EDIT_BOOKING = `booking/EDIT`;
+const CLEAR_BOOKINGS = "bookings/CLEAR";
 
 export const loadYourBookings = (bookings) => {
   return {
@@ -22,6 +23,13 @@ export const editBooking = (booking) => {
   return {
     type: EDIT_BOOKING,
     booking,
+  };
+};
+
+export const clearBookings = () => {
+  return {
+    type: CLEAR_BOOKINGS,
+    bookings: {},
   };
 };
 
@@ -73,6 +81,8 @@ export const bookingsReducer = (state = initialState, action) => {
       booking.startDate = action.booking.startDate;
       booking.endDate = action.booking.endDate;
       return newState;
+    case CLEAR_BOOKINGS:
+      return action.bookings;
     default:
       return state;
   }

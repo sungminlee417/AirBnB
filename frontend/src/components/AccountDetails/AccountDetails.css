@@ -1,6 +1,7 @@
 #account-details {
   display: flex;
   height: 100vh;
+  width: 100vw;
 }
 
 .account-details-divider {
@@ -62,7 +63,7 @@
 }
 
 #account-details-content-container {
-  width: 76vw;
   background-color: #dcdcdc;
   overflow: auto;
+  width: 76vw;
 }

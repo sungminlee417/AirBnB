@@ -10,6 +10,7 @@ const UserBookings = () => {
 
   useEffect(() => {
     dispatch(bookingsActions.loadYourBookingsThunk());
+    return () => dispatch(bookingsActions.clearBookings());
   }, [dispatch]);
 
   return (

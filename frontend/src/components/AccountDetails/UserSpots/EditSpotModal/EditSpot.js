@@ -30,16 +30,6 @@ const EditSpot = ({ spot, setShowModal }) => {
   const [errors, setErrors] = useState([]);
   const [submitted, setSubmitted] = useState(false);
 
-  const date = new Date();
-  const year = date.getFullYear();
-  const month =
-    (date.getMonth() + 1).toString().length === 1
-      ? "0" + (date.getMonth() + 1)
-      : date.getMonth() + 1;
-  const day = date.getDate();
-
-  const today = `${year}-${month}-${day}`;
-
   const onSubmit = (e) => {
     setErrors([]);
     e.preventDefault();
@@ -72,72 +62,123 @@ const EditSpot = ({ spot, setShowModal }) => {
     if (submitted) {
       setShowModal(false);
     }
-  }, [submitted]);
+  }, [setShowModal, submitted]);
 
   return (
-    <div id="edit-booking-container">
-      <form onSubmit={onSubmit} id="edit-spot-form">
-        <input
-          value={editAddress}
-          className="edit-spot-form-input"
-          placeholder="Address"
-          onChange={(e) => setEditAddress(e.target.value)}
-        />
-        <input
-          value={editCity}
-          className="edit-spot-form-input"
-          placeholder="City"
-          onChange={(e) => setEditCity(e.target.value)}
-        />
-        <input
-          value={editState}
-          className="edit-spot-form-input"
-          placeholder="State"
-          onChange={(e) => setEditState(e.target.value)}
-        />
-        <input
-          value={editCountry}
-          className="edit-spot-form-input"
-          placeholder="Country"
-          onChange={(e) => setEditCountry(e.target.value)}
-        />
-        <input
-          value={editLat}
-          className="edit-spot-form-input"
-          placeholder="Latitude"
-          onChange={(e) => setEditLat(e.target.value)}
-        />
-        <input
-          value={editLng}
-          className="edit-spot-form-input"
-          placeholder="Longitude"
-          onChange={(e) => setEditLng(e.target.value)}
-        />
-        <input
-          value={editName}
-          className="edit-spot-form-input"
-          placeholder="Listing Name"
-          onChange={(e) => setEditName(e.target.value)}
-        />
-        <input
-          value={editDescription}
-          type="textarea"
-          className="edit-spot-form-input"
-          placeholder="Listing Description"
-          onChange={(e) => setEditDescription(e.target.value)}
-        />
-        <input
-          value={editPrice}
-          className="edit-spot-form-input"
-          placeholder="Listing Price"
-          onChange={(e) => setEditPrice(e.target.value)}
-        />
-        <input
-          value={editPreviewImage}
-          className="edit-spot-form-input"
-          placeholder="Image URL"
-          onChange={(e) => setEditPreviewImage(e.target.value)}
-        />
+    <div id="edit-spot-container">
+      <form id="edit-spot-form">
+        <header id="edit-spot-header">Edit your listing</header>
+        <div className="edit-spot-input-field-container">
+          <label className="edit-spot-input-field-label" for="address">
+            Address:{" "}
+          </label>
+          <input
+            name="address"
+            value={editAddress}
+            className="edit-spot-form-input"
+            onChange={(e) => setEditAddress(e.target.value)}
+          />
+        </div>
+        <div className="edit-spot-input-field-container">
+          <label className="edit-spot-input-field-label" for="city">
+            City:{" "}
+          </label>
+          <input
+            name="city"
+            value={editCity}
+            className="edit-spot-form-input"
+            onChange={(e) => setEditCity(e.target.value)}
+          />
+        </div>
+        <div className="edit-spot-input-field-container">
+          <label className="edit-spot-input-field-label" for="state">
+            State:{" "}
+          </label>
+          <input
+            name="state"
+            value={editState}
+            className="edit-spot-form-input"
+            onChange={(e) => setEditState(e.target.value)}
+          />
+        </div>
+        <div className="edit-spot-input-field-container">
+          <label className="edit-spot-input-field-label" for="country">
+            Country:{" "}
+          </label>
+          <input
+            name="country"
+            value={editCountry}
+            className="edit-spot-form-input"
+            onChange={(e) => setEditCountry(e.target.value)}
+          />
+        </div>
+        <div className="edit-spot-input-field-container">
+          <label className="edit-spot-input-field-label" for="lat">
+            Latitude:{" "}
+          </label>
+          <input
+            name="lat"
+            value={editLat}
+            className="edit-spot-form-input"
+            onChange={(e) => setEditLat(e.target.value)}
+          />
+        </div>
+        <div className="edit-spot-input-field-container">
+          <label className="edit-spot-input-field-label" for="lng">
+            Longitude:{" "}
+          </label>
+          <input
+            name="lng"
+            value={editLng}
+            className="edit-spot-form-input"
+            onChange={(e) => setEditLng(e.target.value)}
+          />
+        </div>
+        <div className="edit-spot-input-field-container">
+          <label className="edit-spot-input-field-label" for="name">
+            Name:{" "}
+          </label>
+          <input
+            name="name"
+            value={editName}
+            className="edit-spot-form-input"
+            onChange={(e) => setEditName(e.target.value)}
+          />
+        </div>
+        <div className="edit-spot-input-field-container">
+          <label className="edit-spot-input-field-label" for="description">
+            Description:{" "}
+          </label>
+          <textarea
+            name="description"
+            value={editDescription}
+            type="textarea"
+            className="edit-spot-form-input"
+            onChange={(e) => setEditDescription(e.target.value)}
+          />
+        </div>
+        <div className="edit-spot-input-field-container">
+          <label className="edit-spot-input-field-label" for="price">
+            Price:{" "}
+          </label>
+          <input
+            name="price"
+            value={editPrice}
+            className="edit-spot-form-input"
+            onChange={(e) => setEditPrice(e.target.value)}
+          />
+        </div>
+        <div className="edit-spot-input-field-container">
+          <label className="edit-spot-input-field-label" for="previewImage">
+            Image URL:{" "}
+          </label>
+          <input
+            name="previewImage"
+            value={editPreviewImage}
+            className="edit-spot-form-input"
+            onChange={(e) => setEditPreviewImage(e.target.value)}
+          />
+        </div>
         <ul className="edit-spot-errors">
           {Object.values(errors).map((error, i) => {
             return (
@@ -148,10 +189,10 @@ const EditSpot = ({ spot, setShowModal }) => {
             );
           })}
         </ul>
-        <button className="edit-spot-form-button" type="submit">
-          Submit edit
-        </button>
       </form>
+      <button onClick={onSubmit} id="edit-spot-form-button" type="submit">
+        Submit edit
+      </button>
     </div>
   );
 };

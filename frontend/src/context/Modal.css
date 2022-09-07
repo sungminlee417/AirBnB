@@ -19,14 +19,6 @@
   background-color: rgba(0, 0, 0, 0.7);
 }
 
-#modal-content {
-  position: absolute;
-  background-color: white;
-  border-radius: 10px;
-  height: 300px;
-  width: 500px;
-}
-
 #modal-content-login {
   position: absolute;
   background-color: white;
@@ -73,7 +65,7 @@
   position: absolute;
   background-color: white;
   border-radius: 10px;
-  height: 200px;
-  width: 375px;
+  height: 600px;
+  width: 800px;
   display: flex;
 }

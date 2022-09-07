@@ -50,9 +50,11 @@ const validateSpot = [
     .exists({ checkFalsy: true })
     .withMessage("Country is required"),
   check("lat").exists({ checkFalsy: true }).withMessage("Latitude is required"),
+  check("lat").isDecimal().withMessage("Latitude must be a decimal"),
   check("lng")
     .exists({ checkFalsy: true })
     .withMessage("Longitude is required"),
+  check("lng").isDecimal().withMessage("Longitude must be a decimal"),
   check("name")
     .exists({ checkFalsy: true })
     .isLength({ max: 50 })
@@ -61,6 +63,7 @@ const validateSpot = [
     .exists({ checkFalsy: true })
     .withMessage("Description is required"),
   check("price").exists({ checkFalsy: true }).withMessage("Price is required"),
+  check("price").isDecimal().withMessage("Price must be a decimal"),
   handleValidationErrors,
 ];
 
