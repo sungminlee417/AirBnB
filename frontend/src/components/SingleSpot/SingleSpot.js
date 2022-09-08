@@ -74,9 +74,9 @@ const SingleSpot = () => {
           </div>
           <CreateBookingCard spot={spot} />
         </div>
-        <div id="sing-spot-reviews-container">
+        {/* <div id="sing-spot-reviews-container">
           <SpotReviews />
-        </div>
+        </div> */}
       </div>
     </div>
   );
