@@ -6,3 +6,16 @@
   border: none;
   background-color: rgb(255, 21, 99);
 }
+
+#not-logged-in-host-link {
+  text-decoration: none;
+  padding: 10px;
+  color: black;
+  background-color: white;
+  border: none;
+}
+
+#not-logged-in-host-link:hover {
+  background-color: #dcdcdc;
+  border-radius: 70px;
+}

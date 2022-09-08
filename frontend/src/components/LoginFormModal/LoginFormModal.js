@@ -6,8 +6,10 @@ import "./LoginFormModal.css";
 function LoginFormModal({ type }) {
   const [showModal, setShowModal] = useState(false);
 
-  return (
-    <>
+  let button;
+
+  if (type === "navigation" || type === "createBooking") {
+    button = (
       <button
         className={
           type === "navigation"
@@ -18,9 +20,23 @@ function LoginFormModal({ type }) {
       >
         Log In
       </button>
+    );
+  }
+
+  if (type === "host-link") {
+    button = (
+      <button id="not-logged-in-host-link" onClick={() => setShowModal(true)}>
+        Switch to hosting
+      </button>
+    );
+  }
+
+  return (
+    <>
+      {button}
       {showModal && (
         <Modal onClose={() => setShowModal(false)} type={"login"}>
-          <LoginForm />
+          <LoginForm type={type} />
         </Modal>
       )}
     </>

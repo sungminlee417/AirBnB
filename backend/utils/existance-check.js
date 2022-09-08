@@ -111,10 +111,10 @@ const checkConflictingBookingExists = async (req, res, next) => {
       err.errors = {};
       console.log("hi");
 
-      if (bookingStartPrim <= startPrim && bookingEndPrim >= startPrim) {
+      if (bookingStartPrim <= startPrim && bookingEndPrim > startPrim) {
         err.errors[1] = "Start date conflicts with an existing booking";
       }
-      if (bookingStartPrim <= endPrim && bookingEndPrim >= endPrim) {
+      if (bookingStartPrim < endPrim && bookingEndPrim >= endPrim) {
         err.errors[2] = "End date conflicts with an existing booking";
       }
       if (bookingStartPrim >= startPrim && bookingEndPrim <= endPrim) {

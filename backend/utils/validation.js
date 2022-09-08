@@ -116,7 +116,7 @@ const validateBookingEndDate = (req, res, next) => {
 
 // VALIDATE BOOKING DATE CONFLICT
 const validateBookingDateConflict = async (req, res, next) => {
-  const booking = await Booking.findByPk(req.params.bookingId, {
+  const bookingEdit = await Booking.findByPk(req.params.bookingId, {
     include: { model: Spot, attributes: ["id"] },
   });
 
@@ -127,7 +127,7 @@ const validateBookingDateConflict = async (req, res, next) => {
   const user = req.user;
 
   const bookings = await Booking.findAll({
-    where: [{ userId: user.id }, { spotId: booking.Spot.id }],
+    where: [{ userId: user.id }, { spotId: bookingEdit.Spot.id }],
   });
 
   const startPrim = new Date(startArr[0], startArr[1] - 1, startArr[2])[
@@ -139,43 +139,45 @@ const validateBookingDateConflict = async (req, res, next) => {
 
   if (bookings) {
     bookings.forEach((booking) => {
-      const bookingStartArr = booking.startDate.split("-");
-      const bookingEndArr = booking.endDate.split("-");
+      if (booking.id !== bookingEdit.id) {
+        const bookingStartArr = booking.startDate.split("-");
+        const bookingEndArr = booking.endDate.split("-");
 
-      const bookingStartPrim = new Date(
-        bookingStartArr[0],
-        bookingStartArr[1] - 1,
-        bookingStartArr[2]
-      )[Symbol.toPrimitive]("number");
+        const bookingStartPrim = new Date(
+          bookingStartArr[0],
+          bookingStartArr[1] - 1,
+          bookingStartArr[2]
+        )[Symbol.toPrimitive]("number");
 
-      const bookingEndPrim = new Date(
-        bookingEndArr[0],
-        bookingEndArr[1] - 1,
-        bookingEndArr[2]
-      )[Symbol.toPrimitive]("number");
+        const bookingEndPrim = new Date(
+          bookingEndArr[0],
+          bookingEndArr[1] - 1,
+          bookingEndArr[2]
+        )[Symbol.toPrimitive]("number");
 
-      const err = new Error(
-        "Sorry, this spot is already booked for the specified dates"
-      );
+        const err = new Error(
+          "Sorry, this spot is already booked for the specified dates"
+        );
 
-      err.status = 403;
-      err.errors = {};
-      console.log("hi");
+        err.status = 403;
+        err.errors = {};
+        console.log("hi");
 
-      if (bookingStartPrim <= startPrim && bookingEndPrim >= startPrim) {
-        err.errors[1] = "Start date conflicts with an existing booking";
-      }
-      if (bookingStartPrim <= endPrim && bookingEndPrim >= endPrim) {
-        err.errors[2] = "End date conflicts with an existing booking";
-      }
-      if (bookingStartPrim >= startPrim && bookingEndPrim <= endPrim) {
-        err.errors[3] = "Booking already exists between two dates";
-      }
-      if (bookingStartPrim <= startPrim && bookingEndPrim >= endPrim) {
-        err.errors[4] = "Booking already exists outside two dates";
-      }
-      if (Object.values(err.errors).length) {
-        return next(err);
+        if (bookingStartPrim <= startPrim && bookingEndPrim > startPrim) {
+          err.errors[1] = "Start date conflicts with an existing booking";
+        }
+        if (bookingStartPrim < endPrim && bookingEndPrim >= endPrim) {
+          err.errors[2] = "End date conflicts with an existing booking";
+        }
+        if (bookingStartPrim >= startPrim && bookingEndPrim <= endPrim) {
+          err.errors[3] = "Booking already exists between two dates";
+        }
+        if (bookingStartPrim <= startPrim && bookingEndPrim >= endPrim) {
+          err.errors[4] = "Booking already exists outside two dates";
+        }
+        if (Object.values(err.errors).length) {
+          return next(err);
+        }
       }
     });
   }

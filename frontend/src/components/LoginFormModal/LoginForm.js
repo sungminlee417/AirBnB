@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { Redirect } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import * as sessionActions from "../../store/session";
 import "./LoginForm.css";
 
-const LoginForm = () => {
+const LoginForm = ({ type }) => {
   const dispatch = useDispatch();
+  const history = useHistory();
   const sessionUser = useSelector((state) => state.session.user);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -15,13 +16,15 @@ const LoginForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    return dispatch(sessionActions.login(email, password)).catch(
-      async (res) => {
+    dispatch(sessionActions.login(email, password))
+      .then(() => {
+        if (type === "host-link") history.push("/host");
+      })
+      .catch(async (res) => {
         const data = await res.json();
         if (data && data.errors) setErrors(data.errors);
         if (data.statusCode === 401) setErrors([data.message]);
-      }
-    );
+      });
   };
 
   return (

@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import ProfileButton from "./ProfileButton/ProfileButton";
 import "./Navigation.css";
+import LoginFormModal from "../LoginFormModal";
 
 const Navigation = ({ isLoaded }) => {
   const sessionUser = useSelector((state) => state.session.user);
@@ -25,10 +26,14 @@ const Navigation = ({ isLoaded }) => {
         </button>
         <div>
           <div id="user-options">
-            <Link to="/host" id="host-link">
-              {sessionUser && <div>Switch to hosting</div>}
-              {!sessionUser && <div>Become a host</div>}
-            </Link>
+            <>
+              {sessionUser && (
+                <Link to="/host" id="host-link">
+                  <div>Become a host</div>
+                </Link>
+              )}
+              {!sessionUser && <LoginFormModal type={"host-link"} />}
+            </>
             <i className="fa-solid fa-globe"></i>
             <ProfileButton user={sessionUser} isLoaded={isLoaded} />
           </div>
