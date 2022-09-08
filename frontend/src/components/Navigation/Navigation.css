@@ -92,9 +92,11 @@
   display: flex;
   padding: 10px;
   justify-content: center;
+  display: none;
 }
 
 .fa-globe:hover {
   background-color: #dcdcdc;
   border-radius: 70px;
+  display: none;
 }
