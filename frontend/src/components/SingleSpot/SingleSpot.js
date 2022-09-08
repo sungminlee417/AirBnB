@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import * as singleSpotActions from "../../store/singleSpot";
 import CreateBookingCard from "./CreateBookingCard";
 import "./SingleSpot.css";
+import SpotReviews from "./SpotReviews";
 
 const SingleSpot = () => {
   const dispatch = useDispatch();
@@ -72,6 +73,9 @@ const SingleSpot = () => {
             <div id="single-spot-body-description">{spot.description}</div>
           </div>
           <CreateBookingCard spot={spot} />
+        </div>
+        <div id="sing-spot-reviews-container">
+          <SpotReviews />
         </div>
       </div>
     </div>
