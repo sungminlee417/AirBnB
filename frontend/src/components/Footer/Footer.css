@@ -1,0 +1,17 @@
+#footer-container {
+  width: 100%;
+  position: sticky;
+  bottom: 0;
+  padding: 15px 75px 15px 75px;
+  background-color: white;
+  border-top: 0.5px solid #c8c8c8;
+}
+
+#about-link {
+  text-decoration: none;
+  color: black;
+}
+
+#about-link:hover {
+  text-decoration: underline;
+}

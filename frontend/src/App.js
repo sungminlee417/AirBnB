@@ -8,6 +8,7 @@ import AccountDetails from "./components/AccountDetails";
 import SingleSpot from "./components/SingleSpot";
 import SuccessfulPosting from "./components/SuccessfulPosting";
 import CreateASpot from "./components/CreateASpot";
+import Footer from "./components/Footer";
 
 function App() {
   const dispatch = useDispatch();
@@ -31,6 +32,7 @@ function App() {
           <Switch>
             <Route exact path="/">
               <Spots />
+              <Footer />
             </Route>
             <Route path="/account-details">
               {user && isLoaded && <AccountDetails user={user} />}
