@@ -35,7 +35,7 @@ const AccountDetails = () => {
                 </p>
               </header>
               <div className="account-detail-links">
-                <NavLink
+                {/* <NavLink
                   className={(isActive) =>
                     isActive
                       ? "account-detail-link-active"
@@ -45,7 +45,7 @@ const AccountDetails = () => {
                   to={`${match.url}`}
                 >
                   Account Details
-                </NavLink>
+                </NavLink> */}
                 <NavLink
                   className={(isActive) =>
                     isActive
@@ -72,11 +72,11 @@ const AccountDetails = () => {
           <div className="account-details-divider"></div>
           <section id="account-details-content-container">
             <Switch>
-              <Route exact path={match.url}>
+              {/* <Route exact path={match.url}>
                 <div id="account-details-info">
                   ACCOUNT SETTINGS WILL GO HERE
                 </div>
-              </Route>
+              </Route> */}
               <Route path={`${match.url}/spots`}>
                 <UserSpots />
               </Route>

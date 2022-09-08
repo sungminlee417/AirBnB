@@ -11,7 +11,10 @@ const {
   requireAuthorizationDeletingBooking,
 } = require("../utils/auth");
 
-const { checkBookingExists } = require("../utils/existance-check");
+const {
+  checkBookingExists,
+  checkConflictingBookingExists,
+} = require("../utils/existance-check");
 
 const {
   validateBookingEndDate,

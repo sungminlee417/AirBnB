@@ -2,6 +2,24 @@
 
 [Live Link](https://bnb-ground.herokuapp.com/)
 
+## Setup
+
+In order to start up this app after cloning it from https://github.com/sungminlee417/AirBnB.git, run `npm install` in both the backend and frontend folders to install all necessary dependencies.
+
+In the backend folder
+
+1. Create a `.env` file following the `.env.example` to set up your local environement variables.
+2. Setup the database by running:
+
+- `dotenv npx sequelize db:migrate`
+- `dotenv npx sequelize db:seed:all`
+
+3. Run `npm start` to start up the backend.
+
+Run `npm start` to start up your frontend.
+
+## About AirBnB Clone
+
 This AirBnB clone is a PERN stack application using React/Redux for the frontend, and Express/PostgresSQL for the backend. This app allows users to either host or book listings for renting over a period of time. Users also have the ability to edit their listings/bookings as long as the edits pass validations listed on the backend.
 
 ![landing-page-screen](./readme-resources/Screen%20Shot%202022-09-06%20at%208.18.46%20AM.png)

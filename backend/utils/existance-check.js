@@ -70,26 +70,60 @@ const checkBookingExists = async (req, res, next) => {
 // CREATE A BOOKING: CHECK IF BOOKING ALREADY EXISTS AND IF DATES CONFLICT MIDDLEWARE
 const checkConflictingBookingExists = async (req, res, next) => {
   const { startDate, endDate } = req.body;
+  const startArr = startDate.split("-");
+  const endArr = endDate.split("-");
+
   const user = req.user;
+
   const bookings = await Booking.findAll({
     where: [{ userId: user.id }, { spotId: req.params.spotId }],
   });
 
+  const startPrim = new Date(startArr[0], startArr[1] - 1, startArr[2])[
+    Symbol.toPrimitive
+  ]("number");
+  const endPrim = new Date(endArr[0], endArr[1] - 1, endArr[2])[
+    Symbol.toPrimitive
+  ]("number");
+
   if (bookings) {
     bookings.forEach((booking) => {
-      if (booking.startDate === startDate || booking.endDate === endDate) {
-        const err = new Error(
-          "Sorry, this spot is already booked for the specified dates"
-        );
-        err.status = 403;
-        err.errors = {};
-        if (booking.startDate === startDate) {
-          err.errors[startDate] =
-            "Start date conflicts with an existing booking";
-        }
-        if (booking.endDate === endDate) {
-          err.errors[endDate] = "End date conflicts with an existing booking";
-        }
+      const bookingStartArr = booking.startDate.split("-");
+      const bookingEndArr = booking.endDate.split("-");
+
+      const bookingStartPrim = new Date(
+        bookingStartArr[0],
+        bookingStartArr[1] - 1,
+        bookingStartArr[2]
+      )[Symbol.toPrimitive]("number");
+
+      const bookingEndPrim = new Date(
+        bookingEndArr[0],
+        bookingEndArr[1] - 1,
+        bookingEndArr[2]
+      )[Symbol.toPrimitive]("number");
+
+      const err = new Error(
+        "Sorry, this spot is already booked for the specified dates"
+      );
+
+      err.status = 403;
+      err.errors = {};
+      console.log("hi");
+
+      if (bookingStartPrim <= startPrim && bookingEndPrim >= startPrim) {
+        err.errors[1] = "Start date conflicts with an existing booking";
+      }
+      if (bookingStartPrim <= endPrim && bookingEndPrim >= endPrim) {
+        err.errors[2] = "End date conflicts with an existing booking";
+      }
+      if (bookingStartPrim >= startPrim && bookingEndPrim <= endPrim) {
+        err.errors[3] = "Booking already exists between two dates";
+      }
+      if (bookingStartPrim <= startPrim && bookingEndPrim >= endPrim) {
+        err.errors[4] = "Booking already exists outside two dates";
+      }
+      if (Object.values(err.errors).length) {
         return next(err);
       }
     });

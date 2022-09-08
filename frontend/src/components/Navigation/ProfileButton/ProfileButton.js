@@ -21,7 +21,7 @@ const ProfileButton = ({ user, isLoaded }) => {
   if (user && isLoaded) {
     sessionLinks = (
       <div id="session-links">
-        <Link to="/account-details" className="profile-button-link">
+        <Link to="/account-details/spots" className="profile-button-link">
           Account
         </Link>
         <Link to="/" className="profile-button-link" onClick={logout}>
