@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 
+const { singlePublicFileUpload, singleMulterUpload } = require("../awsS3");
+
 const sequelize = require("sequelize");
 const { Op } = require("sequelize");
 
@@ -263,34 +265,39 @@ router.get("/", validateGetAllSpotsQueries, async (req, res) => {
 });
 
 // CREATE A SPOT
-router.post("/", [restoreUser, requireAuth, validateSpot], async (req, res) => {
-  const userId = req.user.id;
-  const {
-    address,
-    city,
-    state,
-    country,
-    lat,
-    lng,
-    name,
-    description,
-    price,
-    previewImage,
-  } = req.body;
-  const spot = await Spot.create({
-    ownerId: userId,
-    address,
-    city,
-    state,
-    country,
-    lat,
-    lng,
-    name,
-    description,
-    price,
-    previewImage,
-  });
-  res.status(201).json(spot);
-});
+router.post(
+  "/",
+  singleMulterUpload("previewImage"),
+  [restoreUser, requireAuth, validateSpot],
+  async (req, res) => {
+    const userId = req.user.id;
+    const previewImage = await singlePublicFileUpload(req.file);
+    const {
+      address,
+      city,
+      state,
+      country,
+      lat,
+      lng,
+      name,
+      description,
+      price,
+    } = req.body;
+    const spot = await Spot.create({
+      ownerId: userId,
+      address,
+      city,
+      state,
+      country,
+      lat,
+      lng,
+      name,
+      description,
+      price,
+      previewImage,
+    });
+    res.status(201).json(spot);
+  }
+);
 
 module.exports = router;

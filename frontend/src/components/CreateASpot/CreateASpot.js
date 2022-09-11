@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import * as singleSpotActions from "../../store/singleSpot";
 import "./CreateASpot.css";
 
@@ -16,36 +16,32 @@ const CreateASpot = () => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
-  const [previewImage, setPreviewImage] = useState("");
+  const [previewImage, setPreviewImage] = useState(null);
   const [errors, setErrors] = useState([]);
-
-  useEffect(() => {
-    return () => dispatch(singleSpotActions.clearSpot());
-  });
 
   const onSubmit = async (e) => {
     setErrors([]);
     e.preventDefault();
 
-    const spot = {
-      address,
-      city,
-      state,
-      country,
-      lat,
-      lng,
-      name,
-      description,
-      price,
-      previewImage,
-    };
+    const spot = new FormData();
+
+    spot.append("address", address);
+    spot.append("city", city);
+    spot.append("state", state);
+    spot.append("country", country);
+    spot.append("lat", lat);
+    spot.append("lng", lng);
+    spot.append("name", name);
+    spot.append("description", description);
+    spot.append("price", price);
+
+    if (previewImage) spot.append("previewImage", previewImage);
 
     await dispatch(singleSpotActions.createSpotThunk(spot))
       .then(() =>
         history.push({
           pathname: "/successful-posting",
           state: {
-            spot: spot,
             type: "listing",
           },
         })
@@ -53,7 +49,7 @@ const CreateASpot = () => {
       .catch(async (res) => {
         const data = await res.json();
         const errorArray = [];
-        if (data.errors.length) {
+        if (data && data.errors) {
           Object.values(data.errors).forEach((error) => errorArray.push(error));
           setErrors(errorArray);
         }
@@ -62,6 +58,11 @@ const CreateASpot = () => {
 
   const onHome = () => {
     history.push("/");
+  };
+
+  const updateFile = (e) => {
+    const file = e.target.files[0];
+    if (file) setPreviewImage(file);
   };
 
   return (
@@ -133,10 +134,10 @@ const CreateASpot = () => {
               onChange={(e) => setPrice(e.target.value)}
             />
             <input
-              value={previewImage}
+              type="file"
               className="create-spot-form-input"
-              placeholder="Image URL"
-              onChange={(e) => setPreviewImage(e.target.value)}
+              // placeholder="Image URL"
+              onChange={updateFile}
             />
             <ul className="create-spot-errors">
               {Object.values(errors).map((error, i) => {

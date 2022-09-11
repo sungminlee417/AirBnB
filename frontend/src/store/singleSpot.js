@@ -29,9 +29,9 @@ export const createSpotThunk = (spot) => async (dispatch) => {
   const response = await csrfFetch(`/spots`, {
     method: "POST",
     headers: {
-      "Content-Type": "application/json",
+      "Content-Type": "multipart/form-data",
     },
-    body: JSON.stringify(spot),
+    body: spot,
   });
   const data = await response.json();
   dispatch(loadSpot(data));

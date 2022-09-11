@@ -1,13 +1,25 @@
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
+import * as singleSpotActions from "../../store/singleSpot";
 import "./SuccessfulPosting.css";
 
 const SuccessfulPosting = () => {
+  const dispatch = useDispatch();
   const history = useHistory();
   const location = useLocation();
-  const spot = location.state.spot;
+  const spot = useSelector((state) => state.spot);
   const type = location.state.type;
   const startDate = location.state.startDate;
   const endDate = location.state.endDate;
+
+  useEffect(() => {
+    return () => {
+      if (spot) {
+        dispatch(singleSpotActions.clearSpot());
+      }
+    };
+  });
 
   const backToHome = () => {
     history.push("/");
