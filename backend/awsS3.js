@@ -43,7 +43,6 @@ const multiplePublicFileUpload = async (files) => {
 // --------------------------- Prviate UPLOAD ------------------------
 
 const singlePrivateFileUpload = async (file) => {
-  console.log("hi");
   const { originalname, mimetype, buffer } = await file;
   const path = require("path");
   // name of the file in your S3 bucket will be the date in ms plus the extension name

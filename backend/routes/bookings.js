@@ -37,7 +37,7 @@ router.put(
   async (req, res) => {
     const { startDate, endDate } = req.body;
     const booking = await Booking.findByPk(req.params.bookingId);
-    booking.update({
+    await booking.update({
       startDate: startDate,
       endDate: endDate,
     });
