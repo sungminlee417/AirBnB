@@ -23,16 +23,16 @@
   position: absolute;
   background-color: white;
   border-radius: 10px;
-  height: 300px;
-  width: 500px;
+  height: 24rem;
+  width: 50rem;
 }
 
 #modal-content-signup {
   position: absolute;
   background-color: white;
   border-radius: 10px;
-  height: 450px;
-  width: 500px;
+  height: 36rem;
+  width: 50rem;
 }
 
 #modal-content-delete-booking {
@@ -68,4 +68,16 @@
   height: 600px;
   width: 800px;
   display: flex;
+}
+
+@media (max-width: 425px) {
+  #modal-content-login {
+    height: 23rem;
+    width: 30rem;
+  }
+
+  #modal-content-signup {
+    height: 34rem;
+    width: 30rem;
+  }
 }
