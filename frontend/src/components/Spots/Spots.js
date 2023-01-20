@@ -23,11 +23,13 @@ const Spots = () => {
               className="spot-preview"
               key={spotId}
             >
-              <img
-                className="spot-img"
-                src={spots[spotId].previewImage}
-                alt={spots[spotId].name}
-              />
+              <div className="spot-img-container">
+                <img
+                  className="spot-img"
+                  src={spots[spotId].previewImage}
+                  alt={spots[spotId].name}
+                />
+              </div>
               <div className="spot-details-container">
                 <div className="spot-details">
                   <strong>

@@ -1,10 +1,5 @@
 "use strict";
 
-let options = {};
-if (process.env.NODE_ENV === "production") {
-  options.schema = process.env.SCHEMA; // define your schema in options object
-}
-
 const { query } = require("express");
 
 module.exports = {
@@ -18,8 +13,7 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
      */
-    options.tableName = "Spots";
-    return queryInterface.bulkInsert(options, [
+    await queryInterface.bulkInsert("Spots", [
       {
         ownerId: 1,
         address: "260 Avenue Street",
@@ -114,8 +108,7 @@ module.exports = {
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
-    options.tableName = "Spots";
-    await queryInterface.bulkDelete(options, {
+    await queryInterface.bulkDelete("Spots", {
       address: "123 Disney Lane",
     });
   },

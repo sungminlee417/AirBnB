@@ -13,7 +13,7 @@ const Navigation = ({ isLoaded }) => {
         <div id="homepage-links">
           <Link id="homepage-link" exact="true" to="/">
             <i className="fa-brands fa-airbnb fa-2x"></i>
-            <p id="homepage-link-name">airbnb</p>
+            <p id="homepage-link-name">groundbnb</p>
           </Link>
         </div>
         <button id="search-bar">

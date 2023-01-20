@@ -7,13 +7,12 @@
   font-size: 14px;
 }
 
-input:focus {
-  outline: none;
+html {
+  font-size: 62.5%;
 }
 
-/* MARGIN FOR CERTAIN COMPONENTS */
-.body-margin {
-  margin: 0px 75px 0px 75px;
+input:focus {
+  outline: none;
 }
 
 /* FORM ERROR STYLING */
