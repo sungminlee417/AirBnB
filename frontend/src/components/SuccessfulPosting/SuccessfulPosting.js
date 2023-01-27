@@ -8,7 +8,7 @@ const SuccessfulPosting = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const location = useLocation();
-  const spot = useSelector((state) => state.spot);
+  const spot = location.state.spot;
   const type = location.state.type;
   const startDate = location.state.startDate;
   const endDate = location.state.endDate;
@@ -19,7 +19,7 @@ const SuccessfulPosting = () => {
         dispatch(singleSpotActions.clearSpot());
       }
     };
-  });
+  }, []);
 
   const backToHome = () => {
     history.push("/");

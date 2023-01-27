@@ -35,6 +35,7 @@ export const createSpotThunk = (spot) => async (dispatch) => {
   });
   const data = await response.json();
   dispatch(loadSpot(data));
+  return data;
 };
 
 const initialState = {};

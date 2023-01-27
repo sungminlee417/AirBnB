@@ -25,7 +25,7 @@
   gap: 5px;
   padding-top: 5px;
   padding-bottom: 5px;
-  position: absolute;
+  position: fixed;
   top: 6rem;
   right: 2rem;
 }

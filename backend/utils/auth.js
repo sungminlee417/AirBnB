@@ -51,7 +51,6 @@ const restoreUser = (req, res, next) => {
 // AUTHENTICATION MIDDLEWARE
 const requireAuth = function (req, res, next) {
   if (req.user) return next();
-
   const err = new Error("Authentication required");
   err.status = 401;
   return next(err);

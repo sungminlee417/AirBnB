@@ -35,7 +35,8 @@ const checkReviewAtSpotExists = async (req, res, next) => {
     where: { userId: req.user.id, spotId: req.params.spotId },
   });
   if (review) {
-    const err = new Error("User already has a review for this spot");
+    const err = new Error();
+    err.errors = ["You already have a review for this spot"];
     err.status = 403;
     return next(err);
   } else {
@@ -109,7 +110,6 @@ const checkConflictingBookingExists = async (req, res, next) => {
 
       err.status = 403;
       err.errors = {};
-      console.log("hi");
 
       if (bookingStartPrim <= startPrim && bookingEndPrim > startPrim) {
         err.errors[1] = "Start date conflicts with an existing booking";

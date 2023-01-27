@@ -1,10 +1,7 @@
 #create-booking-card-container {
   display: flex;
-  justify-content: flex-end;
-  width: 50%;
-  height: 50%;
-  position: sticky;
-  top: 18vh;
+  justify-content: center;
+  position: static;
 }
 
 #create-booking-card {
@@ -12,11 +9,13 @@
   flex-direction: column;
   gap: 25px;
   margin: 10px 0 10px 0;
-  width: 90%;
-  height: 80%;
+  width: 30rem;
+  height: fit-content;
   border-radius: 20px;
   box-shadow: 0.5px 0.5px 2.3px 1px #999;
   padding: 25px 20px;
+  position: sticky;
+  top: 10rem;
 }
 
 #booking-card-spot-details {
@@ -98,8 +97,23 @@
 #reserve-button {
   font-size: 15px;
   color: white;
+  cursor: pointer;
   height: 40px;
   border-radius: 10px;
   border: none;
   background-color: rgb(255, 21, 99);
+}
+
+@media (max-width: 768px) {
+  #create-booking-card {
+    width: 25rem;
+  }
+  #booking-card-dates-button {
+    padding: 0.8rem;
+    width: 100%;
+  }
+
+  .booking-check-date-input {
+    font-size: 1rem;
+  }
 }

@@ -1,0 +1,119 @@
+.create-spot-form-step-three-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+}
+
+.swiper-wrapper {
+  align-items: center;
+}
+
+.create-spot-image-swiper {
+  height: fit-content;
+  width: 50rem;
+}
+
+.create-spot-image-swiper-slide {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.create-spot-image-swiper-image {
+  height: 50rem;
+  width: 80%;
+  object-fit: contain;
+}
+
+.create-spot-form-step-three-submit-back {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.create-spot-form-button-label {
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  font-size: 15px;
+  color: white;
+  height: 40px;
+  border-radius: 5px;
+  border: none;
+  background-color: rgb(255, 21, 99);
+  justify-content: center;
+  width: 50%;
+}
+
+.create-spot-form-file-input {
+  display: none;
+}
+
+.create-spot-form-button {
+  cursor: pointer;
+  font-size: 15px;
+  color: white;
+  height: 40px;
+  border-radius: 5px;
+  border: none;
+  background-color: rgb(255, 21, 99);
+  width: 50%;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  color: rgb(255, 21, 99);
+}
+
+.swiper-button-next {
+  right: 0rem;
+}
+
+.swiper-button-prev {
+  left: 0rem;
+}
+
+.create-spot-image-remove {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  right: 2rem;
+  position: absolute;
+  top: 2rem;
+}
+
+.create-spot-image-remove-icon {
+  font-size: 2.4rem;
+}
+
+@media (max-width: 768px) {
+  .create-spot-image-swiper {
+    height: fit-content;
+    width: 35rem;
+  }
+
+  .create-spot-image-swiper-image {
+    height: 50rem;
+  }
+}
+
+@media (max-width: 425px) {
+  .create-spot-image-swiper {
+    height: fit-content;
+    width: 30rem;
+  }
+
+  .create-spot-image-swiper-image {
+    height: 30rem;
+  }
+
+  .create-spot-form-button-label {
+    width: 20rem;
+  }
+
+  .create-spot-form-button {
+    width: 20rem;
+  }
+}

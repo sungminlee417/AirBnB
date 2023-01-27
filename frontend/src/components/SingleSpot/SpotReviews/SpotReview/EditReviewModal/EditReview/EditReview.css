@@ -1,0 +1,13 @@
+.edit-review-section {
+  align-items: center;
+  background-color: white;
+  border-radius: 1rem;
+  flex-direction: column;
+  display: flex;
+  gap: 2rem;
+  height: auto;
+  justify-content: center;
+  padding: 2rem;
+  width: 32rem;
+  z-index: 1;
+}

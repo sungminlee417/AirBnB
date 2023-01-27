@@ -8,6 +8,7 @@ const reviewsRouter = require("./reviews");
 const bookingsRouter = require("./bookings");
 const imagesRouter = require("./images");
 const apiRouter = require("./api");
+const mapsRouter = require("./maps");
 
 router.use("/", sessionRouter);
 router.use("/me", currentUserRouter);
@@ -16,6 +17,7 @@ router.use("/reviews", reviewsRouter);
 router.use("/bookings", bookingsRouter);
 router.use("/images", imagesRouter);
 router.use("/api", apiRouter);
+router.use("/maps", mapsRouter);
 
 if (process.env.NODE_ENV === "production") {
   const path = require("path");

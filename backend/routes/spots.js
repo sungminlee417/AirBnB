@@ -1,9 +1,8 @@
 const express = require("express");
 const router = express.Router();
 
-const { singlePublicFileUpload, singleMulterUpload } = require("../awsS3");
+const { multipleMulterUpload, multiplePublicFileUpload } = require("../awsS3");
 
-const sequelize = require("sequelize");
 const { Op } = require("sequelize");
 
 const {
@@ -28,7 +27,6 @@ const {
 } = require("../utils/validation");
 
 const { Spot, User, Review, Booking, Image } = require("../db/models");
-const { where } = require("sequelize");
 
 // GET REVIEWS VIA SPOT ID
 router.get("/:spotId/reviews", checkSpotExists, async (req, res, next) => {
@@ -41,24 +39,26 @@ router.get("/:spotId/reviews", checkSpotExists, async (req, res, next) => {
         model: User,
         attributes: ["id", "firstName", "lastName"],
       },
+      { model: Image, attributes: ["url"] },
     ],
   });
 
-  for (let review of reviews) {
-    const images = await Image.findAll({ where: { imageableId: review.id } });
-    const imagesArr = [];
-    images.forEach((image) => {
-      imagesArr.push(image.url);
-    });
-    review.dataValues["Images"] = imagesArr;
-  }
+  // for (let review of reviews) {
+  //   const images = await Image.findAll({ where: { imageableId: review.id } });
+  //   const imagesArr = [];
+  //   images.forEach((image) => {
+  //     imagesArr.push(image.url);
+  //   });
+  //   review.dataValues["Images"] = imagesArr;
+  // }
 
-  res.json({ Reviews: reviews });
+  res.json(reviews);
 });
 
 // CREATE REVIEW FOR CERTAIN SPOT
 router.post(
   "/:spotId/reviews",
+  multipleMulterUpload("images"),
   [
     restoreUser,
     requireAuth,
@@ -68,6 +68,7 @@ router.post(
   ],
   async (req, res, next) => {
     const { review, stars } = req.body;
+    const imagesURL = await multiplePublicFileUpload(req.files);
     const user = req.user;
     const newReview = await Review.create({
       userId: user.id,
@@ -75,7 +76,22 @@ router.post(
       review,
       stars,
     });
-    res.status(201).json(newReview);
+
+    imagesURL.forEach(async (imageUrl) => {
+      await newReview.createImage({ imageableType: "Review", url: imageUrl });
+    });
+
+    const singleReview = await Review.findByPk(newReview.id, {
+      include: [
+        {
+          model: User,
+          attributes: ["id", "firstName", "lastName"],
+        },
+        { model: Image, attributes: ["url"] },
+      ],
+    });
+
+    res.status(201).json(singleReview);
   }
 );
 
@@ -170,7 +186,7 @@ router.get("/:spotId", checkSpotExists, async (req, res, next) => {
   const sum = await Review.sum("stars", {
     where: { spotId: spot.id },
   });
-  const avgStarRating = sum / numReviews;
+  const avgStarRating = (sum / numReviews).toFixed(2);
 
   spot.dataValues["numReviews"] = numReviews;
   spot.dataValues["avgStarRating"] = avgStarRating;
@@ -254,10 +270,12 @@ router.get("/", validateGetAllSpotsQueries, async (req, res) => {
 
   const spots = await Spot.findAll({
     where,
-    include: {
-      model: Image,
-      attributes: [],
-    },
+    include: [
+      {
+        model: Image,
+        attributes: [],
+      },
+    ],
     limit: limit,
     offset: offset,
   });
@@ -267,11 +285,11 @@ router.get("/", validateGetAllSpotsQueries, async (req, res) => {
 // CREATE A SPOT
 router.post(
   "/",
-  singleMulterUpload("previewImage"),
+  multipleMulterUpload("previewImages"),
   [restoreUser, requireAuth, validateSpot],
   async (req, res) => {
     const userId = req.user.id;
-    const previewImage = await singlePublicFileUpload(req.file);
+    const previewImagesURL = await multiplePublicFileUpload(req.files);
     const {
       address,
       city,
@@ -283,6 +301,7 @@ router.post(
       description,
       price,
     } = req.body;
+
     const spot = await Spot.create({
       ownerId: userId,
       address,
@@ -294,8 +313,15 @@ router.post(
       name,
       description,
       price,
-      previewImage,
+      previewImage: previewImagesURL[0],
     });
+
+    previewImagesURL.forEach(async (previewImageUrl, i) => {
+      if (i) {
+        await spot.createImage({ imageableType: "Spot", url: previewImageUrl });
+      }
+    });
+
     res.status(201).json(spot);
   }
 );

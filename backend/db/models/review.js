@@ -37,10 +37,10 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       stars: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.DECIMAL,
         allowNull: false,
         validate: {
-          len: [1, 5],
+          len: [0, 5],
         },
       },
     },

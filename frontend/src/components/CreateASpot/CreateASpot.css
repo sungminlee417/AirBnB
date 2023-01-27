@@ -27,6 +27,7 @@
   font-size: 40px;
   color: white;
   font-weight: 600;
+  padding: 1rem;
 }
 
 #create-spot-right-side-container {
@@ -34,11 +35,13 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  position: relative;
   width: 50%;
   padding: 20px;
 }
 
 #create-spot-back-to-home-button {
+  cursor: pointer;
   position: absolute;
   top: 2%;
   right: 2%;
@@ -56,44 +59,118 @@
 }
 
 #create-spot-right-side-form-container {
-  width: 75%;
+  width: fit-content;
 }
 
-#create-spot-form {
+.create-spot-form-step-section {
+  align-items: center;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8rem;
+  width: 50rem;
+}
+
+.create-spot-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+  width: 100%;
 }
 
 .create-spot-form-input {
-  padding: 8px;
-  border-radius: 5px;
-}
-
-.create-spot-form-button {
-  font-size: 15px;
-  color: white;
-  height: 40px;
-  border-radius: 5px;
+  padding: 0.6rem;
   border: none;
-  background-color: rgb(255, 21, 99);
+  border-bottom: 0.1rem solid rgb(180, 180, 180);
 }
 
-.create-spot-errors {
-  color: red !important;
-  font-size: 13px;
-  list-style: none;
+.create-spot-form-input-container {
   display: flex;
   flex-direction: column;
-  gap: 1px;
+  gap: 1rem;
 }
 
-.create-spot-error {
-  display: flex;
-  gap: 5px;
+.create-spot-form-error-container {
   align-items: center;
+  display: flex;
+  gap: 0.4rem;
+  padding-top: 0.2rem;
 }
 
-.create-spot-error-text {
-  font-size: 10px;
+.create-spot-form-error-text {
+  color: red;
+  font-size: 1rem;
+}
+
+.create-spot-form-error-icon {
+  color: red;
+  font-size: 1rem;
+}
+
+.create-spot-form-next-button {
+  background-color: rgb(255, 21, 99);
+  border: none;
+  border-radius: 1rem;
+  color: white;
+  cursor: pointer;
+  font-size: 2rem;
+  padding: 1rem 2rem;
+  width: 100%;
+}
+
+.create-spot-form-step-back-button {
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid transparent;
+  cursor: pointer;
+  position: absolute;
+  bottom: 2rem;
+  left: 2rem;
+}
+
+.create-spot-form-step-back-button:hover {
+  border-bottom: 1px solid rgb(255, 21, 99);
+}
+
+@media (max-width: 1024px) {
+  .create-spot-form-step-section {
+    width: 40rem;
+  }
+}
+
+@media (max-width: 768px) {
+  #create-spot-left-side-container-text {
+    font-size: 3rem;
+  }
+
+  .create-spot-form-step-section {
+    width: 30rem;
+  }
+}
+
+@media (max-width: 425px) {
+  #create-spot-container {
+    flex-direction: column;
+  }
+
+  #create-spot-left-side-container {
+    height: fit-content;
+    padding: 5rem 4.2rem;
+    text-align: center;
+    width: 100%;
+  }
+
+  #create-spot-left-side-container-text {
+    font-size: 3rem;
+  }
+
+  #create-spot-right-side-container {
+    flex-grow: 1;
+    height: fit-content;
+    padding: 1.2rem;
+    width: 100%;
+  }
+
+  .create-spot-form-step-section {
+    width: 30rem;
+  }
 }

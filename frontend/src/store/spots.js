@@ -86,7 +86,6 @@ const spotReducer = (state = initialState, action) => {
       return action.spots;
     case EDIT_SPOT:
       const spot = newState[action.spot.id];
-      console.log(spot);
       spot.address = action.spot.address;
       spot.city = action.spot.city;
       spot.country = action.spot.country;

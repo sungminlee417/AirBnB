@@ -5,11 +5,14 @@ const { Booking, Image, Spot } = require("../db/models");
 const handleValidationErrors = (req, res, next) => {
   const validationErrors = validationResult(req);
   if (!validationErrors.isEmpty()) {
-    const errors = validationErrors.array().map((error) => `${error.msg}`);
+    const validationErrorsObj = {};
+    validationErrors.errors.forEach(
+      (error) => (validationErrorsObj[error.param] = error.msg)
+    );
 
     const err = Error("Validation error");
     err.status = 400;
-    err.errors = errors;
+    err.errors = validationErrorsObj;
     next(err);
   }
   next();
@@ -49,12 +52,14 @@ const validateSpot = [
   check("country")
     .exists({ checkFalsy: true })
     .withMessage("Country is required"),
-  check("lat").exists({ checkFalsy: true }).withMessage("Latitude is required"),
-  check("lat").isDecimal().withMessage("Latitude must be a decimal"),
+  check("lat")
+    .exists({ checkFalsy: true })
+    .withMessage("Please enter a valid address"),
+  check("lat").isDecimal(),
   check("lng")
     .exists({ checkFalsy: true })
-    .withMessage("Longitude is required"),
-  check("lng").isDecimal().withMessage("Longitude must be a decimal"),
+    .withMessage("Please enter a valid address"),
+  check("lng").isDecimal(),
   check("name")
     .exists({ checkFalsy: true })
     .isLength({ max: 50 })
@@ -74,7 +79,7 @@ const validateReview = [
     .withMessage("Review text is required"),
   check("stars")
     .exists({ checkFalsy: true })
-    .withMessage("Stars must be an integer from 1 to 5"),
+    .withMessage("Stars must be an decimal from 0 to 5"),
   handleValidationErrors,
 ];
 
@@ -161,7 +166,6 @@ const validateBookingDateConflict = async (req, res, next) => {
 
         err.status = 403;
         err.errors = {};
-        console.log("hi");
 
         if (bookingStartPrim <= startPrim && bookingEndPrim > startPrim) {
           err.errors[1] = "Start date conflicts with an existing booking";
@@ -192,8 +196,6 @@ const validateBookingStartDate = async (req, res, next) => {
   const year = currentDate.getFullYear();
   const month = currentDate.getMonth() + 1;
   const day = currentDate.getDate();
-
-  console.log(req.body.startDate);
 
   const bookingDate = booking.startDate.split("-");
   const bookingYear = Number(bookingDate[0]);
@@ -274,7 +276,6 @@ const validateBookingStartAndEndDate = (req, res, next) => {
 
 const validateAmountOfImages = async (req, res, next) => {
   const images = await Image.findAll();
-  console.log(images.length);
   if (images.length >= 10) {
     const err = new Error(
       "Maximum number of images for this resource was reached"

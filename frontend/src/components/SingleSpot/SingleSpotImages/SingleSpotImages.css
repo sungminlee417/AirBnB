@@ -1,0 +1,53 @@
+.single-spot-images-section {
+  width: 100rem;
+  height: 60rem;
+}
+
+.single-spot-images-swiper {
+  height: 100%;
+}
+
+.single-spot-images-swiper-slide {
+  overflow-y: hidden;
+}
+
+.single-spot-images-swiper-image {
+  width: 100%;
+  object-fit: contain;
+  height: 100%;
+}
+
+.single-spot-images-close-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+}
+
+.single-spot-images-close-button-icon {
+  color: white;
+  font-size: 2.8rem;
+}
+
+@media (max-width: 1024px) {
+  .single-spot-images-section {
+    width: 86rem;
+    height: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .single-spot-images-section {
+    width: 60rem;
+    height: auto;
+  }
+}
+
+@media (max-width: 425px) {
+  .single-spot-images-section {
+    width: 30rem;
+    height: auto;
+  }
+}

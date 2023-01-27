@@ -1,15 +1,18 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import { Modal } from "../../context/Modal";
 import * as singleSpotActions from "../../store/singleSpot";
 import CreateBookingCard from "./CreateBookingCard";
 import "./SingleSpot.css";
+import SingleSpotImages from "./SingleSpotImages";
 import SpotReviews from "./SpotReviews";
 
 const SingleSpot = () => {
   const dispatch = useDispatch();
   const { spotId } = useParams();
   const spot = useSelector((state) => state.spot);
+  const [showModal, setShowModal] = useState(false);
   const imageUrls = {};
   const review =
     spot.numReviews > 1 || spot.numReviews === 0 ? "reviews" : "review";
@@ -24,13 +27,17 @@ const SingleSpot = () => {
     });
   }
 
+  const showImages = () => {
+    setShowModal(true);
+  };
+
   useEffect(() => {
     dispatch(singleSpotActions.loadOneSpotThunk(spotId));
     return () => dispatch(singleSpotActions.clearSpot());
   }, [dispatch, spotId]);
 
   return (
-    <div id="single-spot-container" className="body-margin">
+    <div className="single-spot-container">
       <div id="single-spot-details-container">
         <h1 id="single-spot-name">{spot.name}</h1>
         <div id="single-spot-details">
@@ -46,23 +53,87 @@ const SingleSpot = () => {
           </div>
         </div>
         <div id="single-spot-images-container">
-          <img
-            id="single-spot-main-image"
-            src={spot.previewImage}
-            alt={spot.name}
-          />
-          <div id="single-spot-side-image-container">
-            {Object.values(imageUrls).map((image, i) => {
-              return (
-                <img
-                  className="single-spot-side-image"
-                  key={i}
-                  src={image.url}
-                  alt={spot.name}
-                />
-              );
-            })}
-          </div>
+          <button
+            className="single-spot-images-modal-button"
+            onClick={showImages}
+          >
+            <img
+              id="single-spot-main-image"
+              src={spot.previewImage}
+              alt={spot.name}
+            />
+          </button>
+          {Object.values(imageUrls).length === 1 && (
+            <button
+              className="single-spot-images-modal-button"
+              onClick={showImages}
+            >
+              <img
+                className="single-spot-side-image"
+                src={Object.values(imageUrls)[0].url}
+                alt={spot.name}
+              />
+            </button>
+          )}
+          {Object.values(imageUrls).length === 2 && (
+            <div id="single-spot-side-image-container-two">
+              {Object.values(imageUrls).map((image, i) => {
+                return (
+                  <button
+                    className="single-spot-images-modal-button"
+                    onClick={showImages}
+                  >
+                    <img
+                      className="single-spot-side-image"
+                      key={i}
+                      src={image.url}
+                      alt={spot.name}
+                    />
+                  </button>
+                );
+              })}
+            </div>
+          )}
+          {Object.values(imageUrls).length === 3 && (
+            <div id="single-spot-side-image-container-three">
+              {Object.values(imageUrls).map((image, i) => {
+                return (
+                  <button
+                    className={`single-spot-images-modal-button single-spot-images-modal-button-${i}`}
+                    onClick={showImages}
+                  >
+                    <img
+                      className={`single-spot-side-image single-spot-side-image-${i}`}
+                      key={i}
+                      src={image.url}
+                      alt={spot.name}
+                    />
+                  </button>
+                );
+              })}
+            </div>
+          )}
+          {Object.values(imageUrls).length > 3 && (
+            <div class="single-spot-side-image-container-more">
+              {Object.values(imageUrls).map((image, i) => {
+                if (i < 4) {
+                  return (
+                    <button
+                      className={`single-spot-images-modal-button`}
+                      onClick={showImages}
+                    >
+                      <img
+                        className={`single-spot-side-image`}
+                        key={i}
+                        src={image.url}
+                        alt={spot.name}
+                      />
+                    </button>
+                  );
+                }
+              })}
+            </div>
+          )}
         </div>
         <div id="single-spot-body-container">
           <div id="single-spot-body-text-container">
@@ -71,13 +142,23 @@ const SingleSpot = () => {
             </div>
             <div className="single-spot-body-break-line"></div>
             <div id="single-spot-body-description">{spot.description}</div>
+            <div className="single-spot-body-break-line"></div>
+            <div id="single-spot-reviews-container">
+              <SpotReviews spot={spot} />
+            </div>
           </div>
           <CreateBookingCard spot={spot} />
         </div>
-        {/* <div id="sing-spot-reviews-container">
-          <SpotReviews />
-        </div> */}
       </div>
+      {showModal && (
+        <Modal onClose={() => setShowModal(false)} showModal={showModal}>
+          <SingleSpotImages
+            previewImage={spot.previewImage}
+            images={imageUrls}
+            onClose={() => setShowModal(false)}
+          />
+        </Modal>
+      )}
     </div>
   );
 };

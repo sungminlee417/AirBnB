@@ -1,0 +1,13 @@
+.delete-review-modal-button {
+  background-color: transparent;
+  border: none;
+  border-bottom-right-radius: 1rem;
+  border-bottom-left-radius: 1rem;
+  cursor: pointer;
+  padding: 1rem 2rem 1rem 1rem;
+  text-align: start;
+}
+
+.delete-review-modal-button:hover {
+  background-color: #dcdcdc;
+}

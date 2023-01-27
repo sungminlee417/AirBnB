@@ -19,6 +19,12 @@
   background-color: rgba(0, 0, 0, 0.7);
 }
 
+.modal-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 #modal-content-login {
   position: absolute;
   background-color: white;
