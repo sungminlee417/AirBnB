@@ -48,7 +48,7 @@ const SpotReview = ({ review }) => {
             className="spot-review-options"
             onClick={(e) => e.stopPropagation()}
           >
-            <EditReviewModal review={review} />
+            <EditReviewModal review={review} setShowOptions={setShowOptions} />
             <DeleteReviewModal review={review} />
           </div>
         )}

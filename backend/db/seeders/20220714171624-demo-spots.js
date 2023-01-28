@@ -22,7 +22,7 @@ module.exports = {
         country: "United States of America",
         lat: 87.3925079,
         lng: -123.1346136,
-        name: "Insert name",
+        name: "Fun House",
         description: "This is a place.",
         price: 343,
         previewImage:
@@ -36,7 +36,7 @@ module.exports = {
         country: "United States of America",
         lat: 12.8235911,
         lng: -51.1698319,
-        name: "Insert name",
+        name: "Silly House",
         description: "This is a place.",
         price: 412,
         previewImage:
@@ -50,7 +50,7 @@ module.exports = {
         country: "United States of America",
         lat: 58.1257124,
         lng: 59.6812698,
-        name: "Insert name",
+        name: "Cool House",
         description: "This is a place.",
         price: 542,
         previewImage:
@@ -64,7 +64,7 @@ module.exports = {
         country: "United States of America",
         lat: 68.2587121,
         lng: -109.2538912,
-        name: "Insert name",
+        name: "Greatest House",
         description: "This is a place",
         price: 671,
         previewImage:
@@ -78,7 +78,7 @@ module.exports = {
         country: "United States of America",
         lat: 1231.2512387121,
         lng: -1093.11232538912,
-        name: "Insert name",
+        name: "Awesome Home",
         description: "This is a place",
         price: 349,
         previewImage:
@@ -92,7 +92,7 @@ module.exports = {
         country: "United States of America",
         lat: 81237.325071239,
         lng: -12312.112346136,
-        name: "Insert name",
+        name: "Great Home",
         description: "Hello",
         price: 343,
         previewImage:

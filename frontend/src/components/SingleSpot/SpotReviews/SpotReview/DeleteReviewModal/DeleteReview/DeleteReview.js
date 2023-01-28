@@ -17,7 +17,7 @@ const DeleteReview = ({ review, onClose }) => {
         Are you sure you would like to delete this review?
       </header>
       <button className="delete-review-button" onClick={onDelete}>
-        Delete review
+        Delete Review
       </button>
     </section>
   );

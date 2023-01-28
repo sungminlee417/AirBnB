@@ -186,7 +186,7 @@ router.get("/:spotId", checkSpotExists, async (req, res, next) => {
   const sum = await Review.sum("stars", {
     where: { spotId: spot.id },
   });
-  const avgStarRating = (sum / numReviews).toFixed(2);
+  const avgStarRating = parseFloat((sum / numReviews).toFixed(2));
 
   spot.dataValues["numReviews"] = numReviews;
   spot.dataValues["avgStarRating"] = avgStarRating;

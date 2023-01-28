@@ -170,3 +170,9 @@
     margin-top: 1rem;
   }
 }
+
+@media (max-width: 425px) {
+  #single-spot-body-text-container {
+    width: 100%;
+  }
+}

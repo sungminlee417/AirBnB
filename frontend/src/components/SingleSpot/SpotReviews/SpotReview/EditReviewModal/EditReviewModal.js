@@ -3,7 +3,7 @@ import { Modal } from "../../../../../context/Modal";
 import EditReview from "./EditReview/EditReview";
 import "./EditReviewModal.css";
 
-const EditReviewModal = ({ review }) => {
+const EditReviewModal = ({ review, setShowOptions }) => {
   const [showModal, setShowModal] = useState(false);
 
   return (
@@ -16,7 +16,11 @@ const EditReviewModal = ({ review }) => {
       </button>
       {showModal && (
         <Modal onClose={() => setShowModal(false)}>
-          <EditReview review={review} />
+          <EditReview
+            review={review}
+            setShowOptions={setShowOptions}
+            onClose={() => setShowModal(false)}
+          />
         </Modal>
       )}
     </>

@@ -11,6 +11,7 @@ import "./SpotReviews.css";
 
 const SpotReviews = ({ spot }) => {
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.session.user);
   const [rating, setRating] = useState(0);
   const [reviewText, setReviewText] = useState("");
   const [images, setImages] = useState([]);
@@ -83,64 +84,68 @@ const SpotReviews = ({ spot }) => {
           </ul>
         </>
       )}
-      <div className="spot-reviews-create-review-container">
-        <ReactStars
-          count={5}
-          onChange={ratingChanged}
-          size={24}
-          color2={"rgb(255, 21, 99)"}
-        />
-        <div className="spot-reviews-create-review-info-container">
-          <textarea
-            className="spot-reviews-create-review-text-area"
-            placeholder="Write your review here..."
-            value={reviewText}
-            onChange={(e) => setReviewText(e.target.value)}
+      {user && (
+        <div className="spot-reviews-create-review-container">
+          <ReactStars
+            count={5}
+            onChange={ratingChanged}
+            size={24}
+            color2={"rgb(255, 21, 99)"}
           />
-          <label htmlFor="add-photo">
-            <i className="fa-solid fa-plus spot-reviews-create-review-add-image-icon"></i>
-          </label>
-          <input
-            id="add-photo"
-            type="file"
-            onChange={updateFile}
-            accept="image/pdf, image/png, image/jpg, image/jpeg, image/gif"
-            className="spot-reviews-create-review-add-image"
-          />
-          <div className="spot-reviews-create-review-image-list">
-            {images.map((image, i) => {
+          <div className="spot-reviews-create-review-info-container">
+            <textarea
+              className="spot-reviews-create-review-text-area"
+              placeholder="Write your review here..."
+              value={reviewText}
+              onChange={(e) => setReviewText(e.target.value)}
+            />
+            <div className="spot-reviews-image-add-list-container">
+              <label htmlFor="add-photo">
+                <i className="fa-solid fa-plus spot-reviews-create-review-add-image-icon"></i>
+              </label>
+              <input
+                id="add-photo"
+                type="file"
+                onChange={updateFile}
+                accept="image/pdf, image/png, image/jpg, image/jpeg, image/gif"
+                className="spot-reviews-create-review-add-image"
+              />
+              <div className="spot-reviews-create-review-image-list">
+                {images.map((image, i) => {
+                  return (
+                    <div className="spot-review-create-review-image-container">
+                      <img
+                        className="spot-reviews-create-review-image"
+                        src={URL.createObjectURL(image)}
+                        alt="review pic"
+                      />
+                      <button
+                        className="spot-reviews-create-review-image-remove"
+                        onClick={() => removeImage(i)}
+                      >
+                        <i className="fa-solid fa-xmark"></i>
+                      </button>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+          <ul className="errors">
+            {Object.values(errors).map((error, i) => {
               return (
-                <div className="spot-review-create-review-image-container">
-                  <img
-                    className="spot-reviews-create-review-image"
-                    src={URL.createObjectURL(image)}
-                    alt="review pic"
-                  />
-                  <button
-                    className="spot-reviews-create-review-image-remove"
-                    onClick={() => removeImage(i)}
-                  >
-                    <i className="fa-solid fa-xmark"></i>
-                  </button>
+                <div key={i} className="error">
+                  <i className="fa-solid fa-circle-exclamation"></i>
+                  <li>{error}</li>
                 </div>
               );
             })}
-          </div>
+          </ul>
+          <button onClick={onSubmit} className="spot-reviews-create-review">
+            Leave Your Review
+          </button>
         </div>
-        <ul className="errors">
-          {Object.values(errors).map((error, i) => {
-            return (
-              <div key={i} className="error">
-                <i className="fa-solid fa-circle-exclamation"></i>
-                <li>{error}</li>
-              </div>
-            );
-          })}
-        </ul>
-        <button onClick={onSubmit} className="spot-reviews-create-review">
-          Leave Your Review
-        </button>
-      </div>
+      )}
     </section>
   );
 };

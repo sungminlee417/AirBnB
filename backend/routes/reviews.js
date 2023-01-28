@@ -40,6 +40,9 @@ router.post(
 
 router.put(
   "/:reviewId",
+  async (req, res, next) => {
+    next();
+  },
   [
     restoreUser,
     requireAuth,
