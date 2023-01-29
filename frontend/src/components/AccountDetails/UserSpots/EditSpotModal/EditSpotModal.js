@@ -8,10 +8,10 @@ function EditSpotModal({ spot }) {
   return (
     <>
       <button
-        className="booking-edit-container-button"
+        className="spot-edit-container-button"
         onClick={() => setShowModal(true)}
       >
-        <i className="booking-button fa-solid fa-pen-to-square fa-2x"></i>
+        <i className="spot-button fa-solid fa-pen-to-square fa-2x"></i>
       </button>
       {showModal && (
         <Modal onClose={() => setShowModal(false)} type="edit-spot">

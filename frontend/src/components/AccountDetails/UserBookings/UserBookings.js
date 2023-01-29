@@ -14,9 +14,9 @@ const UserBookings = () => {
   }, [dispatch]);
 
   return (
-    <div>
-      {bookings && (
-        <ul>
+    <div className="user-bookings-section">
+      {bookings.length > 0 && (
+        <ul className="user-bookings-list">
           {bookings.map((booking, i) => {
             return <UserBookingsItem key={i} booking={booking} />;
           })}

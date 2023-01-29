@@ -16,6 +16,13 @@ input:focus {
   outline: none;
 }
 
+#airbnb-app {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+}
+
 /* FORM ERROR STYLING */
 .errors {
   color: red !important;

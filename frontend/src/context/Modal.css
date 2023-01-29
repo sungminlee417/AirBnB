@@ -86,4 +86,10 @@
     height: 34rem;
     width: 30rem;
   }
+
+  #modal-content-edit-booking,
+  #modal-content-delete-booking,
+  #modal-content-delete-spot {
+    width: 30rem;
+  }
 }

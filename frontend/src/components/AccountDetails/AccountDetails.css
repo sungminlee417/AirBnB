@@ -1,6 +1,6 @@
 #account-details {
   display: flex;
-  height: 100vh;
+  height: 100%;
   width: 100vw;
 }
 
@@ -14,7 +14,6 @@
   flex-direction: column;
   width: 24vw;
   gap: 25px;
-  top: 13.6%;
   position: sticky;
   background-color: white;
 }
@@ -64,6 +63,69 @@
 
 #account-details-content-container {
   background-color: #dcdcdc;
-  overflow: auto;
-  width: 76vw;
+  display: flex;
+  flex-grow: 1;
+  overflow-y: scroll;
+  padding-right: 1rem;
+}
+
+@media (max-width: 768px) {
+  #account-details-header {
+    padding: 2rem;
+  }
+
+  .account-sidebar-sub-header {
+    font-size: 1.4rem;
+  }
+
+  .account-detail-link,
+  .account-detail-link-active {
+    font-size: 1.6rem;
+    padding: 2rem;
+    width: 100%;
+  }
+}
+
+@media (max-width: 425px) {
+  #account-details {
+    flex-direction: column;
+    flex-grow: 1;
+  }
+
+  #account-details-sidebar {
+    gap: 1rem;
+    width: 100%;
+    position: sticky;
+    background-color: white;
+  }
+
+  #account-details-header {
+    padding: 2rem;
+  }
+
+  .account-detail-links {
+    flex-direction: row;
+    width: 100%;
+  }
+
+  .account-detail-link,
+  .account-detail-link-active {
+    font-size: 1.4rem;
+    padding: 1.4rem;
+    width: 100%;
+  }
+
+  .account-detail-link {
+    border-left: none;
+    border-top: 8px solid transparent;
+  }
+
+  .account-detail-link-active {
+    border-left: none;
+    border-top: 8px solid #ff385c;
+  }
+
+  #account-details-content-container {
+    padding-right: 0;
+  }
 }

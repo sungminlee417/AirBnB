@@ -23,7 +23,6 @@
   gap: 10px;
   width: 100%;
   justify-content: space-between;
-  padding-right: 10px;
 }
 
 #booking-spot-details {
@@ -67,8 +66,56 @@
 
 .booking-button {
   color: #4a4a4a;
+  cursor: pointer;
 }
 
 .booking-button:hover {
   color: black;
+}
+
+@media (max-width: 425px) {
+  #user-bookings-item {
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+    padding: 1rem;
+    width: 100%;
+  }
+
+  #user-booking-details {
+    flex-direction: column;
+    width: 50%;
+  }
+
+  #user-bookings-item-img-container {
+    width: 50%;
+    height: 18rem;
+  }
+
+  #booking-spot-name {
+    font-size: 1.4rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .booking-spot-address {
+    font-size: 1.2rem;
+  }
+
+  .booking-spot-check-bold {
+    font-size: 1.4rem;
+  }
+
+  .booking-spot-check-light {
+    font-size: 1.2rem;
+  }
+
+  .booking-edit-container {
+    flex-direction: row;
+    gap: 1rem;
+    justify-content: flex-end;
+  }
+
+  .booking-button {
+    font-size: 2rem;
+  }
 }

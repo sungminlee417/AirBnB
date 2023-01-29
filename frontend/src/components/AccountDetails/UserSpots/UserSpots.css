@@ -1,8 +1,22 @@
-#no-spots-available {
+.user-spots-section {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 200px 200px 200px 200px;
+  width: 100%;
+}
+
+.user-spots-list {
+  width: 100%;
+}
+
+#no-spots-available {
+  align-self: center;
   font-size: 33px;
   color: #999;
+  margin: 0 auto;
+  text-align: center;
+}
+
+@media (max-width: 425px) {
+  #no-spots-available {
+    font-size: 2rem;
+  }
 }

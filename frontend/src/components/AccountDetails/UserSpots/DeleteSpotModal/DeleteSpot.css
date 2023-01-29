@@ -41,3 +41,14 @@
   border: none;
   background-color: rgb(255, 21, 99);
 }
+
+@media (max-width: 425px) {
+  #delete-spot-container {
+    padding: 2rem;
+  }
+
+  #delete-spot-card-image {
+    width: 12rem;
+    height: 8rem;
+  }
+}

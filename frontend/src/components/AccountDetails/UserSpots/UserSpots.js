@@ -14,9 +14,9 @@ const UserSpots = () => {
   }, [dispatch]);
 
   return (
-    <div>
+    <div className="user-spots-section">
       {spots && (
-        <ul>
+        <ul className="user-spots-list">
           {spots.map((spot, i) => {
             return <UserSpotsItem key={i} spot={spot} />;
           })}

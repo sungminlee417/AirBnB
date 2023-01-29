@@ -23,7 +23,6 @@
   gap: 10px;
   width: 100%;
   justify-content: space-between;
-  padding-right: 10px;
 }
 
 #user-spot-details {
@@ -67,8 +66,85 @@
 
 .spot-button {
   color: #4a4a4a;
+  cursor: pointer;
 }
 
 .spot-button:hover {
   color: black;
+}
+
+@media (max-width: 768px) {
+  #user-spot-name {
+    font-size: 1.6rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .user-spot-address {
+    font-size: 1.2rem;
+  }
+
+  .user-spot-check-bold {
+    font-size: 1.6rem;
+  }
+
+  .user-spot-check-light {
+    font-size: 1.2rem;
+  }
+
+  .user-spot-edit-container {
+    flex-direction: row;
+    gap: 1rem;
+    justify-content: flex-end;
+  }
+
+  .spot-button {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 425px) {
+  #user-spots-item {
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+    padding: 1rem;
+    width: 100%;
+  }
+
+  #user-spots-details {
+    flex-direction: column;
+    width: 50%;
+  }
+
+  #user-spots-item-img-container {
+    width: 50%;
+    height: 18rem;
+  }
+
+  #user-spot-name {
+    font-size: 1.4rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .user-spot-address {
+    font-size: 1.2rem;
+  }
+
+  .user-spot-check-bold {
+    font-size: 1.4rem;
+  }
+
+  .user-spot-check-light {
+    font-size: 1.2rem;
+  }
+
+  .user-spot-edit-container {
+    flex-direction: row;
+    gap: 1rem;
+    justify-content: flex-end;
+  }
+
+  .spot-button {
+    font-size: 2rem;
+  }
 }
