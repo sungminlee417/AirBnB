@@ -23,6 +23,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 1;
 }
 
 #modal-content-login {
@@ -64,15 +65,6 @@
   border-radius: 10px;
   height: 300px;
   width: 500px;
-  display: flex;
-}
-
-#modal-content-edit-spot {
-  position: absolute;
-  background-color: white;
-  border-radius: 10px;
-  height: 600px;
-  width: 800px;
   display: flex;
 }
 

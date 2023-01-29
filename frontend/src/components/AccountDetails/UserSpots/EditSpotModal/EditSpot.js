@@ -10,8 +10,6 @@ const EditSpot = ({ spot, setShowModal }) => {
     city,
     state,
     country,
-    lat,
-    lng,
     name,
     description,
     price,
@@ -21,8 +19,6 @@ const EditSpot = ({ spot, setShowModal }) => {
   const [editCity, setEditCity] = useState(city);
   const [editState, setEditState] = useState(state);
   const [editCountry, setEditCountry] = useState(country);
-  const [editLat, setEditLat] = useState(lat);
-  const [editLng, setEditLng] = useState(lng);
   const [editName, setEditName] = useState(name);
   const [editDescription, setEditDescription] = useState(description);
   const [editPrice, setEditPrice] = useState(price);
@@ -39,12 +35,9 @@ const EditSpot = ({ spot, setShowModal }) => {
       city: editCity,
       state: editState,
       country: editCountry,
-      lat: editLat,
-      lng: editLng,
       name: editName,
       description: editDescription,
       price: editPrice,
-      previewImage: editPreviewImage,
     };
 
     dispatch(spotsActions.editSpotThunk(spot.id, spotEditObj))
@@ -66,8 +59,8 @@ const EditSpot = ({ spot, setShowModal }) => {
 
   return (
     <div id="edit-spot-container">
+      <header id="edit-spot-header">Edit your listing</header>
       <form id="edit-spot-form">
-        <header id="edit-spot-header">Edit your listing</header>
         <div className="edit-spot-input-field-container">
           <label className="edit-spot-input-field-label" for="address">
             Address:{" "}
@@ -113,28 +106,6 @@ const EditSpot = ({ spot, setShowModal }) => {
           />
         </div>
         <div className="edit-spot-input-field-container">
-          <label className="edit-spot-input-field-label" for="lat">
-            Latitude:{" "}
-          </label>
-          <input
-            name="lat"
-            value={editLat}
-            className="edit-spot-form-input"
-            onChange={(e) => setEditLat(e.target.value)}
-          />
-        </div>
-        <div className="edit-spot-input-field-container">
-          <label className="edit-spot-input-field-label" for="lng">
-            Longitude:{" "}
-          </label>
-          <input
-            name="lng"
-            value={editLng}
-            className="edit-spot-form-input"
-            onChange={(e) => setEditLng(e.target.value)}
-          />
-        </div>
-        <div className="edit-spot-input-field-container">
           <label className="edit-spot-input-field-label" for="name">
             Name:{" "}
           </label>
@@ -145,7 +116,7 @@ const EditSpot = ({ spot, setShowModal }) => {
             onChange={(e) => setEditName(e.target.value)}
           />
         </div>
-        <div className="edit-spot-input-field-container">
+        <div className="edit-spot-input-field-container  edit-spot-form-input-field-description">
           <label className="edit-spot-input-field-label" for="description">
             Description:{" "}
           </label>
@@ -153,7 +124,7 @@ const EditSpot = ({ spot, setShowModal }) => {
             name="description"
             value={editDescription}
             type="textarea"
-            className="edit-spot-form-input"
+            className="edit-spot-form-input edit-spot-form-input-description"
             onChange={(e) => setEditDescription(e.target.value)}
           />
         </div>
@@ -166,17 +137,6 @@ const EditSpot = ({ spot, setShowModal }) => {
             value={editPrice}
             className="edit-spot-form-input"
             onChange={(e) => setEditPrice(e.target.value)}
-          />
-        </div>
-        <div className="edit-spot-input-field-container">
-          <label className="edit-spot-input-field-label" for="previewImage">
-            Image URL:{" "}
-          </label>
-          <input
-            name="previewImage"
-            value={editPreviewImage}
-            className="edit-spot-form-input"
-            onChange={(e) => setEditPreviewImage(e.target.value)}
           />
         </div>
         <ul className="edit-spot-errors">
