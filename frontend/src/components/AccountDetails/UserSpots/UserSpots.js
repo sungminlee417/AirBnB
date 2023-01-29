@@ -15,7 +15,7 @@ const UserSpots = () => {
 
   return (
     <div className="user-spots-section">
-      {spots && (
+      {spots.length > 0 && (
         <ul className="user-spots-list">
           {spots.map((spot, i) => {
             return <UserSpotsItem key={i} spot={spot} />;
