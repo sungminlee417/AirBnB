@@ -36,6 +36,7 @@
 #delete-spot-button {
   font-size: 15px;
   color: white;
+  cursor: pointer;
   height: 40px;
   border-radius: 10px;
   border: none;
